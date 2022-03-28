@@ -96,6 +96,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { BsDatepickerModule, BsDatepickerConfig, BsDaterangepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { NgxBootstrapDatePickerConfigService } from 'assets/ngx-bootstrap/ngx-bootstrap-datepicker-config.service';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
@@ -119,7 +120,8 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
         NgxChartsModule,
         BsDatepickerModule.forRoot(),
         BsDropdownModule.forRoot(),
-        PopoverModule.forRoot()
+        PopoverModule.forRoot(),
+        ImageCropperModule
     ],
     declarations: [
 		ReturnProdsComponent,

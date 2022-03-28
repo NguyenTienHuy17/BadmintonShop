@@ -122,10 +122,10 @@
 	<text name="ERP.Common.Image">Ảnh</text>
 	<text name="Url">Đường dẫn</text>
 	<text name="ImagesHeaderInfo">Images header info</text>
-	<text name="CreateNewImage">Create new image</text>
-	<text name="EditImage">Edit image</text>
-	<text name="DeleteImage">Delete image</text>
-	<text name="Images">Images</text>
+	<text name="CreateNewImage">Tải ảnh lên</text>
+	<text name="EditImage">Thay ảnh</text>
+	<text name="DeleteImage">Xóa ảnh</text>
+	<text name="Images">Hình ảnh</text>
 	<text name="Discount">Giảm giá</text>
 	<text name="ERP.Common.Discount">Giảm giá</text>
 	<text name="DiscountCode">Mã giảm giá</text>

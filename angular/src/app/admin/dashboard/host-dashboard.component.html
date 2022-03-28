@@ -53,7 +53,7 @@
                                     </div>
                                     <span class="kt-widget24__stats kt-font-brand">
                                         <span *ngIf="!hostDashboardData">...</span>
-                                        <span *ngIf="hostDashboardData" counto [step]="30" [countTo]="hostDashboardData.newSubscriptionAmount" [countFrom]="0" [duration]="5" (countoChange)="countoNewSubscriptionAmount = $event">{{countoNewSubscriptionAmount | currency:'USD':'symbol':'1.0-0'}}</span>
+                                        <!-- <span *ngIf="hostDashboardData" counto [step]="30" [countTo]="hostDashboardData.newSubscriptionAmount" [countFrom]="0" [duration]="5" (countoChange)="countoNewSubscriptionAmount = $event">{{countoNewSubscriptionAmount | currency:'USD':'symbol':'1.0-0'}}</span> -->
                                     </span>
                                 </div>
                                 <div class="progress progress--sm">
@@ -83,7 +83,7 @@
                                     </div>
                                     <span class="kt-widget24__stats kt-font-info new-tenants-count">
                                         <span *ngIf="!hostDashboardData">...</span>
-                                        <span *ngIf="hostDashboardData" counto [step]="10" [countTo]="hostDashboardData.newTenantsCount" [countFrom]="0" [duration]="5" (countoChange)="countoNewTenantsCount = $event">{{countoNewTenantsCount | number:'1.0-0' }}</span>
+                                        <!-- <span *ngIf="hostDashboardData" counto [step]="10" [countTo]="hostDashboardData.newTenantsCount" [countFrom]="0" [duration]="5" (countoChange)="countoNewTenantsCount = $event">{{countoNewTenantsCount | number:'1.0-0' }}</span> -->
                                     </span>
                                 </div>
                                 <div class="progress progress--sm">
@@ -113,7 +113,7 @@
                                     </div>
                                     <span class="kt-widget24__stats kt-font-danger dashboard-placeholder1">
                                         <span *ngIf="!hostDashboardData">...</span>
-                                        <span *ngIf="hostDashboardData" counto [step]="100" [countTo]="hostDashboardData.dashboardPlaceholder1" [countFrom]="0" [duration]="5" (countoChange)="countoDashboardPlaceholder1 = $event">{{countoDashboardPlaceholder1 | number:'1.0-0' }}</span>
+                                        <!-- <span *ngIf="hostDashboardData" counto [step]="100" [countTo]="hostDashboardData.dashboardPlaceholder1" [countFrom]="0" [duration]="5" (countoChange)="countoDashboardPlaceholder1 = $event">{{countoDashboardPlaceholder1 | number:'1.0-0' }}</span> -->
                                     </span>
                                 </div>
                                 <div class="progress progress--sm">
@@ -142,7 +142,7 @@
                                     </div>
                                     <span class="kt-widget24__stats kt-font-success dashboard-placeholder2">
                                         <span *ngIf="!hostDashboardData">...</span>
-                                        <span *ngIf="hostDashboardData" counto [step]="100" [countTo]="hostDashboardData.dashboardPlaceholder2" [countFrom]="0" [duration]="5" (countoChange)="countoDashboardPlaceholder2 = $event">{{countoDashboardPlaceholder2 | number:'1.0-0' }}</span>
+                                        <!-- <span *ngIf="hostDashboardData" counto [step]="100" [countTo]="hostDashboardData.dashboardPlaceholder2" [countFrom]="0" [duration]="5" (countoChange)="countoDashboardPlaceholder2 = $event">{{countoDashboardPlaceholder2 | number:'1.0-0' }}</span> -->
                                     </span>
                                 </div>
                                 <div class="progress progress--sm">
