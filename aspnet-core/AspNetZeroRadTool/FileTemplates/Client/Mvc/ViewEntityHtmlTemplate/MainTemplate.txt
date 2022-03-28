@@ -1,9 +1,9 @@
 ﻿
 @using {{Namespace_Here}}.Web.Areas.{{App_Area_Name_Here}}.Models.Common.Modals
 @using {{Namespace_Here}}.Web.Areas.{{App_Area_Name_Here}}.Models.{{Entity_Name_Plural_Here}}
-@model {{Entity_Name_Here}}ViewModel
+@model {{Master_Detail_Child_Prefix_Here}}{{Entity_Name_Here}}ViewModel
 
-@await Html.PartialAsync("~/Areas/{{App_Area_Name_Here}}/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(""))
+@await Html.PartialAsync("~/Areas/{{App_Area_Name_Here}}/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
 
 <div class="modal-body">
     <div id="{{Entity_Name_Here}}InformationsTab">

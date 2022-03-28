@@ -1,7 +1,7 @@
 ﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form *ngIf="active" #{{entity_Name_Here}}Form="ngForm" novalidate (ngSubmit)="save()" autocomplete="new-password">
+            <form *ngIf="active" #{{entity_Name_Here}}Form="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
                 <div class="modal-header">
                     <h4 class="modal-title">
                         <span *ngIf="{{entity_Name_Here}}.id">{{l("Edit{{Entity_Name_Here}}")}}</span>

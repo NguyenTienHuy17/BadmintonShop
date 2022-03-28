@@ -19,7 +19,7 @@
         <div class="m-portlet m-portlet--mobile">
             <div class="m-portlet__body">
 
-				<form class="horizontal-form" autocomplete="new-password">
+				<form class="horizontal-form" autocomplete="off">
                     <div class="m-form m-form--label-align-right">
                         <div class="row align-items-center m--margin-bottom-10">
                             <div class="col-xl-12">
@@ -82,12 +82,14 @@
                                         <ul class="dropdown-menu">
 {{View_Button_Here}}
                                             <li>
-                                                <a *ngIf="permission.isGranted('{{Permission_Value_Here}}.Edit')"
-                                                   (click)="createOrEdit{{Entity_Name_Here}}Modal.show(record.{{entity_Name_Here}}.id)">{{l('Edit')}}</a>
+                                            {{Edit_Button_Here}}                                              
                                             </li>
                                             <li>
                                                 <a *ngIf="permission.isGranted('{{Permission_Value_Here}}.Delete')"
-                                                   (click)="delete{{Entity_Name_Here}}(record.{{entity_Name_Here}})">{{l('Delete')}}</a>
+                                                   (click)="delete{{Entity_Name_Here}}(record.{{entity_Name_Here}})">
+                                                   <i class="far fa-trash-alt mr-2"></i>
+                                                   {{l('Delete')}}
+                                                </a>
                                             </li>
                                         </ul>
                                     </div>
@@ -119,7 +121,6 @@
             </div>
         </div>
     </div>
-
-    <createOrEdit{{Entity_Name_Here}}Modal #createOrEdit{{Entity_Name_Here}}Modal (modalSave)="get{{Entity_Name_Plural_Here}}()"></createOrEdit{{Entity_Name_Here}}Modal>
+    {{Create_Or_Edit_Modal_Tag_Here}}    
     {{View_Modal_Tag_Here}}
 </div>

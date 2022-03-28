@@ -9,11 +9,11 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-                    <div class="m-portlet m-portlet--mobile">
-                        <div class="m-portlet__body">
-                            <form class="horizontal-form" autocomplete="new-password">
-                                <div class="m-form m-form--label-align-right">
-                                    <div class="row align-items-center m--margin-bottom-10">
+                    <div class="{{Portlet_Class_Here}}{{Card_Class_Here}}">
+                        <div class="{{Portlet_Body_Here}}{{Card_Body_Here}}">
+                            <form class="{{Form_Class_Here}}" autocomplete="off">
+                                <div>
+                                    <div class="row align-items-center mb-4">
                                         <div class="col-xl-12">
                                             <div class="form-group m-form__group align-items-center">
                                                 <div class="input-group">
@@ -60,7 +60,7 @@
                                                 </div>
 											</td>
 											<td style="width:150px">
-												<span class="ui-column-title"> {{l('{{NP_Display_Property_Name_Here}}')}}</span>
+												<span class="{{PrimeNG_Column_Title_Class_Here}}"> {{l('{{NP_Display_Property_Name_Here}}')}}</span>
 												{{record.displayName}}
 											</td>
 										</tr>
@@ -75,11 +75,11 @@
                                                      styleClass="{{nP_Foreign_Entity_Name_Here}}-lookup-table-paginator"
                                                      (onPageChange)="getAll($event)"
                                                      [totalRecords]="primengTableHelper.totalRecordsCount"
-                                                     [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+                                                     [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                                     [showCurrentPageReport]="true"
+                                                     [currentPageReportTemplate]="'TotalRecordsCount' | localize:primengTableHelper.totalRecordsCount"    
+                                        >
                                         </p-paginator>
-                                        <span class="total-records-count">
-                                            {{l('TotalRecordsCount', primengTableHelper.totalRecordsCount)}}
-                                        </span>
                                     </div>
                                 </div>
                             </div>

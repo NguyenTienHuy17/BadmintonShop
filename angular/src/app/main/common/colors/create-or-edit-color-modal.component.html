@@ -1,0 +1,40 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #colorForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="color.id">{{l("EditColor")}}</span>
+                        <span *ngIf="!color.id">{{l("CreateNewColor")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label for="Color_ColorName">{{l("ColorName")}} *</label>
+									<input type="text" #Color_ColorName="ngModel" id="Color_ColorName" class="form-control" [(ngModel)]="color.colorName" name="ColorName"   minlength="0"  maxlength="32"  required/>
+								    <validation-messages [formCtrl]="Color_ColorName"></validation-messages>
+								</div>
+					
+								<div class="form-group">
+									<label for="Color_ColorCode">{{l("ColorCode")}}</label>
+									<input type="number" #Color_ColorCode="ngModel" id="Color_ColorCode" class="form-control" [(ngModel)]="color.colorCode" name="ColorCode"   />
+									<validation-messages [formCtrl]="Color_ColorCode"></validation-messages>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!colorForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

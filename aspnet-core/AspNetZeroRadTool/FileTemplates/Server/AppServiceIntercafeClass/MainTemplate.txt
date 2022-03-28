@@ -4,6 +4,7 @@ using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}.Dtos;
 using {{Namespace_Here}}.Dto;
+{{NP_Using_Looped_Template_Here}}
 
 namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}
 {
@@ -18,5 +19,7 @@ namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}
 		Task Delete(EntityDto{{Primary_Key_Inside_Tag_Here}} input);
 
 		{{Get_Excel_Method_Here}}{{NP_Looped_Method_Declaration_Here}}
+		
+		{{Remove_File_Prop_Here}}
     }
 }

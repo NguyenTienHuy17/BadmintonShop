@@ -39,9 +39,19 @@
 			"placeholder": "{{Min_Max_Value_Const_Here}}",
 			"condition": "{{Property_Is_Range_Set_Here}} == true",
 			"content": "
-		public const long Max{{Property_Name_Here}}Value = {{Property_RangeMax_Here}};
+		public const {{Min_Max_Value_Type_Here}} Max{{Property_Name_Here}}Value = {{Property_RangeMax_Here}};
 	
-		public const long Min{{Property_Name_Here}}Value = {{Property_RangeMin_Here}};"
-		}
+		public const {{Min_Max_Value_Type_Here}} Min{{Property_Name_Here}}Value = {{Property_RangeMin_Here}};"
+		},		
+		{
+            "placeholder": "{{Min_Max_Value_Type_Here}}",
+            "condition": "{{Property_Is_Decimal_Here}} == true",
+            "content": "double"
+        },
+        {
+            "placeholder": "{{Min_Max_Value_Type_Here}}",
+            "condition": "{{Property_Is_Decimal_Here}} == false",
+            "content": "long"
+        },
 	]
 }

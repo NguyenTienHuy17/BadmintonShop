@@ -1,3 +1,9 @@
+﻿using ERP.Purchase.Dtos;
+using ERP.Purchase;
+using ERP.Entity.Dtos;
+using ERP.Entity;
+using ERP.Common.Dtos;
+using ERP.Common;
 using Abp.Application.Editions;
 using Abp.Application.Features;
 using Abp.Auditing;
@@ -41,6 +47,38 @@ namespace ERP
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditReturnProdDto, ReturnProd>().ReverseMap();
+            configuration.CreateMap<ReturnProdDto, ReturnProd>().ReverseMap();
+            configuration.CreateMap<CreateOrEditOrderItemDto, OrderItem>().ReverseMap();
+            configuration.CreateMap<OrderItemDto, OrderItem>().ReverseMap();
+            configuration.CreateMap<CreateOrEditOrderDto, Order>().ReverseMap();
+            configuration.CreateMap<OrderDto, Order>().ReverseMap();
+            configuration.CreateMap<CreateOrEditStatusDto, Status>().ReverseMap();
+            configuration.CreateMap<StatusDto, Status>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductImageDto, ProductImage>().ReverseMap();
+            configuration.CreateMap<ProductImageDto, ProductImage>().ReverseMap();
+            configuration.CreateMap<CreateOrEditColorItemDto, ColorItem>().ReverseMap();
+            configuration.CreateMap<ColorItemDto, ColorItem>().ReverseMap();
+            configuration.CreateMap<CreateOrEditSizeItemDto, SizeItem>().ReverseMap();
+            configuration.CreateMap<SizeItemDto, SizeItem>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductDto, Product>().ReverseMap();
+            configuration.CreateMap<ProductDto, Product>().ReverseMap();
+            configuration.CreateMap<CreateOrEditSizeDto, Size>().ReverseMap();
+            configuration.CreateMap<SizeDto, Size>().ReverseMap();
+            configuration.CreateMap<CreateOrEditColorDto, Color>().ReverseMap();
+            configuration.CreateMap<ColorDto, Color>().ReverseMap();
+            configuration.CreateMap<CreateOrEditCategoryDto, Category>().ReverseMap();
+            configuration.CreateMap<CategoryDto, Category>().ReverseMap();
+            configuration.CreateMap<CreateOrEditBrandDto, Brand>().ReverseMap();
+            configuration.CreateMap<BrandDto, Brand>().ReverseMap();
+            configuration.CreateMap<CreateOrEditImageDto, Image>().ReverseMap();
+            configuration.CreateMap<ImageDto, Image>().ReverseMap();
+            configuration.CreateMap<CreateOrEditDiscountDto, Discount>().ReverseMap();
+            configuration.CreateMap<DiscountDto, Discount>().ReverseMap();
+            configuration.CreateMap<CreateOrEditBlogDto, Blog>().ReverseMap();
+            configuration.CreateMap<BlogDto, Blog>().ReverseMap();
+            configuration.CreateMap<CreateOrEditBookingDto, Booking>().ReverseMap();
+            configuration.CreateMap<BookingDto, Booking>().ReverseMap();
             //Inputs
             configuration.CreateMap<CheckboxInputType, FeatureInputTypeDto>();
             configuration.CreateMap<SingleLineStringInputType, FeatureInputTypeDto>();
@@ -81,7 +119,6 @@ namespace ERP
             configuration.CreateMap<Edition, EditionEditDto>();
             configuration.CreateMap<Edition, SubscribableEdition>();
             configuration.CreateMap<Edition, EditionSelectDto>();
-
 
             //Payment
             configuration.CreateMap<SubscriptionPaymentDto, SubscriptionPayment>().ReverseMap();

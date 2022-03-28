@@ -7,8 +7,33 @@
 					{
 					"type" : "enum",
 					"content" : "                    <div class=\"col-6 mb-3\">
-                        <h6>{{l(\"{{property_Name_Here}}\")}} :</h6>
+                        <h6>{{l(\"{{Property_Name_Here}}\")}} :</h6>
                         {{l({{Enum_Localization_Before_060600}} {{property_Type_Here}}[item.{{entity_Name_Here}}.{{property_Name_Here}}])}}
+                    </div>
+"
+					},
+					{
+					"type" : "bool",
+					"content" : "                    <div class=\"col-6 mb-3\">
+                        <h6>{{l(\"{{Property_Name_Here}}\")}} :</h6>
+                        <div *ngIf=\"item.{{entity_Name_Here}}.{{property_Name_Here}}\" class=\"text-left\"><i class=\"fa fa-check-circle {{Font_Success_Class_Here}}\"
+                                title=\"True\"></i></div>
+                        <div *ngIf=\"!item.{{entity_Name_Here}}.{{property_Name_Here}}\" class=\"text-left\"><i class=\"fa fa-times-circle\" title=\"False\"></i></div>
+                    </div>"
+					},
+					{
+					"type" : "DateTime",
+					"content" : "                    <div class=\"col-6 mb-3\">
+                        <h6>{{l(\"{{Property_Name_Here}}\")}} :</h6>
+                        {{ item.{{entity_Name_Here}}.{{property_Name_Here}} | {{Datetime_Format_Pipe_Here}} }}
+                    </div>
+"
+					},
+					{
+					"type" : "file",
+					"content" : "                    <div class=\"col-6 mb-3\">
+                        <h6>{{l(\"{{Property_Name_Here}}\")}} :</h6>
+                        <a href=\"{{getDownloadUrl(item.{{entity_Name_Here}}.{{property_Name_Here}})}}\" target=\"_blank\">{{ item.{{entity_Name_Here}}.{{property_Name_Here}}FileName}}</a>
                     </div>
 "
 					},
@@ -16,7 +41,7 @@
 					"type" : "default",
 					"content" : "                    <div class=\"col-6 mb-3\">
                         <h6>{{l(\"{{Property_Name_Here}}\")}} :</h6>
-                        {{item.{{entity_Name_Here}}.{{property_Name_Here}}}}
+                        {{ item.{{entity_Name_Here}}.{{property_Name_Here}} }}
                     </div>
 "
 					}
@@ -43,6 +68,26 @@
 			"placeholder": "{{Enum_Localization_Before_060600}}",
 			"condition": "{{Project_Version_Here}} < 060600",
 			"content": "'Enum_{{Property_Type_Here}}' + "
-		}
+		},
+        {
+            "placeholder": "{{Font_Success_Class_Here}}",
+            "condition": "{{Project_Version_Here}} < 090000",
+            "content": "kt--font-success"
+        },
+        {
+            "placeholder": "{{Font_Success_Class_Here}}",
+            "condition": "{{Project_Version_Here}} >= 090000",
+            "content": "text-success"
+        },
+        {
+             "placeholder": "{{Datetime_Format_Pipe_Here}}",
+             "condition": "{{Project_Version_Here}} >= 100000",
+             "content": " luxonFormat:'yyyy-LL-dd HH:mm:ss' "
+        },
+        {
+             "placeholder": "{{Datetime_Format_Pipe_Here}}",
+             "condition": "{{Project_Version_Here}} < 100000",
+             "content": " momentFormat:'YYYY-MM-DD HH:mm:ss' "
+        }
 	]
 }

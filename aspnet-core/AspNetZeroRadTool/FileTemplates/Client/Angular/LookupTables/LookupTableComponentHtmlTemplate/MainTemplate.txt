@@ -9,13 +9,13 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-                    <div class="m-portlet m-portlet--mobile">
-                        <div class="m-portlet__body">
-                            <form class="horizontal-form" autocomplete="new-password">
-                                <div class="m-form m-form--label-align-right">
-                                    <div class="row align-items-center m--margin-bottom-10">
+                    <div class="kt-portlet">
+                        <div class="kt-portlet__body">
+                            <form class="kt-form" autocomplete="off">
+                                <div>
+                                    <div class="row align-items-center mb-4">
                                         <div class="col-xl-12">
-                                            <div class="form-group m-form__group align-items-center">
+                                            <div class="form-group align-items-center">
                                                 <div class="input-group">
                                                     <input [(ngModel)]="filterText" name="filterText" autoFocus class="form-control m-input" [placeholder]="l('SearchWithThreeDot')" type="text">
                                                     <span class="input-group-btn">
@@ -67,7 +67,10 @@
                                                      styleClass="{{nP_Foreign_Entity_Name_Here}}-lookup-table-paginator"
                                                      (onPageChange)="getAll($event)"
                                                      [totalRecords]="primengDatatableHelper.totalRecordsCount"
-                                                     [rowsPerPageOptions]="primengDatatableHelper.predefinedRecordsCountPerPage">
+                                                     [rowsPerPageOptions]="primengDatatableHelper.predefinedRecordsCountPerPage"
+                                                     [showCurrentPageReport]="true"
+                                                     [currentPageReportTemplate]="'TotalRecordsCount' | localize:primengTableHelper.totalRecordsCount"    
+                                        >
                                         </p-paginator>
                                         <span class="total-records-count">
                                             {{l('TotalRecordsCount', primengDatatableHelper.totalRecordsCount)}}

@@ -29,6 +29,87 @@ namespace ERP.Authorization
             //COMMON PERMISSIONS (FOR BOTH OF TENANTS AND HOST)
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
+
+            var returnProds = pages.CreateChildPermission(AppPermissions.Pages_ReturnProds, L("ReturnProds"));
+            returnProds.CreateChildPermission(AppPermissions.Pages_ReturnProds_Create, L("CreateNewReturnProd"));
+            returnProds.CreateChildPermission(AppPermissions.Pages_ReturnProds_Edit, L("EditReturnProd"));
+            returnProds.CreateChildPermission(AppPermissions.Pages_ReturnProds_Delete, L("DeleteReturnProd"));
+
+            var orderItems = pages.CreateChildPermission(AppPermissions.Pages_OrderItems, L("OrderItems"));
+            orderItems.CreateChildPermission(AppPermissions.Pages_OrderItems_Create, L("CreateNewOrderItem"));
+            orderItems.CreateChildPermission(AppPermissions.Pages_OrderItems_Edit, L("EditOrderItem"));
+            orderItems.CreateChildPermission(AppPermissions.Pages_OrderItems_Delete, L("DeleteOrderItem"));
+
+            var orders = pages.CreateChildPermission(AppPermissions.Pages_Orders, L("Orders"));
+            orders.CreateChildPermission(AppPermissions.Pages_Orders_Create, L("CreateNewOrder"));
+            orders.CreateChildPermission(AppPermissions.Pages_Orders_Edit, L("EditOrder"));
+            orders.CreateChildPermission(AppPermissions.Pages_Orders_Delete, L("DeleteOrder"));
+
+            var statuses = pages.CreateChildPermission(AppPermissions.Pages_Statuses, L("Statuses"));
+            statuses.CreateChildPermission(AppPermissions.Pages_Statuses_Create, L("CreateNewStatus"));
+            statuses.CreateChildPermission(AppPermissions.Pages_Statuses_Edit, L("EditStatus"));
+            statuses.CreateChildPermission(AppPermissions.Pages_Statuses_Delete, L("DeleteStatus"));
+
+            var productImages = pages.CreateChildPermission(AppPermissions.Pages_ProductImages, L("ProductImages"));
+            productImages.CreateChildPermission(AppPermissions.Pages_ProductImages_Create, L("CreateNewProductImage"));
+            productImages.CreateChildPermission(AppPermissions.Pages_ProductImages_Edit, L("EditProductImage"));
+            productImages.CreateChildPermission(AppPermissions.Pages_ProductImages_Delete, L("DeleteProductImage"));
+
+            var colorItems = pages.CreateChildPermission(AppPermissions.Pages_ColorItems, L("ColorItems"));
+            colorItems.CreateChildPermission(AppPermissions.Pages_ColorItems_Create, L("CreateNewColorItem"));
+            colorItems.CreateChildPermission(AppPermissions.Pages_ColorItems_Edit, L("EditColorItem"));
+            colorItems.CreateChildPermission(AppPermissions.Pages_ColorItems_Delete, L("DeleteColorItem"));
+
+            var sizeItems = pages.CreateChildPermission(AppPermissions.Pages_SizeItems, L("SizeItems"));
+            sizeItems.CreateChildPermission(AppPermissions.Pages_SizeItems_Create, L("CreateNewSizeItem"));
+            sizeItems.CreateChildPermission(AppPermissions.Pages_SizeItems_Edit, L("EditSizeItem"));
+            sizeItems.CreateChildPermission(AppPermissions.Pages_SizeItems_Delete, L("DeleteSizeItem"));
+
+            var products = pages.CreateChildPermission(AppPermissions.Pages_Products, L("Products"));
+            products.CreateChildPermission(AppPermissions.Pages_Products_Create, L("CreateNewProduct"));
+            products.CreateChildPermission(AppPermissions.Pages_Products_Edit, L("EditProduct"));
+            products.CreateChildPermission(AppPermissions.Pages_Products_Delete, L("DeleteProduct"));
+
+            var sizes = pages.CreateChildPermission(AppPermissions.Pages_Sizes, L("Sizes"));
+            sizes.CreateChildPermission(AppPermissions.Pages_Sizes_Create, L("CreateNewSize"));
+            sizes.CreateChildPermission(AppPermissions.Pages_Sizes_Edit, L("EditSize"));
+            sizes.CreateChildPermission(AppPermissions.Pages_Sizes_Delete, L("DeleteSize"));
+
+            var colors = pages.CreateChildPermission(AppPermissions.Pages_Colors, L("Colors"));
+            colors.CreateChildPermission(AppPermissions.Pages_Colors_Create, L("CreateNewColor"));
+            colors.CreateChildPermission(AppPermissions.Pages_Colors_Edit, L("EditColor"));
+            colors.CreateChildPermission(AppPermissions.Pages_Colors_Delete, L("DeleteColor"));
+
+            var categories = pages.CreateChildPermission(AppPermissions.Pages_Categories, L("Categories"));
+            categories.CreateChildPermission(AppPermissions.Pages_Categories_Create, L("CreateNewCategory"));
+            categories.CreateChildPermission(AppPermissions.Pages_Categories_Edit, L("EditCategory"));
+            categories.CreateChildPermission(AppPermissions.Pages_Categories_Delete, L("DeleteCategory"));
+
+            var brands = pages.CreateChildPermission(AppPermissions.Pages_Brands, L("Brands"));
+            brands.CreateChildPermission(AppPermissions.Pages_Brands_Create, L("CreateNewBrand"));
+            brands.CreateChildPermission(AppPermissions.Pages_Brands_Edit, L("EditBrand"));
+            brands.CreateChildPermission(AppPermissions.Pages_Brands_Delete, L("DeleteBrand"));
+
+            var images = pages.CreateChildPermission(AppPermissions.Pages_Images, L("Images"));
+            images.CreateChildPermission(AppPermissions.Pages_Images_Create, L("CreateNewImage"));
+            images.CreateChildPermission(AppPermissions.Pages_Images_Edit, L("EditImage"));
+            images.CreateChildPermission(AppPermissions.Pages_Images_Delete, L("DeleteImage"));
+
+            var discounts = pages.CreateChildPermission(AppPermissions.Pages_Discounts, L("Discounts"));
+            discounts.CreateChildPermission(AppPermissions.Pages_Discounts_Create, L("CreateNewDiscount"));
+            discounts.CreateChildPermission(AppPermissions.Pages_Discounts_Edit, L("EditDiscount"));
+            discounts.CreateChildPermission(AppPermissions.Pages_Discounts_Delete, L("DeleteDiscount"));
+
+            var blogs = pages.CreateChildPermission(AppPermissions.Pages_Blogs, L("Blogs"));
+            blogs.CreateChildPermission(AppPermissions.Pages_Blogs_Create, L("CreateNewBlog"));
+            blogs.CreateChildPermission(AppPermissions.Pages_Blogs_Edit, L("EditBlog"));
+            blogs.CreateChildPermission(AppPermissions.Pages_Blogs_Delete, L("DeleteBlog"));
+
+            var bookings = pages.CreateChildPermission(AppPermissions.Pages_Bookings, L("Bookings"));
+            bookings.CreateChildPermission(AppPermissions.Pages_Bookings_Create, L("CreateNewBooking"));
+            bookings.CreateChildPermission(AppPermissions.Pages_Bookings_Edit, L("EditBooking"));
+            bookings.CreateChildPermission(AppPermissions.Pages_Bookings_Delete, L("DeleteBooking"));
+
             pages.CreateChildPermission(AppPermissions.Pages_DemoUiComponents, L("DemoUiComponents"));
 
             var administration = pages.CreateChildPermission(AppPermissions.Pages_Administration, L("Administration"));
@@ -73,7 +154,7 @@ namespace ERP.Authorization
             editions.CreateChildPermission(AppPermissions.Pages_Editions_Create, L("CreatingNewEdition"), multiTenancySides: MultiTenancySides.Host);
             editions.CreateChildPermission(AppPermissions.Pages_Editions_Edit, L("EditingEdition"), multiTenancySides: MultiTenancySides.Host);
             editions.CreateChildPermission(AppPermissions.Pages_Editions_Delete, L("DeletingEdition"), multiTenancySides: MultiTenancySides.Host);
-            editions.CreateChildPermission(AppPermissions.Pages_Editions_MoveTenantsToAnotherEdition, L("MoveTenantsToAnotherEdition"), multiTenancySides: MultiTenancySides.Host); 
+            editions.CreateChildPermission(AppPermissions.Pages_Editions_MoveTenantsToAnotherEdition, L("MoveTenantsToAnotherEdition"), multiTenancySides: MultiTenancySides.Host);
 
             var tenants = pages.CreateChildPermission(AppPermissions.Pages_Tenants, L("Tenants"), multiTenancySides: MultiTenancySides.Host);
             tenants.CreateChildPermission(AppPermissions.Pages_Tenants_Create, L("CreatingNewTenant"), multiTenancySides: MultiTenancySides.Host);

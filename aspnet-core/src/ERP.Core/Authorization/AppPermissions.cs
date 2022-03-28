@@ -6,11 +6,91 @@
     /// </summary>
     public static class AppPermissions
     {
+        public const string Pages_ReturnProds = "Pages.ReturnProds";
+        public const string Pages_ReturnProds_Create = "Pages.ReturnProds.Create";
+        public const string Pages_ReturnProds_Edit = "Pages.ReturnProds.Edit";
+        public const string Pages_ReturnProds_Delete = "Pages.ReturnProds.Delete";
+
+        public const string Pages_OrderItems = "Pages.OrderItems";
+        public const string Pages_OrderItems_Create = "Pages.OrderItems.Create";
+        public const string Pages_OrderItems_Edit = "Pages.OrderItems.Edit";
+        public const string Pages_OrderItems_Delete = "Pages.OrderItems.Delete";
+
+        public const string Pages_Orders = "Pages.Orders";
+        public const string Pages_Orders_Create = "Pages.Orders.Create";
+        public const string Pages_Orders_Edit = "Pages.Orders.Edit";
+        public const string Pages_Orders_Delete = "Pages.Orders.Delete";
+
+        public const string Pages_Statuses = "Pages.Statuses";
+        public const string Pages_Statuses_Create = "Pages.Statuses.Create";
+        public const string Pages_Statuses_Edit = "Pages.Statuses.Edit";
+        public const string Pages_Statuses_Delete = "Pages.Statuses.Delete";
+
+        public const string Pages_ProductImages = "Pages.ProductImages";
+        public const string Pages_ProductImages_Create = "Pages.ProductImages.Create";
+        public const string Pages_ProductImages_Edit = "Pages.ProductImages.Edit";
+        public const string Pages_ProductImages_Delete = "Pages.ProductImages.Delete";
+
+        public const string Pages_ColorItems = "Pages.ColorItems";
+        public const string Pages_ColorItems_Create = "Pages.ColorItems.Create";
+        public const string Pages_ColorItems_Edit = "Pages.ColorItems.Edit";
+        public const string Pages_ColorItems_Delete = "Pages.ColorItems.Delete";
+
+        public const string Pages_SizeItems = "Pages.SizeItems";
+        public const string Pages_SizeItems_Create = "Pages.SizeItems.Create";
+        public const string Pages_SizeItems_Edit = "Pages.SizeItems.Edit";
+        public const string Pages_SizeItems_Delete = "Pages.SizeItems.Delete";
+
+        public const string Pages_Products = "Pages.Products";
+        public const string Pages_Products_Create = "Pages.Products.Create";
+        public const string Pages_Products_Edit = "Pages.Products.Edit";
+        public const string Pages_Products_Delete = "Pages.Products.Delete";
+
+        public const string Pages_Sizes = "Pages.Sizes";
+        public const string Pages_Sizes_Create = "Pages.Sizes.Create";
+        public const string Pages_Sizes_Edit = "Pages.Sizes.Edit";
+        public const string Pages_Sizes_Delete = "Pages.Sizes.Delete";
+
+        public const string Pages_Colors = "Pages.Colors";
+        public const string Pages_Colors_Create = "Pages.Colors.Create";
+        public const string Pages_Colors_Edit = "Pages.Colors.Edit";
+        public const string Pages_Colors_Delete = "Pages.Colors.Delete";
+
+        public const string Pages_Categories = "Pages.Categories";
+        public const string Pages_Categories_Create = "Pages.Categories.Create";
+        public const string Pages_Categories_Edit = "Pages.Categories.Edit";
+        public const string Pages_Categories_Delete = "Pages.Categories.Delete";
+
+        public const string Pages_Brands = "Pages.Brands";
+        public const string Pages_Brands_Create = "Pages.Brands.Create";
+        public const string Pages_Brands_Edit = "Pages.Brands.Edit";
+        public const string Pages_Brands_Delete = "Pages.Brands.Delete";
+
+        public const string Pages_Images = "Pages.Images";
+        public const string Pages_Images_Create = "Pages.Images.Create";
+        public const string Pages_Images_Edit = "Pages.Images.Edit";
+        public const string Pages_Images_Delete = "Pages.Images.Delete";
+
+        public const string Pages_Discounts = "Pages.Discounts";
+        public const string Pages_Discounts_Create = "Pages.Discounts.Create";
+        public const string Pages_Discounts_Edit = "Pages.Discounts.Edit";
+        public const string Pages_Discounts_Delete = "Pages.Discounts.Delete";
+
+        public const string Pages_Blogs = "Pages.Blogs";
+        public const string Pages_Blogs_Create = "Pages.Blogs.Create";
+        public const string Pages_Blogs_Edit = "Pages.Blogs.Edit";
+        public const string Pages_Blogs_Delete = "Pages.Blogs.Delete";
+
+        public const string Pages_Bookings = "Pages.Bookings";
+        public const string Pages_Bookings_Create = "Pages.Bookings.Create";
+        public const string Pages_Bookings_Edit = "Pages.Bookings.Edit";
+        public const string Pages_Bookings_Delete = "Pages.Bookings.Delete";
+
         //COMMON PERMISSIONS (FOR BOTH OF TENANTS AND HOST)
 
         public const string Pages = "Pages";
 
-        public const string Pages_DemoUiComponents= "Pages.DemoUiComponents";
+        public const string Pages_DemoUiComponents = "Pages.DemoUiComponents";
         public const string Pages_Administration = "Pages.Administration";
 
         public const string Pages_Administration_Roles = "Pages.Administration.Roles";

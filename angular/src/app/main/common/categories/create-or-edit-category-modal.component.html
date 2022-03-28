@@ -1,0 +1,54 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #categoryForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="category.id">{{l("EditCategory")}}</span>
+                        <span *ngIf="!category.id">{{l("CreateNewCategory")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+					<div class="form-group m-form__group">
+                        <label for="ImageName">{{l("Image")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ImageName" name="imageName" [(ngModel)]="imageName" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectImageModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setImageIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="category.imageId" [(ngModel)]="category.imageId" type="text"  hidden>
+		 
+
+								<div class="form-group">
+									<label for="Category_Name">{{l("Name")}} *</label>
+									<input type="text" #Category_Name="ngModel" id="Category_Name" class="form-control" [(ngModel)]="category.name" name="Name"   minlength="0"  maxlength="64"  required/>
+								    <validation-messages [formCtrl]="Category_Name"></validation-messages>
+								</div>
+					
+								<div class="form-group">
+									<label for="Category_Description">{{l("Description")}}</label>
+									<input type="text" #Category_Description="ngModel" id="Category_Description" class="form-control" [(ngModel)]="category.description" name="Description"    />
+								    <validation-messages [formCtrl]="Category_Description"></validation-messages>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!categoryForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<categoryImageLookupTableModal #categoryImageLookupTableModal (modalSave)="getNewImageId()"></categoryImageLookupTableModal>
+		 
+</div>

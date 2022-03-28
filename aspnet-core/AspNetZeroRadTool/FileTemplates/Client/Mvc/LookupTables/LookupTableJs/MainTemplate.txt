@@ -1,5 +1,5 @@
 ﻿(function ($) {
-    app.modals.{{NP_Foreign_Entity_Name_Here}}LookupTableModal = function () {
+    app.modals.{{Master_Detail_Child_Prefix_Here}}{{NP_Foreign_Entity_Name_Here}}LookupTableModal = function () {
 
         var _modalManager;
 

@@ -1,4 +1,7 @@
-﻿using Abp.IdentityServer4;
+﻿using ERP.Purchase;
+using ERP.Entity;
+using ERP.Common;
+using Abp.IdentityServer4;
 using Abp.Zero.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ERP.Authorization.Roles;
@@ -16,6 +19,38 @@ namespace ERP.EntityFrameworkCore
 {
     public class ERPDbContext : AbpZeroDbContext<Tenant, Role, User, ERPDbContext>, IAbpPersistedGrantDbContext
     {
+        public virtual DbSet<ReturnProd> ReturnProds { get; set; }
+
+        public virtual DbSet<OrderItem> OrderItems { get; set; }
+
+        public virtual DbSet<Order> Orders { get; set; }
+
+        public virtual DbSet<Status> Statuses { get; set; }
+
+        public virtual DbSet<ProductImage> ProductImages { get; set; }
+
+        public virtual DbSet<ColorItem> ColorItems { get; set; }
+
+        public virtual DbSet<SizeItem> SizeItems { get; set; }
+
+        public virtual DbSet<Product> Products { get; set; }
+
+        public virtual DbSet<Size> Sizes { get; set; }
+
+        public virtual DbSet<Color> Colors { get; set; }
+
+        public virtual DbSet<Category> Categories { get; set; }
+
+        public virtual DbSet<Brand> Brands { get; set; }
+
+        public virtual DbSet<Image> Images { get; set; }
+
+        public virtual DbSet<Discount> Discounts { get; set; }
+
+        public virtual DbSet<Blog> Blogs { get; set; }
+
+        public virtual DbSet<Booking> Bookings { get; set; }
+
         /* Define an IDbSet for each entity of the application */
 
         public virtual DbSet<BinaryObject> BinaryObjects { get; set; }
@@ -35,17 +70,81 @@ namespace ERP.EntityFrameworkCore
         public ERPDbContext(DbContextOptions<ERPDbContext> options)
             : base(options)
         {
-            
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<BinaryObject>(b =>
+            modelBuilder.Entity<ReturnProd>(r =>
             {
-                b.HasIndex(e => new { e.TenantId });
+                r.HasIndex(e => new { e.TenantId });
             });
+            modelBuilder.Entity<OrderItem>(o =>
+                       {
+                           o.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<Order>(o =>
+                       {
+                           o.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<Status>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ProductImage>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ColorItem>(c =>
+                       {
+                           c.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<SizeItem>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<Product>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<Size>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<Color>(c =>
+                       {
+                           c.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<Category>(c =>
+                       {
+                           c.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<Brand>(b =>
+                       {
+                           b.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<Image>(i =>
+                       {
+                           i.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<Discount>(d =>
+                       {
+                           d.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<Blog>(b =>
+                       {
+                           b.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<Booking>(b =>
+                       {
+                           b.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<BinaryObject>(b =>
+                       {
+                           b.HasIndex(e => new { e.TenantId });
+                       });
 
             modelBuilder.Entity<ChatMessage>(b =>
             {

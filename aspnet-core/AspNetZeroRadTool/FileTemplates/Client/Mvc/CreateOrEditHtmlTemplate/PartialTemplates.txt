@@ -28,7 +28,7 @@
 					"type" : "bool",
 					"content" : "
 								<div class=\"m-checkbox-list\">
-									<label for=\"{{Entity_Name_Here}}_{{Property_Name_Here}}\" class=\"m-checkbox\">
+									<label for=\"{{Entity_Name_Here}}_{{Property_Name_Here}}\" class=\"kt-checkbox\">
 										<input id=\"{{Entity_Name_Here}}_{{Property_Name_Here}}\" type=\"checkbox\" name=\"{{property_Name_Here}}\" value=\"true\" @Html.Raw(Model.{{Entity_Name_Here}}.{{Property_Name_Here}} ?\"checked=\\\"checked\\\"\":\"\") />
 										@L(\"{{Property_Name_Here}}\")
 										<span></span>
@@ -42,6 +42,40 @@
 								<div class=\"form-group\">
 									<label for=\"{{Entity_Name_Here}}_{{Property_Name_Here}}\">@L(\"{{Property_Name_Here}}\")</label>
 									<input class=\"form-control m-input date-picker\" id=\"{{Entity_Name_Here}}_{{Property_Name_Here}}\" type=\"text\" name=\"{{property_Name_Here}}\" value=\"@Model.{{Entity_Name_Here}}.{{Property_Name_Here}}\"/>
+								</div>
+					"
+					},
+					{
+					"type" : "file",
+					"content" : "
+								<div class=\"form-group\">
+                                    <div class=\"input-group mb-3\">
+                                        <div class=\"input-group-prepend\">
+                                            <span class=\"input-group-text\" id=\"inputGroupFileAddon01\">@L(\"{{Property_Name_Here}}\")</span>
+                                        </div>
+                                        <div class=\"custom-file\">
+                                            <input type=\"file\" class=\"custom-file-input\" name=\"{{Entity_Name_Here}}_{{Property_Name_Here}}\" id=\"{{Entity_Name_Here}}_{{Property_Name_Here}}\"
+                                                   aria-describedby=\"inputGroupFileAddon01\"
+                                                   accept=\"@Model.{{Property_Name_Here}}FileAcceptedTypes\"/>                    
+                                            <label class=\"custom-file-label\" for=\"@L(\"{{Property_Name_Here}}\")\" id=\"{{Entity_Name_Here}}_{{Property_Name_Here}}Label\">@L(\"ChooseAFile\")</label>
+                                        </div>
+                                    </div>
+									                                    
+                                    <div id=\"div_current_file\" style=\"background-color: #e5e5e5; padding: 5px @(Model.{{Property_Name_Here}}FileName.IsNullOrEmpty()?\";display:none\":\"\")\">
+                                        <span class=\"font-weight-bold\">@L(\"CurrentFile\") :</span>
+                                        <div class=\"alert alert-custom alert-white alert-bold m-1\" role=\"alert\">
+                                            <div class=\"alert-text\">
+                                                <a href=\"@(\"/File/DownloadBinaryFile?id=\" + Model.{{Entity_Name_Here}}.{{Property_Name_Here}})\" target=\"_blank\">@Model.{{Property_Name_Here}}FileName</a>
+                                            </div>
+                                            <div class=\"alert-close\">
+                                                <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\" id=\"{{Entity_Name_Here}}_{{Property_Name_Here}}_Remove\">
+                                                    <span aria-hidden=\"true\">
+                                                        <i class=\"la la-close fa-1x\"></i>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>									
 								</div>
 					"
 					},
@@ -63,29 +97,42 @@
 			"templates" : [
 					{
 					"relation" : "single",
+					"Type" : "Modal",
+					"viewType":"LookupTable",
 					"content" : "            
 								<div class=\"form-group m-form__group\">
 										<label for=\"{{NP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}}\">@L(\"{{NP_Foreign_Entity_Name_Here}}\")</label>
-									<div class=\"input-group\">
+									    <div class=\"input-group\">
 											<input class=\"form-control\" id=\"{{NP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}}\" name=\"{{nP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}}\" value=\"@Model.{{NP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}}\" type=\"text\" disabled>
 										<div class=\"input-group-append\">
 											<button class=\"btn btn-primary blue\" id=\"Open{{NP_Foreign_Entity_Name_Here}}{{NP_Duplication_Number_Here}}LookupTableButton\" type=\"button\"><i class=\"fa fa-search\"></i> @L(\"Pick\")</button>
 										</div> 
 										<div class=\"input-group-prepend\">
-											<button class=\"btn btn-danger\" type=\"button\" id=\"Clear{{NP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}}Button\"><i class=\"fa fa-times\"></i></button>
+											<button class=\"btn btn-danger btn-icon\" type=\"button\" id=\"Clear{{NP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}}Button\"><i class=\"fa fa-times\"></i></button>
 										</div>
 									</div>
 								</div>
 
 								@if (Model.IsEditMode)
 								{
-									<input class=\"form-control\" value=\"@Model.{{Entity_Name_Here}}.{{NP_Name_Here}}\" type=\"text\" name=\"{{nP_Name_Here}}\" {{NP_IsNullable_Required_Here}} hidden/>
+									<input class=\"form-control\" id=\"{{Entity_Name_Here}}_{{NP_Name_Here}}\" value=\"@Model.{{Entity_Name_Here}}.{{NP_Name_Here}}\" type=\"text\" name=\"{{nP_Name_Here}}\" {{NP_IsNullable_Required_Here}} hidden/>
 								}
 								 else
 								{ 
-									<input class=\"form-control\" value=\"\" type=\"text\" name=\"{{nP_Name_Here}}\" {{NP_IsNullable_Required_Here}} hidden/>
+									<input class=\"form-control\" id=\"{{Entity_Name_Here}}_{{NP_Name_Here}}\" value=\"\" type=\"text\" name=\"{{nP_Name_Here}}\" {{NP_IsNullable_Required_Here}} hidden/>
 								}
 
+"
+					},
+					{
+					"relation" : "single",
+					"Type" : "Modal",
+					"viewType":"Dropdown",
+					"content" : "            
+						<div class=\"form-group\">
+							<label for=\"{{nP_Name_Here}}\">@L(\"{{NP_Foreign_Entity_Name_Here}}\")</label>
+							@Html.DropDownList(\"{{nP_Name_Here}}\", new SelectList(Model.{{Entity_Name_Here}}{{NP_Foreign_Entity_Name_Here}}List,\"Id\",\"DisplayName\", (Model.IsEditMode ? Model.{{Entity_Name_Here}}.{{NP_Name_Here}}.ToString() : \"\")),@L(\"SelectA{{NP_Foreign_Entity_Name_Here}}\"), new { @class = \"form-control\"  {{NP_IsNullable_Required_Here_With_Comma_And_At}} })
+						</div>
 "
 					}
 				]
@@ -136,6 +183,11 @@
 			"placeholder": "{{MinValue}}",
 			"condition": "{{Property_Is_Range_Set_Here}} == true",
 			"content": " min=\"@{{Namespace_Here}}.{{Namespace_Relative_Full_Here}}.{{Entity_Name_Here}}Consts.Min{{Property_Name_Here}}Value\""
+		},	
+		{
+			"placeholder": "{{NP_IsNullable_Required_Here_With_Comma_And_At}}",
+			"condition": "{{NP_IsNullable_Required_Here}} != ''",
+			"content": ", @required=\"required\""
 		}
 	]
 }

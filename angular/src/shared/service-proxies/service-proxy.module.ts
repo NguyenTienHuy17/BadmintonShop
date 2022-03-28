@@ -1,10 +1,26 @@
-import { AbpHttpInterceptor } from '@abp/abpHttpInterceptor';
+﻿import { AbpHttpInterceptor } from '@abp/abpHttpInterceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import * as ApiServiceProxies from './service-proxies';
 
 @NgModule({
     providers: [
+        ApiServiceProxies.ReturnProdsServiceProxy,        
+        ApiServiceProxies.OrderItemsServiceProxy,        
+        ApiServiceProxies.OrdersServiceProxy,        
+        ApiServiceProxies.StatusesServiceProxy,        
+        ApiServiceProxies.ProductImagesServiceProxy,        
+        ApiServiceProxies.ColorItemsServiceProxy,        
+        ApiServiceProxies.SizeItemsServiceProxy,        
+        ApiServiceProxies.ProductsServiceProxy,        
+        ApiServiceProxies.SizesServiceProxy,        
+        ApiServiceProxies.ColorsServiceProxy,        
+        ApiServiceProxies.CategoriesServiceProxy,        
+        ApiServiceProxies.BrandsServiceProxy,        
+        ApiServiceProxies.ImagesServiceProxy,        
+        ApiServiceProxies.DiscountsServiceProxy,        
+        ApiServiceProxies.BlogsServiceProxy,        
+        ApiServiceProxies.BookingsServiceProxy,        
         ApiServiceProxies.AuditLogServiceProxy,
         ApiServiceProxies.CachingServiceProxy,
         ApiServiceProxies.ChatServiceProxy,

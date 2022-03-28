@@ -1,0 +1,46 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #discountForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="discount.id">{{l("EditDiscount")}}</span>
+                        <span *ngIf="!discount.id">{{l("CreateNewDiscount")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label for="Discount_DiscountCode">{{l("DiscountCode")}} *</label>
+									<input type="text" #Discount_DiscountCode="ngModel" id="Discount_DiscountCode" class="form-control" [(ngModel)]="discount.discountCode" name="DiscountCode"   minlength="0"  maxlength="32"  required/>
+								    <validation-messages [formCtrl]="Discount_DiscountCode"></validation-messages>
+								</div>
+					
+								<div class="form-group">
+									<label for="Discount_Discount">{{l("Discount")}}</label>
+									<input type="number" #Discount_Discount="ngModel" id="Discount_Discount" class="form-control" [(ngModel)]="discount.discount" name="Discount"  min="0"  max="100" />
+									<validation-messages [formCtrl]="Discount_Discount"></validation-messages>
+								</div>
+					
+								<div class="form-group">
+									<label for="Discount_Description">{{l("Description")}}</label>
+									<input type="text" #Discount_Description="ngModel" id="Discount_Description" class="form-control" [(ngModel)]="discount.description" name="Description"   minlength="0"  maxlength="1024" />
+								    <validation-messages [formCtrl]="Discount_Description"></validation-messages>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!discountForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
