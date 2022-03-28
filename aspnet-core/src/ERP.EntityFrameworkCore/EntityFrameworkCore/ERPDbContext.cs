@@ -10,6 +10,7 @@ using ERP.MultiTenancy;
 using ERP.MultiTenancy.Accounting;
 using ERP.MultiTenancy.Payments;
 using ERP.Storage;
+using ERP.Configurations;
 
 namespace ERP.EntityFrameworkCore
 {
@@ -73,7 +74,7 @@ namespace ERP.EntityFrameworkCore
                 b.HasIndex(e => new { e.Status, e.CreationTime });
                 b.HasIndex(e => new { PaymentId = e.ExternalPaymentId, e.Gateway });
             });
-
+            UserConfig.Configure(modelBuilder.Entity<User>());
             modelBuilder.ConfigurePersistedGrantEntity();
         }
     }

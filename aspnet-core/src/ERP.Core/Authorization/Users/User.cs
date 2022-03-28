@@ -24,6 +24,8 @@ namespace ERP.Authorization.Users
         public List<UserOrganizationUnit> OrganizationUnits { get; set; }
 
         //Can add application specific user properties here
+        public DateTime DateOfBirth { get; set; }
+        public string Address { get; set; }
 
         public User()
         {
