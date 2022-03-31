@@ -1,16 +1,15 @@
-﻿import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef} from '@angular/core';
+﻿import { Component, Injector, Output, EventEmitter, OnInit, ElementRef, ViewChild} from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 import { finalize } from 'rxjs/operators';
 import { ProductsServiceProxy, CreateOrEditProductDto, CreateOrEditProductImageDto, BrandsServiceProxy, GetBrandForViewDto, Brand, Category, CategoriesServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import * as moment from 'moment';
-
-import { ModeImage } from '@app/shared/common/newUploadImage/modeImage';
-import { ImageProduct } from '@app/shared/common/newUploadImage/imageProduct';
-import { UploadSingleImageComponent } from '@app/shared/common/uploadSingleImage/uploadSingleImage.component';
-import { NewUploadImageComponent } from '@app/shared/common/newUploadImage/newUploadImage.component';
 import { AppConsts } from '@shared/AppConsts';
 import { HttpResponse, HttpClient } from '@angular/common/http'
+import { ModeImage } from '@app/main/newUploadImage/modeImage';
+import { ImageProduct } from '@app/main/newUploadImage/imageProduct';
+import { UploadSingleImageComponent } from '@app/main/uploadSingleImage/uploadSingleImage.component';
+import { NewUploadImageComponent } from '@app/main/newUploadImage/newUploadImage.component';
 
 
 @Component({
@@ -21,7 +20,7 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
    
     @ViewChild('createOrEditModal', { static: true }) modal: ModalDirective;
     @ViewChild('singleUploadImage', { static: true }) singleUploadImage: UploadSingleImageComponent
-	@ViewChild('newUploadImage', { static: true }) newUploadImage: NewUploadImageComponent
+	@ViewChild('newUploadImageComponent', { static: true }) newUploadImageComponent: NewUploadImageComponent
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 
@@ -125,6 +124,9 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
     }
     
      ngOnInit(): void {
+        console.log("newUploadImage",this.newUploadImageComponent)
+        console.log("singleUploadImage",this.singleUploadImage)
+        console.log("modal",this.modal)
 		this.modeImage = ModeImage.AddNew
         this._brandsServiceProxy.getAllForProduct().subscribe(result => {
             this.listBrand = result
@@ -144,7 +146,7 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
 		}
 	}
     uploadFileWhenEdit(files: FileList) {
-		this.newUploadImage.uploadImageWhenEdit(files, this.urlUploadAndCreate, this.newProductId.toString()).subscribe((result) => {
+		this.newUploadImageComponent.uploadImageWhenEdit(files, this.urlUploadAndCreate, this.newProductId.toString()).subscribe((result) => {
 			if (result instanceof HttpResponse) {
 				if (result.status == 200) {
 					let srcImageUploaded = (result.body as any).result

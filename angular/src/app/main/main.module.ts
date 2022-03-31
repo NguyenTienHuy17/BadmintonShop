@@ -69,6 +69,12 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BsDatepickerModule, BsDatepickerConfig, BsDaterangepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { NgxBootstrapDatePickerConfigService } from 'assets/ngx-bootstrap/ngx-bootstrap-datepicker-config.service';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { NewUploadImageComponent } from './newUploadImage/newUploadImage.component';
+import { ShowImageModalComponent } from './newUploadImage/showImageModal/showImageModal.component';
+import { DragDropDirective } from './newUploadImage/drag-and-drop.directive';
+import { UploadSingleImageComponent } from './uploadSingleImage/uploadSingleImage.component';
+import { NewUploadImageService } from './newUploadImage/newUploadImage.service';
+import { UploadSingleImageService } from './uploadSingleImage/uploadSingleImage.service';
 
 NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
@@ -100,19 +106,19 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
 		ViewReturnProdModalComponent,
 		CreateOrEditReturnProdModalComponent,
-    ReturnProdOrderLookupTableModalComponent,
+    	ReturnProdOrderLookupTableModalComponent,
 		OrderItemsComponent,
 
 		ViewOrderItemModalComponent,
 		CreateOrEditOrderItemModalComponent,
-    OrderItemProductLookupTableModalComponent,
-    OrderItemOrderLookupTableModalComponent,
+		OrderItemProductLookupTableModalComponent,
+		OrderItemOrderLookupTableModalComponent,
 		OrdersComponent,
 
 		ViewOrderModalComponent,
 		CreateOrEditOrderModalComponent,
-    OrderStatusLookupTableModalComponent,
-    OrderDiscountLookupTableModalComponent,
+		OrderStatusLookupTableModalComponent,
+		OrderDiscountLookupTableModalComponent,
 		StatusesComponent,
 
 		ViewStatusModalComponent,
@@ -121,8 +127,8 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
 		ViewProductImageModalComponent,
 		CreateOrEditProductImageModalComponent,
-    ProductImageProductLookupTableModalComponent,
-    ProductImageImageLookupTableModalComponent,
+		ProductImageProductLookupTableModalComponent,
+		ProductImageImageLookupTableModalComponent,
 		ProductsComponent,
 
 		ViewProductModalComponent,
@@ -131,7 +137,7 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
 		ViewCategoryModalComponent,
 		CreateOrEditCategoryModalComponent,
-    CategoryImageLookupTableModalComponent,
+    	CategoryImageLookupTableModalComponent,
 		BrandsComponent,
 
 		ViewBrandModalComponent,
@@ -148,9 +154,15 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
 		ViewBookingModalComponent,
 		CreateOrEditBookingModalComponent,
-        DashboardComponent
+        DashboardComponent,
+		NewUploadImageComponent,
+        ShowImageModalComponent,
+        DragDropDirective,
+        UploadSingleImageComponent,
     ],
     providers: [
+		NewUploadImageService,
+		UploadSingleImageService,
         { provide: BsDatepickerConfig, useFactory: NgxBootstrapDatePickerConfigService.getDatepickerConfig },
         { provide: BsDaterangepickerConfig, useFactory: NgxBootstrapDatePickerConfigService.getDaterangepickerConfig },
         { provide: BsLocaleService, useFactory: NgxBootstrapDatePickerConfigService.getDatepickerLocale }

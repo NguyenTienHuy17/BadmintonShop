@@ -18,15 +18,9 @@ import { DateRangePickerInitialValueSetterDirective } from './timing/date-range-
 import { DatePickerInitialValueSetterDirective } from './timing/date-picker-initial-value.directive';
 import { DateTimeService } from './timing/date-time.service';
 import { TimeZoneComboComponent } from './timing/timezone-combo.component';
-import { NewUploadImageComponent } from './newUploadImage/newUploadImage.component';
-import { ShowImageModalComponent } from './newUploadImage/showImageModal/showImageModal.component';
-import { DragDropDirective } from './newUploadImage/drag-and-drop.directive';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgxDropzoneModule } from 'ngx-dropzone';
-import { UploadSingleImageComponent } from './uploadSingleImage/uploadSingleImage.component';
 import { SafePipe } from './pipes/safe.pipe';
-import { NewUploadImageService } from './newUploadImage/newUploadImage.service';
-import { UploadSingleImageService } from './uploadSingleImage/uploadSingleImage.service';
 
 @NgModule({
     imports: [
@@ -49,10 +43,6 @@ import { UploadSingleImageService } from './uploadSingleImage/uploadSingleImage.
         EntityChangeDetailModalComponent,
         DateRangePickerInitialValueSetterDirective,
         DatePickerInitialValueSetterDirective,
-        NewUploadImageComponent,
-        ShowImageModalComponent,
-        DragDropDirective,
-        UploadSingleImageComponent,
         SafePipe
     ],
     exports: [
@@ -62,15 +52,13 @@ import { UploadSingleImageService } from './uploadSingleImage/uploadSingleImage.
         EntityChangeDetailModalComponent,
         DateRangePickerInitialValueSetterDirective,
         DatePickerInitialValueSetterDirective,
-        NewUploadImageComponent,
         SafePipe,
+		DragDropModule,
     ],
     providers: [
         DateTimeService,
         AppLocalizationService,
         AppNavigationService,
-		NewUploadImageService,
-		UploadSingleImageService,
     ]
 })
 export class AppCommonModule {
