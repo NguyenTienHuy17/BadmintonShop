@@ -137,20 +137,20 @@
                             <ng-template pTemplate="header">
                                 <tr>
                                     <th style="width: 130px" [hidden]="!isGrantedAny('Pages.Products.Edit', 'Pages.Products.Delete')">{{l('Actions')}}</th>
-                                    <th style="width: 150px" pSortableColumn="imageFk.name">
-                                        {{l('Name')}}
+                                    <!-- <th style="width: 150px" pSortableColumn="imageFk.name">
+                                        {{l('ImageName')}}
                                         <p-sortIcon field="imageName"></p-sortIcon>
-                                    </th>
+                                    </th> -->
                                     <th style="width: 150px" pSortableColumn="brandFk.name">
-                                        {{l('Name')}}
+                                        {{l('BrandName')}}
                                         <p-sortIcon field="brandName"></p-sortIcon>
                                     </th>
                                     <th style="width: 150px" pSortableColumn="categoryFk.name">
-                                        {{l('Name')}}
+                                        {{l('CategoryName')}}
                                         <p-sortIcon field="categoryName"></p-sortIcon>
                                     </th>
                                     <th style="width: 150px" pSortableColumn="name">
-                                        {{l('Name')}}
+                                        {{l('ProductName')}}
                                         <p-sortIcon field="product.name"></p-sortIcon>
                                     </th>
                                     <th style="width: 150px" pSortableColumn="madeIn">
@@ -172,6 +172,12 @@
                                     <th style="width: 150px" pSortableColumn="description">
                                         {{l('Description')}}
                                         <p-sortIcon field="product.description"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px">
+                                        {{l('Colors')}}
+                                    </th>
+                                    <th style="width: 150px">
+                                        {{l('Size')}}
                                     </th>
                                     <th style="width: 150px" pSortableColumn="title">
                                         {{l('Title')}}
@@ -204,20 +210,20 @@
                                             </ul>
                                         </div>
                                     </td>
-                                    <td style="width:150px">
-												<span class="ui-column-title"> {{l('Name')}}</span>
+                                    <!-- <td style="width:150px">
+												<span class="ui-column-title"> {{l('ImageName')}}</span>
 												{{record.imageName}}
-											</td>
+											</td> -->
                                     <td style="width:150px">
-												<span class="ui-column-title"> {{l('Name')}}</span>
+												<span class="ui-column-title"> {{l('BrandName')}}</span>
 												{{record.brandName}}
 											</td>
                                     <td style="width:150px">
-												<span class="ui-column-title"> {{l('Name')}}</span>
+												<span class="ui-column-title"> {{l('CategoryName')}}</span>
 												{{record.categoryName}}
 											</td>
                                     <td style="width:150px">
-											<span class="ui-column-title"> {{l('Name')}}</span>
+											<span class="ui-column-title"> {{l('ProductName')}}</span>
 											{{record.product.name}}
 										</td>
                                     <td style="width:150px">
@@ -240,6 +246,14 @@
 											<span class="ui-column-title"> {{l('Description')}}</span>
 											{{record.product.description}}
 										</td>
+                                    <td style="width:150px">
+                                        <span class="ui-column-title"> {{l('Colors')}}</span>
+                                        {{record.product.color}}
+                                    </td>
+                                    <td style="width:150px">
+                                        <span class="ui-column-title"> {{l('Size')}}</span>
+                                        {{record.product.size}}
+                                    </td>
                                     <td style="width:150px">
 											<span class="ui-column-title"> {{l('Title')}}</span>
 											{{record.product.title}}

@@ -12,53 +12,30 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                 
-
-					<div class="form-group m-form__group">
-                        <label for="ImageName">{{l("Image")}}</label>
-                        <div class="input-group">
-                            <input class="form-control" id="ImageName" name="imageName" [(ngModel)]="imageName" type="text" disabled>     
-                            <div class="input-group-append">
-                                <button class="btn btn-primary blue" (click)="openSelectImageModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
-                            </div> <div class="input-group-prepend">
-                                <button class="btn btn-danger btn-icon" type="button" (click)="setImageIdNull()"><i class="fa fa-times"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <input class="form-control" name="product.imageId" [(ngModel)]="product.imageId" type="text"  hidden>
-		 
-					<div class="form-group m-form__group">
-                        <label for="BrandName">{{l("Brand")}}</label>
-                        <div class="input-group">
-                            <input class="form-control" id="BrandName" name="brandName" [(ngModel)]="brandName" type="text" disabled>     
-                            <div class="input-group-append">
-                                <button class="btn btn-primary blue" (click)="openSelectBrandModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
-                            </div> <div class="input-group-prepend">
-                                <button class="btn btn-danger btn-icon" type="button" (click)="setBrandIdNull()"><i class="fa fa-times"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <input class="form-control" name="product.brandId" [(ngModel)]="product.brandId" type="text"  hidden>
-		 
-					<div class="form-group m-form__group">
-                        <label for="CategoryName">{{l("Category")}}</label>
-                        <div class="input-group">
-                            <input class="form-control" id="CategoryName" name="categoryName" [(ngModel)]="categoryName" type="text" disabled>     
-                            <div class="input-group-append">
-                                <button class="btn btn-primary blue" (click)="openSelectCategoryModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
-                            </div> <div class="input-group-prepend">
-                                <button class="btn btn-danger btn-icon" type="button" (click)="setCategoryIdNull()"><i class="fa fa-times"></i></button>
-                            </div>
-                        </div>
-                    </div>
                     <input class="form-control" name="product.categoryId" [(ngModel)]="product.categoryId" type="text"  hidden>
 		 
+                                <div class="form-group">
+                                    <label for="Product_Name">{{l("Name")}} *</label>
+                                    <input type="text" #Product_Name="ngModel" id="Product_Name" class="form-control" [(ngModel)]="product.name" name="Name"   minlength="0"  maxlength="256"  required/>
+                                    <validation-messages [formCtrl]="Product_Name"></validation-messages>
+                                </div>
 
 								<div class="form-group">
-									<label for="Product_Name">{{l("Name")}} *</label>
-									<input type="text" #Product_Name="ngModel" id="Product_Name" class="form-control" [(ngModel)]="product.name" name="Name"   minlength="0"  maxlength="256"  required/>
-								    <validation-messages [formCtrl]="Product_Name"></validation-messages>
+									<label for="Product_Brand">{{l("Brand")}} *</label>
+									<select id="Brand" name="Brand" [(ngModel)]="product.brandId"  class="form-control">
+                                        <option value="">{{"Select" | localize}}</option>
+                                        <option *ngFor="let brand of listBrand" [value]="brand.id">{{brand.name}}</option>
+                                    </select>
 								</div>
+
+                                <div class="form-group">
+									<label for="Product_Category">{{l("Category")}} *</label>
+									<select id="Category" name="Category" [(ngModel)]="product.categoryId"  class="form-control">
+                                        <option value="">{{"Select" | localize}}</option>
+                                        <option *ngFor="let category of listCategory" [value]="category.id">{{category.name}}</option>
+                                    </select>
+								</div>
+
 					
 								<div class="form-group">
 									<label for="Product_MadeIn">{{l("MadeIn")}} *</label>
@@ -89,12 +66,28 @@
 									<input type="text" #Product_Description="ngModel" id="Product_Description" class="form-control" [(ngModel)]="product.description" name="Description"    />
 								    <validation-messages [formCtrl]="Product_Description"></validation-messages>
 								</div>
+
+                                <div class="form-group">
+									<label for="Product_Color">{{l("Colors")}}</label>
+									<input type="text" #Product_Color="ngModel" id="Product_Color" class="form-control" [(ngModel)]="product.color" name="Color"    />
+								    <validation-messages [formCtrl]="Product_Color"></validation-messages>
+								</div>
+
+                                <div class="form-group">
+									<label for="Product_Size">{{l("Size")}}</label>
+									<input type="text" #Product_Size="ngModel" id="Product_Size" class="form-control" [(ngModel)]="product.size" name="Description"    />
+								    <validation-messages [formCtrl]="Product_Size"></validation-messages>
+								</div>
 					
 								<div class="form-group">
 									<label for="Product_Title">{{l("Title")}}</label>
 									<input type="text" #Product_Title="ngModel" id="Product_Title" class="form-control" [(ngModel)]="product.title" name="Title"   minlength="0"  maxlength="128" />
 								    <validation-messages [formCtrl]="Product_Title"></validation-messages>
 								</div>
+
+                                <app-newUploadImage #newUploadImage [modeImage]="modeImage" [listUrlImage]="listUrlImage" (filesNeedUpload)="uploadFileWhenEdit($event)"
+												(changeMainImage)="changeMainImage($event)">
+											</app-newUploadImage>
 					
 
                 </div>
@@ -105,8 +98,5 @@
             </form>
         </div>
     </div>
-<productImageLookupTableModal #productImageLookupTableModal (modalSave)="getNewImageId()"></productImageLookupTableModal>
-		 <productBrandLookupTableModal #productBrandLookupTableModal (modalSave)="getNewBrandId()"></productBrandLookupTableModal>
-		 <productCategoryLookupTableModal #productCategoryLookupTableModal (modalSave)="getNewCategoryId()"></productCategoryLookupTableModal>
 		 
 </div>

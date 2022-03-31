@@ -30,14 +30,11 @@ namespace ERP.Entity
         public virtual int InStock { get; set; }
 
         public virtual string Description { get; set; }
+        public virtual string Color { get; set; }
+        public virtual int? Size { get; set; }
 
         [StringLength(ProductConsts.MaxTitleLength, MinimumLength = ProductConsts.MinTitleLength)]
         public virtual string Title { get; set; }
-
-        public virtual long? ImageId { get; set; }
-
-        [ForeignKey("ImageId")]
-        public Image ImageFk { get; set; }
 
         public virtual long? BrandId { get; set; }
 

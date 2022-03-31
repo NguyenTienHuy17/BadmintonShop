@@ -1,0 +1,249 @@
+.file-upload:not(.noimage) {
+	width: 20%;
+	height: fit-content;
+	box-sizing: border-box;
+	float: left;
+	margin: 0 0 1rem;
+	padding-left: 1rem;
+}
+.file-upload.noimage {
+	display: flex;
+	align-items: center;
+	min-height: 300px;
+	cursor: pointer;
+}
+.file-upload {
+	.uploadImage.noimage {
+		width: 150px;
+		height: 150px;
+		margin: 0 auto;
+	}
+}
+.file-upload {
+	.uploadImage:not(.noimage) {
+		padding: 0 0 100%;
+		flex-shrink: 0;
+	}
+	.uploadImage {
+		background-color: #eeeeee;
+		cursor: pointer;
+		// border-radius: 8px;
+		position: relative;
+
+		.fileupload-text {
+			height: 100%;
+			position: absolute;
+			max-width: 100%;
+			max-height: 100%;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			svg {
+				height: 70px;
+				width: 100%;
+				padding: 10px 0;
+			}
+			div {
+				justify-content: center;
+				display: flex;
+				align-items: center;
+			}
+		}
+	}
+}
+
+.image-list {
+	border: solid 1px #e5eaee;
+	border-radius: 4px;
+	.image-row {
+		margin: 1rem 1rem 0 0;
+		display: block;
+		border-radius: 4px;
+		overflow: hidden;
+	}
+	.image-row.noimage {
+		margin: 1rem;
+	}
+}
+
+.image-box {
+	color: rgba(0, 0, 0, 0.87);
+	cursor: move;
+	font-size: 14px;
+	margin: 0 0 1rem;
+	padding-left: 1rem;
+	.image-box-child {
+		width: 100%;
+		align-items: center;
+		display: flex;
+		background: #edeff7;
+		flex-shrink: 0;
+		padding: 0 0 100%;
+		position: relative;
+		box-sizing: content-box;
+	}
+	.overlay a i {
+		font-size: 1.2rem;
+	}
+}
+.image-box:hover .overlay {
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	position: absolute;
+	display: inline-block;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	top: 0;
+
+	img {
+		vertical-align: top;
+	}
+}
+.image-box-main {
+	margin-top: 0;
+	width: 40%;
+	float: left;
+	// .image-box-child {
+	// 	margin-left: 1rem;
+	// }
+	.overlay a i {
+		font-size: 1.5rem;
+	}
+}
+.image-box-second {
+	width: 20%;
+	height: fit-content;
+	box-sizing: border-box;
+	float: left;
+}
+.image-box-nomargin {
+	margin-top: 0;
+}
+@media (max-width: 768px) {
+	.image-box-main {
+		width: 50%;
+		.overlay a i {
+			font-size: 1rem;
+		}
+	}
+	.image-box-second {
+		width: 25%;
+	}
+	.file-upload:not(.noimage) {
+		width: 25%;
+	}
+	svg {
+		height: 50px !important;
+		padding: 2px 0;
+	}
+}
+@media (min-width: 769px) and (max-width: 992px) {
+	.image-box-main {
+		width: 25%;
+		.overlay a i {
+			font-size: 1rem;
+		}
+	}
+	.image-box-second {
+		width: 12.5%;
+	}
+	.file-upload:not(.noimage) {
+		width: 12.5%;
+	}
+}
+@media (min-width: 1025px) and (max-width: 1600px) {
+	.image-box-main {
+		width: 33.3333%;
+		.overlay a i {
+			font-size: 1rem;
+		}
+	}
+	.image-box-second {
+		width: 16.6666%;
+	}
+	.file-upload:not(.noimage) {
+		width: 16.6666%;
+	}
+}
+@media (min-width: 1601px) {
+	.image-box-main {
+		width: 25%;
+		.overlay a i {
+			font-size: 1rem;
+		}
+	}
+	.image-box-second {
+		width: 12.5%;
+	}
+	.file-upload:not(.noimage) {
+		width: 12.5%;
+	}
+}
+.cdk-drag-preview {
+	box-sizing: border-box;
+	border-radius: 4px;
+	box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+	opacity: 0;
+}
+
+.cdk-drag-animating {
+	transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.image-box:last-child {
+	border: none;
+}
+
+.image-list.cdk-drop-list-dragging .image-box:not(.cdk-drag-placeholder) {
+	transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.overlay {
+	display: none;
+}
+
+svg {
+	fill: #fff;
+}
+
+.product-image {
+	max-width: 100%;
+	max-height: 100%;
+	display: block;
+	margin: auto;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+}
+.product-main-image {
+	max-width: 100%;
+	max-height: 100%;
+	display: block;
+	margin: auto;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+}
+
+.center {
+	top: 50%;
+	left: 50%;
+	position: absolute;
+	transform: translate(-50%, -50%);
+}

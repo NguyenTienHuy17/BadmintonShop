@@ -15,17 +15,17 @@ namespace ERP.Entity
 
         Task<GetProductForEditOutput> GetProductForEdit(EntityDto<long> input);
 
-        Task CreateOrEdit(CreateOrEditProductDto input);
+        Task<long> CreateOrEdit(CreateOrEditProductDto input);
 
         Task Delete(EntityDto<long> input);
 
         Task<FileDto> GetProductsToExcel(GetAllProductsForExcelInput input);
 
-        Task<PagedResultDto<ProductImageLookupTableDto>> GetAllImageForLookupTable(GetAllForLookupTableInput input);
+        //Task<PagedResultDto<ProductImageLookupTableDto>> GetAllImageForLookupTable(GetAllForLookupTableInput input);
 
-        Task<PagedResultDto<ProductBrandLookupTableDto>> GetAllBrandForLookupTable(GetAllForLookupTableInput input);
+        //Task<PagedResultDto<ProductBrandLookupTableDto>> GetAllBrandForLookupTable(GetAllForLookupTableInput input);
 
-        Task<PagedResultDto<ProductCategoryLookupTableDto>> GetAllCategoryForLookupTable(GetAllForLookupTableInput input);
+        //Task<PagedResultDto<ProductCategoryLookupTableDto>> GetAllCategoryForLookupTable(GetAllForLookupTableInput input);
 
     }
 }

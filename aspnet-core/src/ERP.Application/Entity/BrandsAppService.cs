@@ -25,13 +25,11 @@ namespace ERP.Entity
     {
         private readonly IRepository<Brand, long> _brandRepository;
         private readonly IBrandsExcelExporter _brandsExcelExporter;
-        private readonly IRepository<Image, long> _lookup_imageRepository;
 
-        public BrandsAppService(IRepository<Brand, long> brandRepository, IBrandsExcelExporter brandsExcelExporter, IRepository<Image, long> lookup_imageRepository)
+        public BrandsAppService(IRepository<Brand, long> brandRepository, IBrandsExcelExporter brandsExcelExporter)
         {
             _brandRepository = brandRepository;
             _brandsExcelExporter = brandsExcelExporter;
-            _lookup_imageRepository = lookup_imageRepository;
 
         }
 
@@ -39,21 +37,16 @@ namespace ERP.Entity
         {
 
             var filteredBrands = _brandRepository.GetAll()
-                        .Include(e => e.ImageFk)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.Country.Contains(input.Filter) || e.Description.Contains(input.Filter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name == input.NameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.CountryFilter), e => e.Country == input.CountryFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionFilter), e => e.Description == input.DescriptionFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.ImageNameFilter), e => e.ImageFk != null && e.ImageFk.Name == input.ImageNameFilter);
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionFilter), e => e.Description == input.DescriptionFilter);
 
             var pagedAndFilteredBrands = filteredBrands
                 .OrderBy(input.Sorting ?? "id asc")
                 .PageBy(input);
 
             var brands = from o in pagedAndFilteredBrands
-                         join o1 in _lookup_imageRepository.GetAll() on o.ImageId equals o1.Id into j1
-                         from s1 in j1.DefaultIfEmpty()
-
                          select new
                          {
 
@@ -61,7 +54,6 @@ namespace ERP.Entity
                              o.Country,
                              o.Description,
                              Id = o.Id,
-                             ImageName = s1 == null || s1.Name == null ? "" : s1.Name.ToString()
                          };
 
             var totalCount = await filteredBrands.CountAsync();
@@ -81,7 +73,6 @@ namespace ERP.Entity
                         Description = o.Description,
                         Id = o.Id,
                     },
-                    ImageName = o.ImageName
                 };
 
                 results.Add(res);
@@ -100,12 +91,6 @@ namespace ERP.Entity
 
             var output = new GetBrandForViewDto { Brand = ObjectMapper.Map<BrandDto>(brand) };
 
-            if (output.Brand.ImageId != null)
-            {
-                var _lookupImage = await _lookup_imageRepository.FirstOrDefaultAsync((long)output.Brand.ImageId);
-                output.ImageName = _lookupImage?.Name?.ToString();
-            }
-
             return output;
         }
 
@@ -115,12 +100,6 @@ namespace ERP.Entity
             var brand = await _brandRepository.FirstOrDefaultAsync(input.Id);
 
             var output = new GetBrandForEditOutput { Brand = ObjectMapper.Map<CreateOrEditBrandDto>(brand) };
-
-            if (output.Brand.ImageId != null)
-            {
-                var _lookupImage = await _lookup_imageRepository.FirstOrDefaultAsync((long)output.Brand.ImageId);
-                output.ImageName = _lookupImage?.Name?.ToString();
-            }
 
             return output;
         }
@@ -169,16 +148,12 @@ namespace ERP.Entity
         {
 
             var filteredBrands = _brandRepository.GetAll()
-                        .Include(e => e.ImageFk)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.Country.Contains(input.Filter) || e.Description.Contains(input.Filter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name == input.NameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.CountryFilter), e => e.Country == input.CountryFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionFilter), e => e.Description == input.DescriptionFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.ImageNameFilter), e => e.ImageFk != null && e.ImageFk.Name == input.ImageNameFilter);
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionFilter), e => e.Description == input.DescriptionFilter);
 
             var query = (from o in filteredBrands
-                         join o1 in _lookup_imageRepository.GetAll() on o.ImageId equals o1.Id into j1
-                         from s1 in j1.DefaultIfEmpty()
 
                          select new GetBrandForViewDto()
                          {
@@ -189,7 +164,6 @@ namespace ERP.Entity
                                  Description = o.Description,
                                  Id = o.Id
                              },
-                             ImageName = s1 == null || s1.Name == null ? "" : s1.Name.ToString()
                          });
 
             var brandListDtos = await query.ToListAsync();
@@ -197,34 +171,16 @@ namespace ERP.Entity
             return _brandsExcelExporter.ExportToFile(brandListDtos);
         }
 
-        [AbpAuthorize(AppPermissions.Pages_Brands)]
-        public async Task<PagedResultDto<BrandImageLookupTableDto>> GetAllImageForLookupTable(GetAllForLookupTableInput input)
+        public async Task<List<Brand>> GetAllForProduct()
         {
-            var query = _lookup_imageRepository.GetAll().WhereIf(
-                   !string.IsNullOrWhiteSpace(input.Filter),
-                  e => e.Name != null && e.Name.Contains(input.Filter)
-               );
-
-            var totalCount = await query.CountAsync();
-
-            var imageList = await query
-                .PageBy(input)
-                .ToListAsync();
-
-            var lookupTableDtoList = new List<BrandImageLookupTableDto>();
-            foreach (var image in imageList)
+            var listBrands = _brandRepository.GetAll();
+            var dbList = await listBrands.ToListAsync();
+            var results = new List<Brand>();
+            foreach (var o in dbList)
             {
-                lookupTableDtoList.Add(new BrandImageLookupTableDto
-                {
-                    Id = image.Id,
-                    DisplayName = image.Name?.ToString()
-                });
+                results.Add(o);
             }
-
-            return new PagedResultDto<BrandImageLookupTableDto>(
-                totalCount,
-                lookupTableDtoList
-            );
+            return results;
         }
 
     }

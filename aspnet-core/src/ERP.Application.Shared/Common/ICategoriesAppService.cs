@@ -21,7 +21,6 @@ namespace ERP.Common
 
         Task<FileDto> GetCategoriesToExcel(GetAllCategoriesForExcelInput input);
 
-        Task<PagedResultDto<CategoryImageLookupTableDto>> GetAllImageForLookupTable(GetAllForLookupTableInput input);
 
     }
 }

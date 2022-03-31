@@ -27,14 +27,12 @@ namespace ERP.Common
         private readonly IRepository<ProductImage, long> _productImageRepository;
         private readonly IProductImagesExcelExporter _productImagesExcelExporter;
         private readonly IRepository<Product, long> _lookup_productRepository;
-        private readonly IRepository<Image, long> _lookup_imageRepository;
 
-        public ProductImagesAppService(IRepository<ProductImage, long> productImageRepository, IProductImagesExcelExporter productImagesExcelExporter, IRepository<Product, long> lookup_productRepository, IRepository<Image, long> lookup_imageRepository)
+        public ProductImagesAppService(IRepository<ProductImage, long> productImageRepository, IProductImagesExcelExporter productImagesExcelExporter, IRepository<Product, long> lookup_productRepository)
         {
             _productImageRepository = productImageRepository;
             _productImagesExcelExporter = productImagesExcelExporter;
             _lookup_productRepository = lookup_productRepository;
-            _lookup_imageRepository = lookup_imageRepository;
 
         }
 
@@ -43,10 +41,8 @@ namespace ERP.Common
 
             var filteredProductImages = _productImageRepository.GetAll()
                         .Include(e => e.ProductFk)
-                        .Include(e => e.ImageFk)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.ProductNameFilter), e => e.ProductFk != null && e.ProductFk.Name == input.ProductNameFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.ImageNameFilter), e => e.ImageFk != null && e.ImageFk.Name == input.ImageNameFilter);
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.ProductNameFilter), e => e.ProductFk != null && e.ProductFk.Name == input.ProductNameFilter);
 
             var pagedAndFilteredProductImages = filteredProductImages
                 .OrderBy(input.Sorting ?? "id asc")
@@ -56,15 +52,11 @@ namespace ERP.Common
                                 join o1 in _lookup_productRepository.GetAll() on o.ProductId equals o1.Id into j1
                                 from s1 in j1.DefaultIfEmpty()
 
-                                join o2 in _lookup_imageRepository.GetAll() on o.ImageId equals o2.Id into j2
-                                from s2 in j2.DefaultIfEmpty()
-
                                 select new
                                 {
 
                                     Id = o.Id,
                                     ProductName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
-                                    ImageName = s2 == null || s2.Name == null ? "" : s2.Name.ToString()
                                 };
 
             var totalCount = await filteredProductImages.CountAsync();
@@ -82,7 +74,6 @@ namespace ERP.Common
                         Id = o.Id,
                     },
                     ProductName = o.ProductName,
-                    ImageName = o.ImageName
                 };
 
                 results.Add(res);
@@ -107,12 +98,6 @@ namespace ERP.Common
                 output.ProductName = _lookupProduct?.Name?.ToString();
             }
 
-            if (output.ProductImage.ImageId != null)
-            {
-                var _lookupImage = await _lookup_imageRepository.FirstOrDefaultAsync((long)output.ProductImage.ImageId);
-                output.ImageName = _lookupImage?.Name?.ToString();
-            }
-
             return output;
         }
 
@@ -128,13 +113,6 @@ namespace ERP.Common
                 var _lookupProduct = await _lookup_productRepository.FirstOrDefaultAsync((long)output.ProductImage.ProductId);
                 output.ProductName = _lookupProduct?.Name?.ToString();
             }
-
-            if (output.ProductImage.ImageId != null)
-            {
-                var _lookupImage = await _lookup_imageRepository.FirstOrDefaultAsync((long)output.ProductImage.ImageId);
-                output.ImageName = _lookupImage?.Name?.ToString();
-            }
-
             return output;
         }
 
@@ -183,17 +161,12 @@ namespace ERP.Common
 
             var filteredProductImages = _productImageRepository.GetAll()
                         .Include(e => e.ProductFk)
-                        .Include(e => e.ImageFk)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.ProductNameFilter), e => e.ProductFk != null && e.ProductFk.Name == input.ProductNameFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.ImageNameFilter), e => e.ImageFk != null && e.ImageFk.Name == input.ImageNameFilter);
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.ProductNameFilter), e => e.ProductFk != null && e.ProductFk.Name == input.ProductNameFilter);
 
             var query = (from o in filteredProductImages
                          join o1 in _lookup_productRepository.GetAll() on o.ProductId equals o1.Id into j1
                          from s1 in j1.DefaultIfEmpty()
-
-                         join o2 in _lookup_imageRepository.GetAll() on o.ImageId equals o2.Id into j2
-                         from s2 in j2.DefaultIfEmpty()
 
                          select new GetProductImageForViewDto()
                          {
@@ -202,7 +175,6 @@ namespace ERP.Common
                                  Id = o.Id
                              },
                              ProductName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
-                             ImageName = s2 == null || s2.Name == null ? "" : s2.Name.ToString()
                          });
 
             var productImageListDtos = await query.ToListAsync();
@@ -235,36 +207,6 @@ namespace ERP.Common
             }
 
             return new PagedResultDto<ProductImageProductLookupTableDto>(
-                totalCount,
-                lookupTableDtoList
-            );
-        }
-
-        [AbpAuthorize(AppPermissions.Pages_ProductImages)]
-        public async Task<PagedResultDto<ProductImageImageLookupTableDto>> GetAllImageForLookupTable(GetAllForLookupTableInput input)
-        {
-            var query = _lookup_imageRepository.GetAll().WhereIf(
-                   !string.IsNullOrWhiteSpace(input.Filter),
-                  e => e.Name != null && e.Name.Contains(input.Filter)
-               );
-
-            var totalCount = await query.CountAsync();
-
-            var imageList = await query
-                .PageBy(input)
-                .ToListAsync();
-
-            var lookupTableDtoList = new List<ProductImageImageLookupTableDto>();
-            foreach (var image in imageList)
-            {
-                lookupTableDtoList.Add(new ProductImageImageLookupTableDto
-                {
-                    Id = image.Id,
-                    DisplayName = image.Name?.ToString()
-                });
-            }
-
-            return new PagedResultDto<ProductImageImageLookupTableDto>(
                 totalCount,
                 lookupTableDtoList
             );

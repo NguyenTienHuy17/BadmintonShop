@@ -25,13 +25,11 @@ namespace ERP.Common
     {
         private readonly IRepository<Category, long> _categoryRepository;
         private readonly ICategoriesExcelExporter _categoriesExcelExporter;
-        private readonly IRepository<Image, long> _lookup_imageRepository;
 
-        public CategoriesAppService(IRepository<Category, long> categoryRepository, ICategoriesExcelExporter categoriesExcelExporter, IRepository<Image, long> lookup_imageRepository)
+        public CategoriesAppService(IRepository<Category, long> categoryRepository, ICategoriesExcelExporter categoriesExcelExporter)
         {
             _categoryRepository = categoryRepository;
             _categoriesExcelExporter = categoriesExcelExporter;
-            _lookup_imageRepository = lookup_imageRepository;
 
         }
 
@@ -39,19 +37,15 @@ namespace ERP.Common
         {
 
             var filteredCategories = _categoryRepository.GetAll()
-                        .Include(e => e.ImageFk)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.Description.Contains(input.Filter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name == input.NameFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionFilter), e => e.Description == input.DescriptionFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.ImageNameFilter), e => e.ImageFk != null && e.ImageFk.Name == input.ImageNameFilter);
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionFilter), e => e.Description == input.DescriptionFilter);
 
             var pagedAndFilteredCategories = filteredCategories
                 .OrderBy(input.Sorting ?? "id asc")
                 .PageBy(input);
 
             var categories = from o in pagedAndFilteredCategories
-                             join o1 in _lookup_imageRepository.GetAll() on o.ImageId equals o1.Id into j1
-                             from s1 in j1.DefaultIfEmpty()
 
                              select new
                              {
@@ -59,7 +53,6 @@ namespace ERP.Common
                                  o.Name,
                                  o.Description,
                                  Id = o.Id,
-                                 ImageName = s1 == null || s1.Name == null ? "" : s1.Name.ToString()
                              };
 
             var totalCount = await filteredCategories.CountAsync();
@@ -78,7 +71,6 @@ namespace ERP.Common
                         Description = o.Description,
                         Id = o.Id,
                     },
-                    ImageName = o.ImageName
                 };
 
                 results.Add(res);
@@ -97,12 +89,6 @@ namespace ERP.Common
 
             var output = new GetCategoryForViewDto { Category = ObjectMapper.Map<CategoryDto>(category) };
 
-            if (output.Category.ImageId != null)
-            {
-                var _lookupImage = await _lookup_imageRepository.FirstOrDefaultAsync((long)output.Category.ImageId);
-                output.ImageName = _lookupImage?.Name?.ToString();
-            }
-
             return output;
         }
 
@@ -112,12 +98,6 @@ namespace ERP.Common
             var category = await _categoryRepository.FirstOrDefaultAsync(input.Id);
 
             var output = new GetCategoryForEditOutput { Category = ObjectMapper.Map<CreateOrEditCategoryDto>(category) };
-
-            if (output.Category.ImageId != null)
-            {
-                var _lookupImage = await _lookup_imageRepository.FirstOrDefaultAsync((long)output.Category.ImageId);
-                output.ImageName = _lookupImage?.Name?.ToString();
-            }
 
             return output;
         }
@@ -166,15 +146,11 @@ namespace ERP.Common
         {
 
             var filteredCategories = _categoryRepository.GetAll()
-                        .Include(e => e.ImageFk)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.Description.Contains(input.Filter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name == input.NameFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionFilter), e => e.Description == input.DescriptionFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.ImageNameFilter), e => e.ImageFk != null && e.ImageFk.Name == input.ImageNameFilter);
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionFilter), e => e.Description == input.DescriptionFilter);
 
             var query = (from o in filteredCategories
-                         join o1 in _lookup_imageRepository.GetAll() on o.ImageId equals o1.Id into j1
-                         from s1 in j1.DefaultIfEmpty()
 
                          select new GetCategoryForViewDto()
                          {
@@ -184,7 +160,6 @@ namespace ERP.Common
                                  Description = o.Description,
                                  Id = o.Id
                              },
-                             ImageName = s1 == null || s1.Name == null ? "" : s1.Name.ToString()
                          });
 
             var categoryListDtos = await query.ToListAsync();
@@ -192,34 +167,20 @@ namespace ERP.Common
             return _categoriesExcelExporter.ExportToFile(categoryListDtos);
         }
 
-        [AbpAuthorize(AppPermissions.Pages_Categories)]
-        public async Task<PagedResultDto<CategoryImageLookupTableDto>> GetAllImageForLookupTable(GetAllForLookupTableInput input)
+        public async Task<List<Category>> GetAllForProduct()
         {
-            var query = _lookup_imageRepository.GetAll().WhereIf(
-                   !string.IsNullOrWhiteSpace(input.Filter),
-                  e => e.Name != null && e.Name.Contains(input.Filter)
-               );
 
-            var totalCount = await query.CountAsync();
+            var listCategories = _categoryRepository.GetAll();
+            var dbList = await listCategories.ToListAsync();
+            var results = new List<Category>();
 
-            var imageList = await query
-                .PageBy(input)
-                .ToListAsync();
-
-            var lookupTableDtoList = new List<CategoryImageLookupTableDto>();
-            foreach (var image in imageList)
+            foreach (var o in dbList)
             {
-                lookupTableDtoList.Add(new CategoryImageLookupTableDto
-                {
-                    Id = image.Id,
-                    DisplayName = image.Name?.ToString()
-                });
+                results.Add(o);
             }
 
-            return new PagedResultDto<CategoryImageLookupTableDto>(
-                totalCount,
-                lookupTableDtoList
-            );
+            return results;
+
         }
 
     }

@@ -29,21 +29,13 @@ export class AppNavigationService {
                 
                 new AppMenuItem('Discounts', 'Pages.Discounts', 'flaticon-more', '/app/main/common/discounts'),
                 
-                new AppMenuItem('Images', 'Pages.Images', 'flaticon-more', '/app/main/common/images'),
                 
                 new AppMenuItem('Brands', 'Pages.Brands', 'flaticon-more', '/app/main/entity/brands'),
                 
                 new AppMenuItem('Categories', 'Pages.Categories', 'flaticon-more', '/app/main/common/categories'),
                 
-                new AppMenuItem('Colors', 'Pages.Colors', 'flaticon-more', '/app/main/common/colors'),
-                
-                new AppMenuItem('Sizes', 'Pages.Sizes', 'flaticon-more', '/app/main/common/sizes'),
                 
                 new AppMenuItem('Products', 'Pages.Products', 'flaticon-more', '/app/main/entity/products'),
-                
-                new AppMenuItem('SizeItems', 'Pages.SizeItems', 'flaticon-more', '/app/main/common/sizeItems'),
-                
-                new AppMenuItem('ColorItems', 'Pages.ColorItems', 'flaticon-more', '/app/main/common/colorItems'),
                 
                 new AppMenuItem('ProductImages', 'Pages.ProductImages', 'flaticon-more', '/app/main/common/productImages'),
                 

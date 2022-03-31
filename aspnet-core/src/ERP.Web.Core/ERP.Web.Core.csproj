@@ -17,6 +17,7 @@
     <ProjectReference Include="..\ERP.EntityFrameworkCore\ERP.EntityFrameworkCore.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Abp" Version="4.6.0" />
     <PackageReference Include="Abp.AspNetCore.SignalR" Version="4.6.0" />
     <PackageReference Include="Abp.AspNetZeroCore.Web" Version="1.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="2.2.0" />

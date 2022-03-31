@@ -29,32 +29,9 @@ import { CreateOrEditProductImageModalComponent } from './common/productImages/c
 import { ProductImageProductLookupTableModalComponent } from './common/productImages/productImage-product-lookup-table-modal.component';
 import { ProductImageImageLookupTableModalComponent } from './common/productImages/productImage-image-lookup-table-modal.component';
 
-import { ColorItemsComponent } from './common/colorItems/colorItems.component';
-import { ViewColorItemModalComponent } from './common/colorItems/view-colorItem-modal.component';
-import { CreateOrEditColorItemModalComponent } from './common/colorItems/create-or-edit-colorItem-modal.component';
-import { ColorItemProductLookupTableModalComponent } from './common/colorItems/colorItem-product-lookup-table-modal.component';
-import { ColorItemColorLookupTableModalComponent } from './common/colorItems/colorItem-color-lookup-table-modal.component';
-
-import { SizeItemsComponent } from './common/sizeItems/sizeItems.component';
-import { ViewSizeItemModalComponent } from './common/sizeItems/view-sizeItem-modal.component';
-import { CreateOrEditSizeItemModalComponent } from './common/sizeItems/create-or-edit-sizeItem-modal.component';
-import { SizeItemProductLookupTableModalComponent } from './common/sizeItems/sizeItem-product-lookup-table-modal.component';
-import { SizeItemSizeLookupTableModalComponent } from './common/sizeItems/sizeItem-size-lookup-table-modal.component';
-
 import { ProductsComponent } from './entity/products/products.component';
 import { ViewProductModalComponent } from './entity/products/view-product-modal.component';
 import { CreateOrEditProductModalComponent } from './entity/products/create-or-edit-product-modal.component';
-import { ProductImageLookupTableModalComponent } from './entity/products/product-image-lookup-table-modal.component';
-import { ProductBrandLookupTableModalComponent } from './entity/products/product-brand-lookup-table-modal.component';
-import { ProductCategoryLookupTableModalComponent } from './entity/products/product-category-lookup-table-modal.component';
-
-import { SizesComponent } from './common/sizes/sizes.component';
-import { ViewSizeModalComponent } from './common/sizes/view-size-modal.component';
-import { CreateOrEditSizeModalComponent } from './common/sizes/create-or-edit-size-modal.component';
-
-import { ColorsComponent } from './common/colors/colors.component';
-import { ViewColorModalComponent } from './common/colors/view-color-modal.component';
-import { CreateOrEditColorModalComponent } from './common/colors/create-or-edit-color-modal.component';
 
 import { CategoriesComponent } from './common/categories/categories.component';
 import { ViewCategoryModalComponent } from './common/categories/view-category-modal.component';
@@ -64,11 +41,6 @@ import { CategoryImageLookupTableModalComponent } from './common/categories/cate
 import { BrandsComponent } from './entity/brands/brands.component';
 import { ViewBrandModalComponent } from './entity/brands/view-brand-modal.component';
 import { CreateOrEditBrandModalComponent } from './entity/brands/create-or-edit-brand-modal.component';
-import { BrandImageLookupTableModalComponent } from './entity/brands/brand-image-lookup-table-modal.component';
-
-import { ImagesComponent } from './common/images/images.component';
-import { ViewImageModalComponent } from './common/images/view-image-modal.component';
-import { CreateOrEditImageModalComponent } from './common/images/create-or-edit-image-modal.component';
 
 import { DiscountsComponent } from './common/discounts/discounts.component';
 import { ViewDiscountModalComponent } from './common/discounts/view-discount-modal.component';
@@ -106,8 +78,8 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 		AutoCompleteModule,
 		PaginatorModule,
 		EditorModule,
-		InputMaskModule,		TableModule,
-
+		InputMaskModule,		
+		TableModule,
         CommonModule,
         FormsModule,
         ModalModule,
@@ -151,33 +123,10 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 		CreateOrEditProductImageModalComponent,
     ProductImageProductLookupTableModalComponent,
     ProductImageImageLookupTableModalComponent,
-		ColorItemsComponent,
-
-		ViewColorItemModalComponent,
-		CreateOrEditColorItemModalComponent,
-    ColorItemProductLookupTableModalComponent,
-    ColorItemColorLookupTableModalComponent,
-		SizeItemsComponent,
-
-		ViewSizeItemModalComponent,
-		CreateOrEditSizeItemModalComponent,
-    SizeItemProductLookupTableModalComponent,
-    SizeItemSizeLookupTableModalComponent,
 		ProductsComponent,
 
 		ViewProductModalComponent,
 		CreateOrEditProductModalComponent,
-    ProductImageLookupTableModalComponent,
-    ProductBrandLookupTableModalComponent,
-    ProductCategoryLookupTableModalComponent,
-		SizesComponent,
-
-		ViewSizeModalComponent,
-		CreateOrEditSizeModalComponent,
-		ColorsComponent,
-
-		ViewColorModalComponent,
-		CreateOrEditColorModalComponent,
 		CategoriesComponent,
 
 		ViewCategoryModalComponent,
@@ -187,11 +136,6 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
 		ViewBrandModalComponent,
 		CreateOrEditBrandModalComponent,
-    BrandImageLookupTableModalComponent,
-		ImagesComponent,
-
-		ViewImageModalComponent,
-		CreateOrEditImageModalComponent,
 		DiscountsComponent,
 
 		ViewDiscountModalComponent,

@@ -18,10 +18,15 @@ namespace ERP.Common
         [ForeignKey("ProductId")]
         public Product ProductFk { get; set; }
 
-        public virtual long? ImageId { get; set; }
+        [Required]
+        [StringLength(ImageConsts.MaxNameLength, MinimumLength = ImageConsts.MinNameLength)]
+        public virtual string Name { get; set; }
 
-        [ForeignKey("ImageId")]
-        public Image ImageFk { get; set; }
+        [Required]
+        public virtual string Url { get; set; }
+
+        [StringLength(ImageConsts.MaxDescriptionLength, MinimumLength = ImageConsts.MinDescriptionLength)]
+        public virtual string Description { get; set; }
 
     }
 }

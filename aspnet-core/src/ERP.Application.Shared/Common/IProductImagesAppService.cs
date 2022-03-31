@@ -23,7 +23,5 @@ namespace ERP.Common
 
         Task<PagedResultDto<ProductImageProductLookupTableDto>> GetAllProductForLookupTable(GetAllForLookupTableInput input);
 
-        Task<PagedResultDto<ProductImageImageLookupTableDto>> GetAllImageForLookupTable(GetAllForLookupTableInput input);
-
     }
 }

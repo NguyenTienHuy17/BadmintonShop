@@ -9,7 +9,13 @@ namespace ERP.Common.Dtos
 
         public long? ProductId { get; set; }
 
-        public long? ImageId { get; set; }
+        public string Name { get; set; }
+
+        [Required]
+        public string Url { get; set; }
+
+        [StringLength(ImageConsts.MaxDescriptionLength, MinimumLength = ImageConsts.MinDescriptionLength)]
+        public string Description { get; set; }
 
     }
 }

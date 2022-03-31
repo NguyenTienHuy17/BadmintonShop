@@ -87,7 +87,6 @@ export class CreateOrEditProductImageModalComponent extends AppComponentBase imp
         this.productImageProductLookupTableModal.show();
     }
     openSelectImageModal() {
-        this.productImageImageLookupTableModal.id = this.productImage.imageId;
         this.productImageImageLookupTableModal.displayName = this.imageName;
         this.productImageImageLookupTableModal.show();
     }
@@ -98,7 +97,6 @@ export class CreateOrEditProductImageModalComponent extends AppComponentBase imp
         this.productName = '';
     }
     setImageIdNull() {
-        this.productImage.imageId = null;
         this.imageName = '';
     }
 
@@ -108,7 +106,6 @@ export class CreateOrEditProductImageModalComponent extends AppComponentBase imp
         this.productName = this.productImageProductLookupTableModal.displayName;
     }
     getNewImageId() {
-        this.productImage.imageId = this.productImageImageLookupTableModal.id;
         this.imageName = this.productImageImageLookupTableModal.displayName;
     }
 

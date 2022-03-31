@@ -29,21 +29,11 @@ namespace ERP.EntityFrameworkCore
 
         public virtual DbSet<ProductImage> ProductImages { get; set; }
 
-        public virtual DbSet<ColorItem> ColorItems { get; set; }
-
-        public virtual DbSet<SizeItem> SizeItems { get; set; }
-
         public virtual DbSet<Product> Products { get; set; }
-
-        public virtual DbSet<Size> Sizes { get; set; }
-
-        public virtual DbSet<Color> Colors { get; set; }
 
         public virtual DbSet<Category> Categories { get; set; }
 
         public virtual DbSet<Brand> Brands { get; set; }
-
-        public virtual DbSet<Image> Images { get; set; }
 
         public virtual DbSet<Discount> Discounts { get; set; }
 
@@ -97,26 +87,12 @@ namespace ERP.EntityFrameworkCore
                        {
                            p.HasIndex(e => new { e.TenantId });
                        });
-            modelBuilder.Entity<ColorItem>(c =>
-                       {
-                           c.HasIndex(e => new { e.TenantId });
-                       });
-            modelBuilder.Entity<SizeItem>(s =>
-                       {
-                           s.HasIndex(e => new { e.TenantId });
-                       });
+            
             modelBuilder.Entity<Product>(p =>
                        {
                            p.HasIndex(e => new { e.TenantId });
                        });
-            modelBuilder.Entity<Size>(s =>
-                       {
-                           s.HasIndex(e => new { e.TenantId });
-                       });
-            modelBuilder.Entity<Color>(c =>
-                       {
-                           c.HasIndex(e => new { e.TenantId });
-                       });
+            
             modelBuilder.Entity<Category>(c =>
                        {
                            c.HasIndex(e => new { e.TenantId });
@@ -124,10 +100,6 @@ namespace ERP.EntityFrameworkCore
             modelBuilder.Entity<Brand>(b =>
                        {
                            b.HasIndex(e => new { e.TenantId });
-                       });
-            modelBuilder.Entity<Image>(i =>
-                       {
-                           i.HasIndex(e => new { e.TenantId });
                        });
             modelBuilder.Entity<Discount>(d =>
                        {

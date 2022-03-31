@@ -23,7 +23,7 @@ namespace ERP.Web.Controllers
     {
         private readonly ITempFileCacheManager _tempFileCacheManager;
 
-        private const int MaxProfilePictureSize = 5242880; //5MB
+        private const int MaxImageBytes = 5242880; //5MB
 
         protected UploadImageControllerBase(ITempFileCacheManager tempFileCacheManager)
         {
@@ -58,14 +58,14 @@ namespace ERP.Web.Controllers
 					throw new Exception(L("IncorrectImageFormat"));
 				}
 
-				DirectoryHelper.CreateIfNotExists("E:/BadmintonShopPictures");
+				DirectoryHelper.CreateIfNotExists("E:/Đồ án tốt nghiệp/ERP/angular/src/assets/common/images");
 
 				var tempFileName = System.Guid.NewGuid() + Path.GetExtension(file.FileName);
-				var tempFilePath = Path.Combine("E:/BadmintonShopPictures", tempFileName);
+				var tempFilePath = Path.Combine("E:/Đồ án tốt nghiệp/ERP/angular/src/assets/common/images", tempFileName);
 
 				System.IO.File.WriteAllBytesAsync(tempFilePath, fileBytes);
 
-				return tempFilePath;
+				return tempFileName;
 			}
             catch (Exception ex)
             {
@@ -73,5 +73,83 @@ namespace ERP.Web.Controllers
                 throw;
             }
 		}
-    }
+
+		public async Task<List<string>> UploadMultipleFileToServer()
+		{
+			try
+			{
+				var listFile = Request.Form.Files;
+
+				var result = new List<string>();
+				if (listFile.Count > 20)
+				{
+					throw new UserFriendlyException(L("Upload_FileCount_Err"));
+				}
+
+				foreach (var file in listFile)
+				{
+					//Check input
+					if (file == null)
+					{
+						throw new UserFriendlyException(L("File_Empty_Error"));
+					}
+
+					//if (file.Length > MaxImageBytes)
+					//{
+					//	throw new UserFriendlyException(L("Upload_FileSize_Err"));
+					//}
+
+					byte[] fileBytes;
+					using (var stream = file.OpenReadStream())
+					{
+						fileBytes = stream.GetAllBytes();
+					}
+
+					var isImage = CheckFileIsImage(file.ContentType);
+
+					if (!isImage)
+					{
+						throw new Exception(L("IncorrectImageFormat"));
+					}
+
+					if (fileBytes.Length > MaxImageBytes)
+					{
+						throw new UserFriendlyException(L("Upload_FileSize_Err"));
+					}
+
+					// TODO: create folder images with tenant and store
+					// TODO: Get product id from Request Form
+
+					var productId = Convert.ToInt32(Request.Form[Request.Form.Keys.FirstOrDefault()]);
+
+					DirectoryHelper.CreateIfNotExists("E:/Đồ án tốt nghiệp/ERP/angular/src/assets/common/images");
+
+					var tempFileName = System.Guid.NewGuid() + Path.GetExtension(file.FileName);
+					var tempFilePath = Path.Combine("E:/Đồ án tốt nghiệp/ERP/angular/src/assets/common/images", tempFileName);
+
+					System.IO.File.WriteAllBytes(tempFilePath, fileBytes);
+
+					result.Add(tempFilePath);
+				}
+
+				return result;
+			}
+			catch (UserFriendlyException ex)
+			{
+				return new List<string>();
+			}
+		}
+
+		private static bool CheckFileIsImage(string contentType)
+		{
+            //var imageExtensions = new List<string> { ".JPG", ".JPEG", ".PNG" };
+            //var fileExtension = MimeTypeMap.GetExtension(contentType);
+
+            //if (imageExtensions.Contains(fileExtension.ToUpperInvariant()))
+            //{
+            //	return true;
+            //}
+            return false;
+        }
+	}
 }

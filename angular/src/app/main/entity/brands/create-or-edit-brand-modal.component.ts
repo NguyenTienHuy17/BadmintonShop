@@ -5,10 +5,6 @@ import { BrandsServiceProxy, CreateOrEditBrandDto } from '@shared/service-proxie
 import { AppComponentBase } from '@shared/common/app-component-base';
 import * as moment from 'moment';
 
-import { BrandImageLookupTableModalComponent } from './brand-image-lookup-table-modal.component';
-
-
-
 @Component({
     selector: 'createOrEditBrandModal',
     templateUrl: './create-or-edit-brand-modal.component.html'
@@ -16,7 +12,6 @@ import { BrandImageLookupTableModalComponent } from './brand-image-lookup-table-
 export class CreateOrEditBrandModalComponent extends AppComponentBase implements OnInit{
    
     @ViewChild('createOrEditModal', { static: true }) modal: ModalDirective;
-    @ViewChild('brandImageLookupTableModal', { static: true }) brandImageLookupTableModal: BrandImageLookupTableModalComponent;
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 
@@ -76,31 +71,11 @@ export class CreateOrEditBrandModalComponent extends AppComponentBase implements
              });
     }
 
-    openSelectImageModal() {
-        this.brandImageLookupTableModal.id = this.brand.imageId;
-        this.brandImageLookupTableModal.displayName = this.imageName;
-        this.brandImageLookupTableModal.show();
-    }
-
 
     setImageIdNull() {
         this.brand.imageId = null;
         this.imageName = '';
     }
-
-
-    getNewImageId() {
-        this.brand.imageId = this.brandImageLookupTableModal.id;
-        this.imageName = this.brandImageLookupTableModal.displayName;
-    }
-
-
-
-
-
-
-
-
     close(): void {
         this.active = false;
         this.modal.hide();

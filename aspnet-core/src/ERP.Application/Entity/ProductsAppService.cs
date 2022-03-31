@@ -1,6 +1,5 @@
 ﻿using ERP.Common;
 using ERP.Entity;
-using ERP.Common;
 
 using System;
 using System.Linq;
@@ -19,6 +18,7 @@ using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Abp.UI;
 using ERP.Storage;
+using ERP.Common.Dtos;
 
 namespace ERP.Entity
 {
@@ -26,16 +26,17 @@ namespace ERP.Entity
     public class ProductsAppService : ERPAppServiceBase, IProductsAppService
     {
         private readonly IRepository<Product, long> _productRepository;
+        private readonly IRepository<ProductImage, long> _productImageRepository;
         private readonly IProductsExcelExporter _productsExcelExporter;
-        private readonly IRepository<Image, long> _lookup_imageRepository;
         private readonly IRepository<Brand, long> _lookup_brandRepository;
         private readonly IRepository<Category, long> _lookup_categoryRepository;
 
-        public ProductsAppService(IRepository<Product, long> productRepository, IProductsExcelExporter productsExcelExporter, IRepository<Image, long> lookup_imageRepository, IRepository<Brand, long> lookup_brandRepository, IRepository<Category, long> lookup_categoryRepository)
+        public ProductsAppService(IRepository<Product, long> productRepository, IRepository<ProductImage, long> productImageRepository,
+            IProductsExcelExporter productsExcelExporter, IRepository<Brand, long> lookup_brandRepository, IRepository<Category, long> lookup_categoryRepository)
         {
             _productRepository = productRepository;
+            _productImageRepository = productImageRepository;
             _productsExcelExporter = productsExcelExporter;
-            _lookup_imageRepository = lookup_imageRepository;
             _lookup_brandRepository = lookup_brandRepository;
             _lookup_categoryRepository = lookup_categoryRepository;
 
@@ -45,7 +46,6 @@ namespace ERP.Entity
         {
 
             var filteredProducts = _productRepository.GetAll()
-                        .Include(e => e.ImageFk)
                         .Include(e => e.BrandFk)
                         .Include(e => e.CategoryFk)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.MadeIn.Contains(input.Filter) || e.Code.Contains(input.Filter) || e.Description.Contains(input.Filter) || e.Title.Contains(input.Filter))
@@ -58,7 +58,6 @@ namespace ERP.Entity
                         .WhereIf(input.MaxInStockFilter != null, e => e.InStock <= input.MaxInStockFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionFilter), e => e.Description == input.DescriptionFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.TitleFilter), e => e.Title == input.TitleFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.ImageNameFilter), e => e.ImageFk != null && e.ImageFk.Name == input.ImageNameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.BrandNameFilter), e => e.BrandFk != null && e.BrandFk.Name == input.BrandNameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.CategoryNameFilter), e => e.CategoryFk != null && e.CategoryFk.Name == input.CategoryNameFilter);
 
@@ -67,8 +66,6 @@ namespace ERP.Entity
                 .PageBy(input);
 
             var products = from o in pagedAndFilteredProducts
-                           join o1 in _lookup_imageRepository.GetAll() on o.ImageId equals o1.Id into j1
-                           from s1 in j1.DefaultIfEmpty()
 
                            join o2 in _lookup_brandRepository.GetAll() on o.BrandId equals o2.Id into j2
                            from s2 in j2.DefaultIfEmpty()
@@ -86,8 +83,9 @@ namespace ERP.Entity
                                o.InStock,
                                o.Description,
                                o.Title,
+                               o.Color,
+                               o.Size,
                                Id = o.Id,
-                               ImageName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
                                BrandName = s2 == null || s2.Name == null ? "" : s2.Name.ToString(),
                                CategoryName = s3 == null || s3.Name == null ? "" : s3.Name.ToString()
                            };
@@ -112,8 +110,9 @@ namespace ERP.Entity
                         Description = o.Description,
                         Title = o.Title,
                         Id = o.Id,
+                        Color = o.Color,
+                        Size = o.Size
                     },
-                    ImageName = o.ImageName,
                     BrandName = o.BrandName,
                     CategoryName = o.CategoryName
                 };
@@ -133,12 +132,6 @@ namespace ERP.Entity
             var product = await _productRepository.GetAsync(id);
 
             var output = new GetProductForViewDto { Product = ObjectMapper.Map<ProductDto>(product) };
-
-            if (output.Product.ImageId != null)
-            {
-                var _lookupImage = await _lookup_imageRepository.FirstOrDefaultAsync((long)output.Product.ImageId);
-                output.ImageName = _lookupImage?.Name?.ToString();
-            }
 
             if (output.Product.BrandId != null)
             {
@@ -162,12 +155,6 @@ namespace ERP.Entity
 
             var output = new GetProductForEditOutput { Product = ObjectMapper.Map<CreateOrEditProductDto>(product) };
 
-            if (output.Product.ImageId != null)
-            {
-                var _lookupImage = await _lookup_imageRepository.FirstOrDefaultAsync((long)output.Product.ImageId);
-                output.ImageName = _lookupImage?.Name?.ToString();
-            }
-
             if (output.Product.BrandId != null)
             {
                 var _lookupBrand = await _lookup_brandRepository.FirstOrDefaultAsync((long)output.Product.BrandId);
@@ -183,38 +170,49 @@ namespace ERP.Entity
             return output;
         }
 
-        public async Task CreateOrEdit(CreateOrEditProductDto input)
+        public async Task<long> CreateOrEdit(CreateOrEditProductDto input)
         {
             if (input.Id == null)
             {
-                await Create(input);
+                return await Create(input);
             }
             else
             {
-                await Update(input);
+                return await Update(input);
             }
         }
 
         [AbpAuthorize(AppPermissions.Pages_Products_Create)]
-        protected virtual async Task Create(CreateOrEditProductDto input)
+        protected virtual async Task<long> Create(CreateOrEditProductDto input)
         {
-            var product = ObjectMapper.Map<Product>(input);
-
-            if (AbpSession.TenantId != null)
+            long productId = 0;
+            try
             {
-                product.TenantId = (int?)AbpSession.TenantId;
+                var product = ObjectMapper.Map<Product>(input);
+
+                if (AbpSession.TenantId != null)
+                {
+                    product.TenantId = (int?)AbpSession.TenantId;
+                }
+
+                productId = await _productRepository.InsertAndGetIdAsync(product);
+
+                //await CreateProductImage(productId, input.ListProductImage);
             }
+            catch (Exception ex)
+            {
 
-            await _productRepository.InsertAsync(product);
-
+                throw;
+            }
+            return productId;
         }
 
         [AbpAuthorize(AppPermissions.Pages_Products_Edit)]
-        protected virtual async Task Update(CreateOrEditProductDto input)
+        protected virtual async Task<long> Update(CreateOrEditProductDto input)
         {
             var product = await _productRepository.FirstOrDefaultAsync((long)input.Id);
             ObjectMapper.Map(input, product);
-
+            return (long)input.Id;
         }
 
         [AbpAuthorize(AppPermissions.Pages_Products_Delete)]
@@ -227,7 +225,6 @@ namespace ERP.Entity
         {
 
             var filteredProducts = _productRepository.GetAll()
-                        .Include(e => e.ImageFk)
                         .Include(e => e.BrandFk)
                         .Include(e => e.CategoryFk)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.MadeIn.Contains(input.Filter) || e.Code.Contains(input.Filter) || e.Description.Contains(input.Filter) || e.Title.Contains(input.Filter))
@@ -240,13 +237,10 @@ namespace ERP.Entity
                         .WhereIf(input.MaxInStockFilter != null, e => e.InStock <= input.MaxInStockFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionFilter), e => e.Description == input.DescriptionFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.TitleFilter), e => e.Title == input.TitleFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.ImageNameFilter), e => e.ImageFk != null && e.ImageFk.Name == input.ImageNameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.BrandNameFilter), e => e.BrandFk != null && e.BrandFk.Name == input.BrandNameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.CategoryNameFilter), e => e.CategoryFk != null && e.CategoryFk.Name == input.CategoryNameFilter);
 
             var query = (from o in filteredProducts
-                         join o1 in _lookup_imageRepository.GetAll() on o.ImageId equals o1.Id into j1
-                         from s1 in j1.DefaultIfEmpty()
 
                          join o2 in _lookup_brandRepository.GetAll() on o.BrandId equals o2.Id into j2
                          from s2 in j2.DefaultIfEmpty()
@@ -265,9 +259,10 @@ namespace ERP.Entity
                                  InStock = o.InStock,
                                  Description = o.Description,
                                  Title = o.Title,
+                                 Color = o.Color,
+                                 Size = o.Size,
                                  Id = o.Id
                              },
-                             ImageName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
                              BrandName = s2 == null || s2.Name == null ? "" : s2.Name.ToString(),
                              CategoryName = s3 == null || s3.Name == null ? "" : s3.Name.ToString()
                          });
@@ -277,94 +272,106 @@ namespace ERP.Entity
             return _productsExcelExporter.ExportToFile(productListDtos);
         }
 
-        [AbpAuthorize(AppPermissions.Pages_Products)]
-        public async Task<PagedResultDto<ProductImageLookupTableDto>> GetAllImageForLookupTable(GetAllForLookupTableInput input)
+        //[AbpAuthorize(AppPermissions.Pages_Products)]
+        //public async Task<PagedResultDto<ProductImageLookupTableDto>> GetAllImageForLookupTable(GetAllForLookupTableInput input)
+        //{
+        //    var query = _lookup_imageRepository.GetAll().WhereIf(
+        //           !string.IsNullOrWhiteSpace(input.Filter),
+        //          e => e.Name != null && e.Name.Contains(input.Filter)
+        //       );
+
+        //    var totalCount = await query.CountAsync();
+
+        //    var imageList = await query
+        //        .PageBy(input)
+        //        .ToListAsync();
+
+        //    var lookupTableDtoList = new List<ProductImageLookupTableDto>();
+        //    foreach (var image in imageList)
+        //    {
+        //        lookupTableDtoList.Add(new ProductImageLookupTableDto
+        //        {
+        //            Id = image.Id,
+        //            DisplayName = image.Name?.ToString()
+        //        });
+        //    }
+
+        //    return new PagedResultDto<ProductImageLookupTableDto>(
+        //        totalCount,
+        //        lookupTableDtoList
+        //    );
+        //}
+
+        //[AbpAuthorize(AppPermissions.Pages_Products)]
+        //public async Task<PagedResultDto<ProductBrandLookupTableDto>> GetAllBrandForLookupTable(GetAllForLookupTableInput input)
+        //{
+        //    var query = _lookup_brandRepository.GetAll().WhereIf(
+        //           !string.IsNullOrWhiteSpace(input.Filter),
+        //          e => e.Name != null && e.Name.Contains(input.Filter)
+        //       );
+
+        //    var totalCount = await query.CountAsync();
+
+        //    var brandList = await query
+        //        .PageBy(input)
+        //        .ToListAsync();
+
+        //    var lookupTableDtoList = new List<ProductBrandLookupTableDto>();
+        //    foreach (var brand in brandList)
+        //    {
+        //        lookupTableDtoList.Add(new ProductBrandLookupTableDto
+        //        {
+        //            Id = brand.Id,
+        //            DisplayName = brand.Name?.ToString()
+        //        });
+        //    }
+
+        //    return new PagedResultDto<ProductBrandLookupTableDto>(
+        //        totalCount,
+        //        lookupTableDtoList
+        //    );
+        //}
+
+        //[AbpAuthorize(AppPermissions.Pages_Products)]
+        //public async Task<PagedResultDto<ProductCategoryLookupTableDto>> GetAllCategoryForLookupTable(GetAllForLookupTableInput input)
+        //{
+        //    var query = _lookup_categoryRepository.GetAll().WhereIf(
+        //           !string.IsNullOrWhiteSpace(input.Filter),
+        //          e => e.Name != null && e.Name.Contains(input.Filter)
+        //       );
+
+        //    var totalCount = await query.CountAsync();
+
+        //    var categoryList = await query
+        //        .PageBy(input)
+        //        .ToListAsync();
+
+        //    var lookupTableDtoList = new List<ProductCategoryLookupTableDto>();
+        //    foreach (var category in categoryList)
+        //    {
+        //        lookupTableDtoList.Add(new ProductCategoryLookupTableDto
+        //        {
+        //            Id = category.Id,
+        //            DisplayName = category.Name?.ToString()
+        //        });
+        //    }
+
+        //    return new PagedResultDto<ProductCategoryLookupTableDto>(
+        //        totalCount,
+        //        lookupTableDtoList
+        //    );
+        //}
+
+        private async Task CreateProductImage(long productId, List<CreateOrEditProductImageDto> listProductImage)
         {
-            var query = _lookup_imageRepository.GetAll().WhereIf(
-                   !string.IsNullOrWhiteSpace(input.Filter),
-                  e => e.Name != null && e.Name.Contains(input.Filter)
-               );
-
-            var totalCount = await query.CountAsync();
-
-            var imageList = await query
-                .PageBy(input)
-                .ToListAsync();
-
-            var lookupTableDtoList = new List<ProductImageLookupTableDto>();
-            foreach (var image in imageList)
+            foreach (var prod in listProductImage)
             {
-                lookupTableDtoList.Add(new ProductImageLookupTableDto
-                {
-                    Id = image.Id,
-                    DisplayName = image.Name?.ToString()
-                });
+                var productImage = ObjectMapper.Map<ProductImage>(prod);
+
+                productImage.ProductId = productId;
+
+                await _productImageRepository.InsertAsync(productImage);
             }
-
-            return new PagedResultDto<ProductImageLookupTableDto>(
-                totalCount,
-                lookupTableDtoList
-            );
-        }
-
-        [AbpAuthorize(AppPermissions.Pages_Products)]
-        public async Task<PagedResultDto<ProductBrandLookupTableDto>> GetAllBrandForLookupTable(GetAllForLookupTableInput input)
-        {
-            var query = _lookup_brandRepository.GetAll().WhereIf(
-                   !string.IsNullOrWhiteSpace(input.Filter),
-                  e => e.Name != null && e.Name.Contains(input.Filter)
-               );
-
-            var totalCount = await query.CountAsync();
-
-            var brandList = await query
-                .PageBy(input)
-                .ToListAsync();
-
-            var lookupTableDtoList = new List<ProductBrandLookupTableDto>();
-            foreach (var brand in brandList)
-            {
-                lookupTableDtoList.Add(new ProductBrandLookupTableDto
-                {
-                    Id = brand.Id,
-                    DisplayName = brand.Name?.ToString()
-                });
-            }
-
-            return new PagedResultDto<ProductBrandLookupTableDto>(
-                totalCount,
-                lookupTableDtoList
-            );
-        }
-
-        [AbpAuthorize(AppPermissions.Pages_Products)]
-        public async Task<PagedResultDto<ProductCategoryLookupTableDto>> GetAllCategoryForLookupTable(GetAllForLookupTableInput input)
-        {
-            var query = _lookup_categoryRepository.GetAll().WhereIf(
-                   !string.IsNullOrWhiteSpace(input.Filter),
-                  e => e.Name != null && e.Name.Contains(input.Filter)
-               );
-
-            var totalCount = await query.CountAsync();
-
-            var categoryList = await query
-                .PageBy(input)
-                .ToListAsync();
-
-            var lookupTableDtoList = new List<ProductCategoryLookupTableDto>();
-            foreach (var category in categoryList)
-            {
-                lookupTableDtoList.Add(new ProductCategoryLookupTableDto
-                {
-                    Id = category.Id,
-                    DisplayName = category.Name?.ToString()
-                });
-            }
-
-            return new PagedResultDto<ProductCategoryLookupTableDto>(
-                totalCount,
-                lookupTableDtoList
-            );
         }
 
     }

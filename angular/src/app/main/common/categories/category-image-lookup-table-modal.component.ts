@@ -1,6 +1,6 @@
 ﻿import { Component, ViewChild, Injector, Output, EventEmitter, ViewEncapsulation} from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
-import {CategoriesServiceProxy, CategoryImageLookupTableDto } from '@shared/service-proxies/service-proxies';
+import {CategoriesServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { Table } from 'primeng/components/table/table';
 import { Paginator } from 'primeng/components/paginator/paginator';
@@ -50,29 +50,10 @@ export class CategoryImageLookupTableModalComponent extends AppComponentBase {
         }
 
         this.primengTableHelper.showLoadingIndicator();
-
-        this._categoriesServiceProxy.getAllImageForLookupTable(
-            this.filterText,
-            this.primengTableHelper.getSorting(this.dataTable),
-            this.primengTableHelper.getSkipCount(this.paginator, event),
-            this.primengTableHelper.getMaxResultCount(this.paginator, event)
-        ).subscribe(result => {
-            this.primengTableHelper.totalRecordsCount = result.totalCount;
-            this.primengTableHelper.records = result.items;
-            this.primengTableHelper.hideLoadingIndicator();
-        });
     }
 
     reloadPage(): void {
         this.paginator.changePage(this.paginator.getPage());
-    }
-
-    setAndSave(image: CategoryImageLookupTableDto) {
-        this.id = image.id;
-        this.displayName = image.displayName;
-        this.active = false;
-        this.modal.hide();
-        this.modalSave.emit(null);
     }
 
     close(): void {

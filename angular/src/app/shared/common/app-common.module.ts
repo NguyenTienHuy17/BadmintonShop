@@ -18,6 +18,15 @@ import { DateRangePickerInitialValueSetterDirective } from './timing/date-range-
 import { DatePickerInitialValueSetterDirective } from './timing/date-picker-initial-value.directive';
 import { DateTimeService } from './timing/date-time.service';
 import { TimeZoneComboComponent } from './timing/timezone-combo.component';
+import { NewUploadImageComponent } from './newUploadImage/newUploadImage.component';
+import { ShowImageModalComponent } from './newUploadImage/showImageModal/showImageModal.component';
+import { DragDropDirective } from './newUploadImage/drag-and-drop.directive';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { UploadSingleImageComponent } from './uploadSingleImage/uploadSingleImage.component';
+import { SafePipe } from './pipes/safe.pipe';
+import { NewUploadImageService } from './newUploadImage/newUploadImage.service';
+import { UploadSingleImageService } from './uploadSingleImage/uploadSingleImage.service';
 
 @NgModule({
     imports: [
@@ -29,7 +38,9 @@ import { TimeZoneComboComponent } from './timing/timezone-combo.component';
         AbpModule,
         CommonModule,
         TableModule,
-        PaginatorModule
+        PaginatorModule,
+        NgxDropzoneModule,
+		DragDropModule,
     ],
     declarations: [
         TimeZoneComboComponent,
@@ -37,7 +48,12 @@ import { TimeZoneComboComponent } from './timing/timezone-combo.component';
         EntityTypeHistoryModalComponent,
         EntityChangeDetailModalComponent,
         DateRangePickerInitialValueSetterDirective,
-        DatePickerInitialValueSetterDirective
+        DatePickerInitialValueSetterDirective,
+        NewUploadImageComponent,
+        ShowImageModalComponent,
+        DragDropDirective,
+        UploadSingleImageComponent,
+        SafePipe
     ],
     exports: [
         TimeZoneComboComponent,
@@ -45,12 +61,16 @@ import { TimeZoneComboComponent } from './timing/timezone-combo.component';
         EntityTypeHistoryModalComponent,
         EntityChangeDetailModalComponent,
         DateRangePickerInitialValueSetterDirective,
-        DatePickerInitialValueSetterDirective
+        DatePickerInitialValueSetterDirective,
+        NewUploadImageComponent,
+        SafePipe,
     ],
     providers: [
         DateTimeService,
         AppLocalizationService,
-        AppNavigationService
+        AppNavigationService,
+		NewUploadImageService,
+		UploadSingleImageService,
     ]
 })
 export class AppCommonModule {

@@ -2151,22 +2151,10 @@ export class BrandsServiceProxy {
     }
 
     /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
      * @return Success
      */
-    getAllImageForLookupTable(filter: string | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfBrandImageLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/Brands/GetAllImageForLookupTable?";
-        if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
-        if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
-        if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+    getAllForProduct(): Observable<Brand[]> {
+        let url_ = this.baseUrl + "/api/services/app/Brands/GetAllForProduct";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -2178,20 +2166,20 @@ export class BrandsServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllImageForLookupTable(response_);
+            return this.processGetAllForProduct(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetAllImageForLookupTable(<any>response_);
+                    return this.processGetAllForProduct(<any>response_);
                 } catch (e) {
-                    return <Observable<PagedResultDtoOfBrandImageLookupTableDto>><any>_observableThrow(e);
+                    return <Observable<Brand[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<PagedResultDtoOfBrandImageLookupTableDto>><any>_observableThrow(response_);
+                return <Observable<Brand[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetAllImageForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfBrandImageLookupTableDto> {
+    protected processGetAllForProduct(response: HttpResponseBase): Observable<Brand[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -2202,7 +2190,11 @@ export class BrandsServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? PagedResultDtoOfBrandImageLookupTableDto.fromJS(resultData200) : new PagedResultDtoOfBrandImageLookupTableDto();
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(Brand.fromJS(item));
+            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -2210,7 +2202,7 @@ export class BrandsServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<PagedResultDtoOfBrandImageLookupTableDto>(<any>null);
+        return _observableOf<Brand[]>(<any>null);
     }
 }
 
@@ -2733,22 +2725,10 @@ export class CategoriesServiceProxy {
     }
 
     /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
      * @return Success
      */
-    getAllImageForLookupTable(filter: string | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfCategoryImageLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/Categories/GetAllImageForLookupTable?";
-        if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
-        if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
-        if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+    getAllForProduct(): Observable<Category[]> {
+        let url_ = this.baseUrl + "/api/services/app/Categories/GetAllForProduct";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -2760,20 +2740,20 @@ export class CategoriesServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllImageForLookupTable(response_);
+            return this.processGetAllForProduct(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetAllImageForLookupTable(<any>response_);
+                    return this.processGetAllForProduct(<any>response_);
                 } catch (e) {
-                    return <Observable<PagedResultDtoOfCategoryImageLookupTableDto>><any>_observableThrow(e);
+                    return <Observable<Category[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<PagedResultDtoOfCategoryImageLookupTableDto>><any>_observableThrow(response_);
+                return <Observable<Category[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetAllImageForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfCategoryImageLookupTableDto> {
+    protected processGetAllForProduct(response: HttpResponseBase): Observable<Category[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -2784,7 +2764,11 @@ export class CategoriesServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? PagedResultDtoOfCategoryImageLookupTableDto.fromJS(resultData200) : new PagedResultDtoOfCategoryImageLookupTableDto();
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(Category.fromJS(item));
+            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -2792,7 +2776,7 @@ export class CategoriesServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<PagedResultDtoOfCategoryImageLookupTableDto>(<any>null);
+        return _observableOf<Category[]>(<any>null);
     }
 }
 
@@ -2968,840 +2952,6 @@ export class ChatServiceProxy {
             }));
         }
         return _observableOf<void>(<any>null);
-    }
-}
-
-@Injectable()
-export class ColorItemsServiceProxy {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "";
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param productNameFilter (optional) 
-     * @param colorColorNameFilter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAll(filter: string | null | undefined, productNameFilter: string | null | undefined, colorColorNameFilter: string | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfGetColorItemForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/ColorItems/GetAll?";
-        if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
-        if (productNameFilter !== undefined)
-            url_ += "ProductNameFilter=" + encodeURIComponent("" + productNameFilter) + "&"; 
-        if (colorColorNameFilter !== undefined)
-            url_ += "ColorColorNameFilter=" + encodeURIComponent("" + colorColorNameFilter) + "&"; 
-        if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
-        if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAll(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAll(<any>response_);
-                } catch (e) {
-                    return <Observable<PagedResultDtoOfGetColorItemForViewDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<PagedResultDtoOfGetColorItemForViewDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetColorItemForViewDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? PagedResultDtoOfGetColorItemForViewDto.fromJS(resultData200) : new PagedResultDtoOfGetColorItemForViewDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<PagedResultDtoOfGetColorItemForViewDto>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getColorItemForView(id: number | null | undefined): Observable<GetColorItemForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/ColorItems/GetColorItemForView?";
-        if (id !== undefined)
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetColorItemForView(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetColorItemForView(<any>response_);
-                } catch (e) {
-                    return <Observable<GetColorItemForViewDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<GetColorItemForViewDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetColorItemForView(response: HttpResponseBase): Observable<GetColorItemForViewDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? GetColorItemForViewDto.fromJS(resultData200) : new GetColorItemForViewDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<GetColorItemForViewDto>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getColorItemForEdit(id: number | null | undefined): Observable<GetColorItemForEditOutput> {
-        let url_ = this.baseUrl + "/api/services/app/ColorItems/GetColorItemForEdit?";
-        if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetColorItemForEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetColorItemForEdit(<any>response_);
-                } catch (e) {
-                    return <Observable<GetColorItemForEditOutput>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<GetColorItemForEditOutput>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetColorItemForEdit(response: HttpResponseBase): Observable<GetColorItemForEditOutput> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? GetColorItemForEditOutput.fromJS(resultData200) : new GetColorItemForEditOutput();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<GetColorItemForEditOutput>(<any>null);
-    }
-
-    /**
-     * @param input (optional) 
-     * @return Success
-     */
-    createOrEdit(input: CreateOrEditColorItemDto | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/ColorItems/CreateOrEdit";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(input);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreateOrEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreateOrEdit(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    delete(id: number | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/ColorItems/Delete?";
-        if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-            })
-        };
-
-        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDelete(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processDelete(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processDelete(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param productNameFilter (optional) 
-     * @param colorColorNameFilter (optional) 
-     * @return Success
-     */
-    getColorItemsToExcel(filter: string | null | undefined, productNameFilter: string | null | undefined, colorColorNameFilter: string | null | undefined): Observable<FileDto> {
-        let url_ = this.baseUrl + "/api/services/app/ColorItems/GetColorItemsToExcel?";
-        if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
-        if (productNameFilter !== undefined)
-            url_ += "ProductNameFilter=" + encodeURIComponent("" + productNameFilter) + "&"; 
-        if (colorColorNameFilter !== undefined)
-            url_ += "ColorColorNameFilter=" + encodeURIComponent("" + colorColorNameFilter) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetColorItemsToExcel(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetColorItemsToExcel(<any>response_);
-                } catch (e) {
-                    return <Observable<FileDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<FileDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetColorItemsToExcel(response: HttpResponseBase): Observable<FileDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? FileDto.fromJS(resultData200) : new FileDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<FileDto>(<any>null);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllProductForLookupTable(filter: string | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfColorItemProductLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/ColorItems/GetAllProductForLookupTable?";
-        if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
-        if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
-        if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllProductForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllProductForLookupTable(<any>response_);
-                } catch (e) {
-                    return <Observable<PagedResultDtoOfColorItemProductLookupTableDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<PagedResultDtoOfColorItemProductLookupTableDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetAllProductForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfColorItemProductLookupTableDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? PagedResultDtoOfColorItemProductLookupTableDto.fromJS(resultData200) : new PagedResultDtoOfColorItemProductLookupTableDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<PagedResultDtoOfColorItemProductLookupTableDto>(<any>null);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllColorForLookupTable(filter: string | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfColorItemColorLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/ColorItems/GetAllColorForLookupTable?";
-        if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
-        if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
-        if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllColorForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllColorForLookupTable(<any>response_);
-                } catch (e) {
-                    return <Observable<PagedResultDtoOfColorItemColorLookupTableDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<PagedResultDtoOfColorItemColorLookupTableDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetAllColorForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfColorItemColorLookupTableDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? PagedResultDtoOfColorItemColorLookupTableDto.fromJS(resultData200) : new PagedResultDtoOfColorItemColorLookupTableDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<PagedResultDtoOfColorItemColorLookupTableDto>(<any>null);
-    }
-}
-
-@Injectable()
-export class ColorsServiceProxy {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "";
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param colorNameFilter (optional) 
-     * @param maxColorCodeFilter (optional) 
-     * @param minColorCodeFilter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAll(filter: string | null | undefined, colorNameFilter: string | null | undefined, maxColorCodeFilter: number | null | undefined, minColorCodeFilter: number | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfGetColorForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/Colors/GetAll?";
-        if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
-        if (colorNameFilter !== undefined)
-            url_ += "ColorNameFilter=" + encodeURIComponent("" + colorNameFilter) + "&"; 
-        if (maxColorCodeFilter !== undefined)
-            url_ += "MaxColorCodeFilter=" + encodeURIComponent("" + maxColorCodeFilter) + "&"; 
-        if (minColorCodeFilter !== undefined)
-            url_ += "MinColorCodeFilter=" + encodeURIComponent("" + minColorCodeFilter) + "&"; 
-        if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
-        if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAll(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAll(<any>response_);
-                } catch (e) {
-                    return <Observable<PagedResultDtoOfGetColorForViewDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<PagedResultDtoOfGetColorForViewDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetColorForViewDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? PagedResultDtoOfGetColorForViewDto.fromJS(resultData200) : new PagedResultDtoOfGetColorForViewDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<PagedResultDtoOfGetColorForViewDto>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getColorForView(id: number | null | undefined): Observable<GetColorForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/Colors/GetColorForView?";
-        if (id !== undefined)
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetColorForView(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetColorForView(<any>response_);
-                } catch (e) {
-                    return <Observable<GetColorForViewDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<GetColorForViewDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetColorForView(response: HttpResponseBase): Observable<GetColorForViewDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? GetColorForViewDto.fromJS(resultData200) : new GetColorForViewDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<GetColorForViewDto>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getColorForEdit(id: number | null | undefined): Observable<GetColorForEditOutput> {
-        let url_ = this.baseUrl + "/api/services/app/Colors/GetColorForEdit?";
-        if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetColorForEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetColorForEdit(<any>response_);
-                } catch (e) {
-                    return <Observable<GetColorForEditOutput>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<GetColorForEditOutput>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetColorForEdit(response: HttpResponseBase): Observable<GetColorForEditOutput> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? GetColorForEditOutput.fromJS(resultData200) : new GetColorForEditOutput();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<GetColorForEditOutput>(<any>null);
-    }
-
-    /**
-     * @param input (optional) 
-     * @return Success
-     */
-    createOrEdit(input: CreateOrEditColorDto | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Colors/CreateOrEdit";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(input);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreateOrEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreateOrEdit(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    delete(id: number | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Colors/Delete?";
-        if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-            })
-        };
-
-        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDelete(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processDelete(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processDelete(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param colorNameFilter (optional) 
-     * @param maxColorCodeFilter (optional) 
-     * @param minColorCodeFilter (optional) 
-     * @return Success
-     */
-    getColorsToExcel(filter: string | null | undefined, colorNameFilter: string | null | undefined, maxColorCodeFilter: number | null | undefined, minColorCodeFilter: number | null | undefined): Observable<FileDto> {
-        let url_ = this.baseUrl + "/api/services/app/Colors/GetColorsToExcel?";
-        if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
-        if (colorNameFilter !== undefined)
-            url_ += "ColorNameFilter=" + encodeURIComponent("" + colorNameFilter) + "&"; 
-        if (maxColorCodeFilter !== undefined)
-            url_ += "MaxColorCodeFilter=" + encodeURIComponent("" + maxColorCodeFilter) + "&"; 
-        if (minColorCodeFilter !== undefined)
-            url_ += "MinColorCodeFilter=" + encodeURIComponent("" + minColorCodeFilter) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetColorsToExcel(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetColorsToExcel(<any>response_);
-                } catch (e) {
-                    return <Observable<FileDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<FileDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetColorsToExcel(response: HttpResponseBase): Observable<FileDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? FileDto.fromJS(resultData200) : new FileDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<FileDto>(<any>null);
     }
 }
 
@@ -5766,363 +4916,6 @@ export class HostSettingsServiceProxy {
             }));
         }
         return _observableOf<void>(<any>null);
-    }
-}
-
-@Injectable()
-export class ImagesServiceProxy {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "";
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param nameFilter (optional) 
-     * @param urlFilter (optional) 
-     * @param descriptionFilter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAll(filter: string | null | undefined, nameFilter: string | null | undefined, urlFilter: string | null | undefined, descriptionFilter: string | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfGetImageForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/Images/GetAll?";
-        if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
-        if (nameFilter !== undefined)
-            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&"; 
-        if (urlFilter !== undefined)
-            url_ += "UrlFilter=" + encodeURIComponent("" + urlFilter) + "&"; 
-        if (descriptionFilter !== undefined)
-            url_ += "DescriptionFilter=" + encodeURIComponent("" + descriptionFilter) + "&"; 
-        if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
-        if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAll(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAll(<any>response_);
-                } catch (e) {
-                    return <Observable<PagedResultDtoOfGetImageForViewDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<PagedResultDtoOfGetImageForViewDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetImageForViewDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? PagedResultDtoOfGetImageForViewDto.fromJS(resultData200) : new PagedResultDtoOfGetImageForViewDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<PagedResultDtoOfGetImageForViewDto>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getImageForView(id: number | null | undefined): Observable<GetImageForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/Images/GetImageForView?";
-        if (id !== undefined)
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetImageForView(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetImageForView(<any>response_);
-                } catch (e) {
-                    return <Observable<GetImageForViewDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<GetImageForViewDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetImageForView(response: HttpResponseBase): Observable<GetImageForViewDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? GetImageForViewDto.fromJS(resultData200) : new GetImageForViewDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<GetImageForViewDto>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getImageForEdit(id: number | null | undefined): Observable<GetImageForEditOutput> {
-        let url_ = this.baseUrl + "/api/services/app/Images/GetImageForEdit?";
-        if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetImageForEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetImageForEdit(<any>response_);
-                } catch (e) {
-                    return <Observable<GetImageForEditOutput>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<GetImageForEditOutput>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetImageForEdit(response: HttpResponseBase): Observable<GetImageForEditOutput> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? GetImageForEditOutput.fromJS(resultData200) : new GetImageForEditOutput();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<GetImageForEditOutput>(<any>null);
-    }
-
-    /**
-     * @param input (optional) 
-     * @return Success
-     */
-    createOrEdit(input: CreateOrEditImageDto | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Images/CreateOrEdit";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(input);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreateOrEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreateOrEdit(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    delete(id: number | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Images/Delete?";
-        if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-            })
-        };
-
-        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDelete(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processDelete(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processDelete(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param nameFilter (optional) 
-     * @param urlFilter (optional) 
-     * @param descriptionFilter (optional) 
-     * @return Success
-     */
-    getImagesToExcel(filter: string | null | undefined, nameFilter: string | null | undefined, urlFilter: string | null | undefined, descriptionFilter: string | null | undefined): Observable<FileDto> {
-        let url_ = this.baseUrl + "/api/services/app/Images/GetImagesToExcel?";
-        if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
-        if (nameFilter !== undefined)
-            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&"; 
-        if (urlFilter !== undefined)
-            url_ += "UrlFilter=" + encodeURIComponent("" + urlFilter) + "&"; 
-        if (descriptionFilter !== undefined)
-            url_ += "DescriptionFilter=" + encodeURIComponent("" + descriptionFilter) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetImagesToExcel(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetImagesToExcel(<any>response_);
-                } catch (e) {
-                    return <Observable<FileDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<FileDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetImagesToExcel(response: HttpResponseBase): Observable<FileDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? FileDto.fromJS(resultData200) : new FileDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<FileDto>(<any>null);
     }
 }
 
@@ -10164,69 +8957,6 @@ export class ProductImagesServiceProxy {
         }
         return _observableOf<PagedResultDtoOfProductImageProductLookupTableDto>(<any>null);
     }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllImageForLookupTable(filter: string | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfProductImageImageLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/ProductImages/GetAllImageForLookupTable?";
-        if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
-        if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
-        if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllImageForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllImageForLookupTable(<any>response_);
-                } catch (e) {
-                    return <Observable<PagedResultDtoOfProductImageImageLookupTableDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<PagedResultDtoOfProductImageImageLookupTableDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetAllImageForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfProductImageImageLookupTableDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? PagedResultDtoOfProductImageImageLookupTableDto.fromJS(resultData200) : new PagedResultDtoOfProductImageImageLookupTableDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<PagedResultDtoOfProductImageImageLookupTableDto>(<any>null);
-    }
 }
 
 @Injectable()
@@ -10451,7 +9181,7 @@ export class ProductsServiceProxy {
      * @param input (optional) 
      * @return Success
      */
-    createOrEdit(input: CreateOrEditProductDto | null | undefined): Observable<void> {
+    createOrEdit(input: CreateOrEditProductDto | null | undefined): Observable<number> {
         let url_ = this.baseUrl + "/api/services/app/Products/CreateOrEdit";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -10463,6 +9193,7 @@ export class ProductsServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json", 
+                "Accept": "application/json"
             })
         };
 
@@ -10473,14 +9204,14 @@ export class ProductsServiceProxy {
                 try {
                     return this.processCreateOrEdit(<any>response_);
                 } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
+                    return <Observable<number>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<void>><any>_observableThrow(response_);
+                return <Observable<number>><any>_observableThrow(response_);
         }));
     }
 
-    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<number> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -10489,14 +9220,17 @@ export class ProductsServiceProxy {
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<void>(<any>null);
+        return _observableOf<number>(<any>null);
     }
 
     /**
@@ -10637,195 +9371,6 @@ export class ProductsServiceProxy {
             }));
         }
         return _observableOf<FileDto>(<any>null);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllImageForLookupTable(filter: string | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfProductImageLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/Products/GetAllImageForLookupTable?";
-        if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
-        if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
-        if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllImageForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllImageForLookupTable(<any>response_);
-                } catch (e) {
-                    return <Observable<PagedResultDtoOfProductImageLookupTableDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<PagedResultDtoOfProductImageLookupTableDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetAllImageForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfProductImageLookupTableDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? PagedResultDtoOfProductImageLookupTableDto.fromJS(resultData200) : new PagedResultDtoOfProductImageLookupTableDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<PagedResultDtoOfProductImageLookupTableDto>(<any>null);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllBrandForLookupTable(filter: string | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfProductBrandLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/Products/GetAllBrandForLookupTable?";
-        if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
-        if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
-        if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllBrandForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllBrandForLookupTable(<any>response_);
-                } catch (e) {
-                    return <Observable<PagedResultDtoOfProductBrandLookupTableDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<PagedResultDtoOfProductBrandLookupTableDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetAllBrandForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfProductBrandLookupTableDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? PagedResultDtoOfProductBrandLookupTableDto.fromJS(resultData200) : new PagedResultDtoOfProductBrandLookupTableDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<PagedResultDtoOfProductBrandLookupTableDto>(<any>null);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllCategoryForLookupTable(filter: string | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfProductCategoryLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/Products/GetAllCategoryForLookupTable?";
-        if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
-        if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
-        if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllCategoryForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllCategoryForLookupTable(<any>response_);
-                } catch (e) {
-                    return <Observable<PagedResultDtoOfProductCategoryLookupTableDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<PagedResultDtoOfProductCategoryLookupTableDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetAllCategoryForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfProductCategoryLookupTableDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? PagedResultDtoOfProductCategoryLookupTableDto.fromJS(resultData200) : new PagedResultDtoOfProductCategoryLookupTableDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<PagedResultDtoOfProductCategoryLookupTableDto>(<any>null);
     }
 }
 
@@ -12265,840 +10810,6 @@ export class SessionServiceProxy {
             }));
         }
         return _observableOf<UpdateUserSignInTokenOutput>(<any>null);
-    }
-}
-
-@Injectable()
-export class SizeItemsServiceProxy {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "";
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param productNameFilter (optional) 
-     * @param sizeDisplayNameFilter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAll(filter: string | null | undefined, productNameFilter: string | null | undefined, sizeDisplayNameFilter: string | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfGetSizeItemForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/SizeItems/GetAll?";
-        if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
-        if (productNameFilter !== undefined)
-            url_ += "ProductNameFilter=" + encodeURIComponent("" + productNameFilter) + "&"; 
-        if (sizeDisplayNameFilter !== undefined)
-            url_ += "SizeDisplayNameFilter=" + encodeURIComponent("" + sizeDisplayNameFilter) + "&"; 
-        if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
-        if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAll(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAll(<any>response_);
-                } catch (e) {
-                    return <Observable<PagedResultDtoOfGetSizeItemForViewDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<PagedResultDtoOfGetSizeItemForViewDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetSizeItemForViewDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? PagedResultDtoOfGetSizeItemForViewDto.fromJS(resultData200) : new PagedResultDtoOfGetSizeItemForViewDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<PagedResultDtoOfGetSizeItemForViewDto>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getSizeItemForView(id: number | null | undefined): Observable<GetSizeItemForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/SizeItems/GetSizeItemForView?";
-        if (id !== undefined)
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetSizeItemForView(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetSizeItemForView(<any>response_);
-                } catch (e) {
-                    return <Observable<GetSizeItemForViewDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<GetSizeItemForViewDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetSizeItemForView(response: HttpResponseBase): Observable<GetSizeItemForViewDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? GetSizeItemForViewDto.fromJS(resultData200) : new GetSizeItemForViewDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<GetSizeItemForViewDto>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getSizeItemForEdit(id: number | null | undefined): Observable<GetSizeItemForEditOutput> {
-        let url_ = this.baseUrl + "/api/services/app/SizeItems/GetSizeItemForEdit?";
-        if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetSizeItemForEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetSizeItemForEdit(<any>response_);
-                } catch (e) {
-                    return <Observable<GetSizeItemForEditOutput>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<GetSizeItemForEditOutput>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetSizeItemForEdit(response: HttpResponseBase): Observable<GetSizeItemForEditOutput> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? GetSizeItemForEditOutput.fromJS(resultData200) : new GetSizeItemForEditOutput();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<GetSizeItemForEditOutput>(<any>null);
-    }
-
-    /**
-     * @param input (optional) 
-     * @return Success
-     */
-    createOrEdit(input: CreateOrEditSizeItemDto | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/SizeItems/CreateOrEdit";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(input);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreateOrEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreateOrEdit(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    delete(id: number | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/SizeItems/Delete?";
-        if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-            })
-        };
-
-        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDelete(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processDelete(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processDelete(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param productNameFilter (optional) 
-     * @param sizeDisplayNameFilter (optional) 
-     * @return Success
-     */
-    getSizeItemsToExcel(filter: string | null | undefined, productNameFilter: string | null | undefined, sizeDisplayNameFilter: string | null | undefined): Observable<FileDto> {
-        let url_ = this.baseUrl + "/api/services/app/SizeItems/GetSizeItemsToExcel?";
-        if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
-        if (productNameFilter !== undefined)
-            url_ += "ProductNameFilter=" + encodeURIComponent("" + productNameFilter) + "&"; 
-        if (sizeDisplayNameFilter !== undefined)
-            url_ += "SizeDisplayNameFilter=" + encodeURIComponent("" + sizeDisplayNameFilter) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetSizeItemsToExcel(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetSizeItemsToExcel(<any>response_);
-                } catch (e) {
-                    return <Observable<FileDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<FileDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetSizeItemsToExcel(response: HttpResponseBase): Observable<FileDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? FileDto.fromJS(resultData200) : new FileDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<FileDto>(<any>null);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllProductForLookupTable(filter: string | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfSizeItemProductLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/SizeItems/GetAllProductForLookupTable?";
-        if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
-        if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
-        if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllProductForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllProductForLookupTable(<any>response_);
-                } catch (e) {
-                    return <Observable<PagedResultDtoOfSizeItemProductLookupTableDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<PagedResultDtoOfSizeItemProductLookupTableDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetAllProductForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfSizeItemProductLookupTableDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? PagedResultDtoOfSizeItemProductLookupTableDto.fromJS(resultData200) : new PagedResultDtoOfSizeItemProductLookupTableDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<PagedResultDtoOfSizeItemProductLookupTableDto>(<any>null);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllSizeForLookupTable(filter: string | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfSizeItemSizeLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/SizeItems/GetAllSizeForLookupTable?";
-        if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
-        if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
-        if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllSizeForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllSizeForLookupTable(<any>response_);
-                } catch (e) {
-                    return <Observable<PagedResultDtoOfSizeItemSizeLookupTableDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<PagedResultDtoOfSizeItemSizeLookupTableDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetAllSizeForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfSizeItemSizeLookupTableDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? PagedResultDtoOfSizeItemSizeLookupTableDto.fromJS(resultData200) : new PagedResultDtoOfSizeItemSizeLookupTableDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<PagedResultDtoOfSizeItemSizeLookupTableDto>(<any>null);
-    }
-}
-
-@Injectable()
-export class SizesServiceProxy {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "";
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param displayNameFilter (optional) 
-     * @param maxSizeNumFilter (optional) 
-     * @param minSizeNumFilter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAll(filter: string | null | undefined, displayNameFilter: string | null | undefined, maxSizeNumFilter: number | null | undefined, minSizeNumFilter: number | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfGetSizeForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/Sizes/GetAll?";
-        if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
-        if (displayNameFilter !== undefined)
-            url_ += "DisplayNameFilter=" + encodeURIComponent("" + displayNameFilter) + "&"; 
-        if (maxSizeNumFilter !== undefined)
-            url_ += "MaxSizeNumFilter=" + encodeURIComponent("" + maxSizeNumFilter) + "&"; 
-        if (minSizeNumFilter !== undefined)
-            url_ += "MinSizeNumFilter=" + encodeURIComponent("" + minSizeNumFilter) + "&"; 
-        if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
-        if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAll(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAll(<any>response_);
-                } catch (e) {
-                    return <Observable<PagedResultDtoOfGetSizeForViewDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<PagedResultDtoOfGetSizeForViewDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetSizeForViewDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? PagedResultDtoOfGetSizeForViewDto.fromJS(resultData200) : new PagedResultDtoOfGetSizeForViewDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<PagedResultDtoOfGetSizeForViewDto>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getSizeForView(id: number | null | undefined): Observable<GetSizeForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/Sizes/GetSizeForView?";
-        if (id !== undefined)
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetSizeForView(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetSizeForView(<any>response_);
-                } catch (e) {
-                    return <Observable<GetSizeForViewDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<GetSizeForViewDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetSizeForView(response: HttpResponseBase): Observable<GetSizeForViewDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? GetSizeForViewDto.fromJS(resultData200) : new GetSizeForViewDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<GetSizeForViewDto>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getSizeForEdit(id: number | null | undefined): Observable<GetSizeForEditOutput> {
-        let url_ = this.baseUrl + "/api/services/app/Sizes/GetSizeForEdit?";
-        if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetSizeForEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetSizeForEdit(<any>response_);
-                } catch (e) {
-                    return <Observable<GetSizeForEditOutput>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<GetSizeForEditOutput>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetSizeForEdit(response: HttpResponseBase): Observable<GetSizeForEditOutput> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? GetSizeForEditOutput.fromJS(resultData200) : new GetSizeForEditOutput();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<GetSizeForEditOutput>(<any>null);
-    }
-
-    /**
-     * @param input (optional) 
-     * @return Success
-     */
-    createOrEdit(input: CreateOrEditSizeDto | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Sizes/CreateOrEdit";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(input);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreateOrEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreateOrEdit(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    delete(id: number | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Sizes/Delete?";
-        if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-            })
-        };
-
-        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDelete(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processDelete(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processDelete(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param displayNameFilter (optional) 
-     * @param maxSizeNumFilter (optional) 
-     * @param minSizeNumFilter (optional) 
-     * @return Success
-     */
-    getSizesToExcel(filter: string | null | undefined, displayNameFilter: string | null | undefined, maxSizeNumFilter: number | null | undefined, minSizeNumFilter: number | null | undefined): Observable<FileDto> {
-        let url_ = this.baseUrl + "/api/services/app/Sizes/GetSizesToExcel?";
-        if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
-        if (displayNameFilter !== undefined)
-            url_ += "DisplayNameFilter=" + encodeURIComponent("" + displayNameFilter) + "&"; 
-        if (maxSizeNumFilter !== undefined)
-            url_ += "MaxSizeNumFilter=" + encodeURIComponent("" + maxSizeNumFilter) + "&"; 
-        if (minSizeNumFilter !== undefined)
-            url_ += "MinSizeNumFilter=" + encodeURIComponent("" + minSizeNumFilter) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetSizesToExcel(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetSizesToExcel(<any>response_);
-                } catch (e) {
-                    return <Observable<FileDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<FileDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetSizesToExcel(response: HttpResponseBase): Observable<FileDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? FileDto.fromJS(resultData200) : new FileDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<FileDto>(<any>null);
     }
 }
 
@@ -18350,7 +16061,6 @@ export class BrandDto implements IBrandDto {
     name!: string | undefined;
     country!: string | undefined;
     description!: string | undefined;
-    imageId!: number | undefined;
     id!: number | undefined;
 
     constructor(data?: IBrandDto) {
@@ -18367,7 +16077,6 @@ export class BrandDto implements IBrandDto {
             this.name = data["name"];
             this.country = data["country"];
             this.description = data["description"];
-            this.imageId = data["imageId"];
             this.id = data["id"];
         }
     }
@@ -18384,7 +16093,6 @@ export class BrandDto implements IBrandDto {
         data["name"] = this.name;
         data["country"] = this.country;
         data["description"] = this.description;
-        data["imageId"] = this.imageId;
         data["id"] = this.id;
         return data; 
     }
@@ -18394,7 +16102,6 @@ export interface IBrandDto {
     name: string | undefined;
     country: string | undefined;
     description: string | undefined;
-    imageId: number | undefined;
     id: number | undefined;
 }
 
@@ -18490,59 +16197,21 @@ export interface ICreateOrEditBrandDto {
     id: number | undefined;
 }
 
-export class PagedResultDtoOfBrandImageLookupTableDto implements IPagedResultDtoOfBrandImageLookupTableDto {
-    totalCount!: number | undefined;
-    items!: BrandImageLookupTableDto[] | undefined;
-
-    constructor(data?: IPagedResultDtoOfBrandImageLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.totalCount = data["totalCount"];
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [] as any;
-                for (let item of data["items"])
-                    this.items!.push(BrandImageLookupTableDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfBrandImageLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfBrandImageLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["totalCount"] = this.totalCount;
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface IPagedResultDtoOfBrandImageLookupTableDto {
-    totalCount: number | undefined;
-    items: BrandImageLookupTableDto[] | undefined;
-}
-
-export class BrandImageLookupTableDto implements IBrandImageLookupTableDto {
+export class Brand implements IBrand {
+    tenantId!: number | undefined;
+    name!: string;
+    country!: string;
+    description!: string | undefined;
+    isDeleted!: boolean | undefined;
+    deleterUserId!: number | undefined;
+    deletionTime!: moment.Moment | undefined;
+    lastModificationTime!: moment.Moment | undefined;
+    lastModifierUserId!: number | undefined;
+    creationTime!: moment.Moment | undefined;
+    creatorUserId!: number | undefined;
     id!: number | undefined;
-    displayName!: string | undefined;
 
-    constructor(data?: IBrandImageLookupTableDto) {
+    constructor(data?: IBrand) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -18553,29 +16222,59 @@ export class BrandImageLookupTableDto implements IBrandImageLookupTableDto {
 
     init(data?: any) {
         if (data) {
+            this.tenantId = data["tenantId"];
+            this.name = data["name"];
+            this.country = data["country"];
+            this.description = data["description"];
+            this.isDeleted = data["isDeleted"];
+            this.deleterUserId = data["deleterUserId"];
+            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
             this.id = data["id"];
-            this.displayName = data["displayName"];
         }
     }
 
-    static fromJS(data: any): BrandImageLookupTableDto {
+    static fromJS(data: any): Brand {
         data = typeof data === 'object' ? data : {};
-        let result = new BrandImageLookupTableDto();
+        let result = new Brand();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["tenantId"] = this.tenantId;
+        data["name"] = this.name;
+        data["country"] = this.country;
+        data["description"] = this.description;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
         data["id"] = this.id;
-        data["displayName"] = this.displayName;
         return data; 
     }
 }
 
-export interface IBrandImageLookupTableDto {
+export interface IBrand {
+    tenantId: number | undefined;
+    name: string;
+    country: string;
+    description: string | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
     id: number | undefined;
-    displayName: string | undefined;
 }
 
 export class ListResultDtoOfCacheDto implements IListResultDtoOfCacheDto {
@@ -18918,59 +16617,21 @@ export interface ICreateOrEditCategoryDto {
     id: number | undefined;
 }
 
-export class PagedResultDtoOfCategoryImageLookupTableDto implements IPagedResultDtoOfCategoryImageLookupTableDto {
-    totalCount!: number | undefined;
-    items!: CategoryImageLookupTableDto[] | undefined;
-
-    constructor(data?: IPagedResultDtoOfCategoryImageLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.totalCount = data["totalCount"];
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [] as any;
-                for (let item of data["items"])
-                    this.items!.push(CategoryImageLookupTableDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfCategoryImageLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfCategoryImageLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["totalCount"] = this.totalCount;
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface IPagedResultDtoOfCategoryImageLookupTableDto {
-    totalCount: number | undefined;
-    items: CategoryImageLookupTableDto[] | undefined;
-}
-
-export class CategoryImageLookupTableDto implements ICategoryImageLookupTableDto {
+export class Category implements ICategory {
+    tenantId!: number | undefined;
+    name!: string;
+    description!: string | undefined;
+    imageId!: number | undefined;
+    isDeleted!: boolean | undefined;
+    deleterUserId!: number | undefined;
+    deletionTime!: moment.Moment | undefined;
+    lastModificationTime!: moment.Moment | undefined;
+    lastModifierUserId!: number | undefined;
+    creationTime!: moment.Moment | undefined;
+    creatorUserId!: number | undefined;
     id!: number | undefined;
-    displayName!: string | undefined;
 
-    constructor(data?: ICategoryImageLookupTableDto) {
+    constructor(data?: ICategory) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -18981,29 +16642,59 @@ export class CategoryImageLookupTableDto implements ICategoryImageLookupTableDto
 
     init(data?: any) {
         if (data) {
+            this.tenantId = data["tenantId"];
+            this.name = data["name"];
+            this.description = data["description"];
+            this.imageId = data["imageId"];
+            this.isDeleted = data["isDeleted"];
+            this.deleterUserId = data["deleterUserId"];
+            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
             this.id = data["id"];
-            this.displayName = data["displayName"];
         }
     }
 
-    static fromJS(data: any): CategoryImageLookupTableDto {
+    static fromJS(data: any): Category {
         data = typeof data === 'object' ? data : {};
-        let result = new CategoryImageLookupTableDto();
+        let result = new Category();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["tenantId"] = this.tenantId;
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["imageId"] = this.imageId;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
         data["id"] = this.id;
-        data["displayName"] = this.displayName;
         return data; 
     }
 }
 
-export interface ICategoryImageLookupTableDto {
+export interface ICategory {
+    tenantId: number | undefined;
+    name: string;
+    description: string | undefined;
+    imageId: number | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
     id: number | undefined;
-    displayName: string | undefined;
 }
 
 export class GetUserChatFriendsWithSettingsOutput implements IGetUserChatFriendsWithSettingsOutput {
@@ -19291,614 +16982,6 @@ export class MarkAllUnreadMessagesOfUserAsReadInput implements IMarkAllUnreadMes
 export interface IMarkAllUnreadMessagesOfUserAsReadInput {
     tenantId: number | undefined;
     userId: number | undefined;
-}
-
-export class PagedResultDtoOfGetColorItemForViewDto implements IPagedResultDtoOfGetColorItemForViewDto {
-    totalCount!: number | undefined;
-    items!: GetColorItemForViewDto[] | undefined;
-
-    constructor(data?: IPagedResultDtoOfGetColorItemForViewDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.totalCount = data["totalCount"];
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [] as any;
-                for (let item of data["items"])
-                    this.items!.push(GetColorItemForViewDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfGetColorItemForViewDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfGetColorItemForViewDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["totalCount"] = this.totalCount;
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface IPagedResultDtoOfGetColorItemForViewDto {
-    totalCount: number | undefined;
-    items: GetColorItemForViewDto[] | undefined;
-}
-
-export class GetColorItemForViewDto implements IGetColorItemForViewDto {
-    colorItem!: ColorItemDto | undefined;
-    productName!: string | undefined;
-    colorColorName!: string | undefined;
-
-    constructor(data?: IGetColorItemForViewDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.colorItem = data["colorItem"] ? ColorItemDto.fromJS(data["colorItem"]) : <any>undefined;
-            this.productName = data["productName"];
-            this.colorColorName = data["colorColorName"];
-        }
-    }
-
-    static fromJS(data: any): GetColorItemForViewDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetColorItemForViewDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["colorItem"] = this.colorItem ? this.colorItem.toJSON() : <any>undefined;
-        data["productName"] = this.productName;
-        data["colorColorName"] = this.colorColorName;
-        return data; 
-    }
-}
-
-export interface IGetColorItemForViewDto {
-    colorItem: ColorItemDto | undefined;
-    productName: string | undefined;
-    colorColorName: string | undefined;
-}
-
-export class ColorItemDto implements IColorItemDto {
-    productId!: number | undefined;
-    colorId!: number | undefined;
-    id!: number | undefined;
-
-    constructor(data?: IColorItemDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.productId = data["productId"];
-            this.colorId = data["colorId"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): ColorItemDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ColorItemDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["productId"] = this.productId;
-        data["colorId"] = this.colorId;
-        data["id"] = this.id;
-        return data; 
-    }
-}
-
-export interface IColorItemDto {
-    productId: number | undefined;
-    colorId: number | undefined;
-    id: number | undefined;
-}
-
-export class GetColorItemForEditOutput implements IGetColorItemForEditOutput {
-    colorItem!: CreateOrEditColorItemDto | undefined;
-    productName!: string | undefined;
-    colorColorName!: string | undefined;
-
-    constructor(data?: IGetColorItemForEditOutput) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.colorItem = data["colorItem"] ? CreateOrEditColorItemDto.fromJS(data["colorItem"]) : <any>undefined;
-            this.productName = data["productName"];
-            this.colorColorName = data["colorColorName"];
-        }
-    }
-
-    static fromJS(data: any): GetColorItemForEditOutput {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetColorItemForEditOutput();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["colorItem"] = this.colorItem ? this.colorItem.toJSON() : <any>undefined;
-        data["productName"] = this.productName;
-        data["colorColorName"] = this.colorColorName;
-        return data; 
-    }
-}
-
-export interface IGetColorItemForEditOutput {
-    colorItem: CreateOrEditColorItemDto | undefined;
-    productName: string | undefined;
-    colorColorName: string | undefined;
-}
-
-export class CreateOrEditColorItemDto implements ICreateOrEditColorItemDto {
-    productId!: number | undefined;
-    colorId!: number | undefined;
-    id!: number | undefined;
-
-    constructor(data?: ICreateOrEditColorItemDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.productId = data["productId"];
-            this.colorId = data["colorId"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): CreateOrEditColorItemDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new CreateOrEditColorItemDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["productId"] = this.productId;
-        data["colorId"] = this.colorId;
-        data["id"] = this.id;
-        return data; 
-    }
-}
-
-export interface ICreateOrEditColorItemDto {
-    productId: number | undefined;
-    colorId: number | undefined;
-    id: number | undefined;
-}
-
-export class PagedResultDtoOfColorItemProductLookupTableDto implements IPagedResultDtoOfColorItemProductLookupTableDto {
-    totalCount!: number | undefined;
-    items!: ColorItemProductLookupTableDto[] | undefined;
-
-    constructor(data?: IPagedResultDtoOfColorItemProductLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.totalCount = data["totalCount"];
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [] as any;
-                for (let item of data["items"])
-                    this.items!.push(ColorItemProductLookupTableDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfColorItemProductLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfColorItemProductLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["totalCount"] = this.totalCount;
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface IPagedResultDtoOfColorItemProductLookupTableDto {
-    totalCount: number | undefined;
-    items: ColorItemProductLookupTableDto[] | undefined;
-}
-
-export class ColorItemProductLookupTableDto implements IColorItemProductLookupTableDto {
-    id!: number | undefined;
-    displayName!: string | undefined;
-
-    constructor(data?: IColorItemProductLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.id = data["id"];
-            this.displayName = data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): ColorItemProductLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ColorItemProductLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data; 
-    }
-}
-
-export interface IColorItemProductLookupTableDto {
-    id: number | undefined;
-    displayName: string | undefined;
-}
-
-export class PagedResultDtoOfColorItemColorLookupTableDto implements IPagedResultDtoOfColorItemColorLookupTableDto {
-    totalCount!: number | undefined;
-    items!: ColorItemColorLookupTableDto[] | undefined;
-
-    constructor(data?: IPagedResultDtoOfColorItemColorLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.totalCount = data["totalCount"];
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [] as any;
-                for (let item of data["items"])
-                    this.items!.push(ColorItemColorLookupTableDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfColorItemColorLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfColorItemColorLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["totalCount"] = this.totalCount;
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface IPagedResultDtoOfColorItemColorLookupTableDto {
-    totalCount: number | undefined;
-    items: ColorItemColorLookupTableDto[] | undefined;
-}
-
-export class ColorItemColorLookupTableDto implements IColorItemColorLookupTableDto {
-    id!: number | undefined;
-    displayName!: string | undefined;
-
-    constructor(data?: IColorItemColorLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.id = data["id"];
-            this.displayName = data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): ColorItemColorLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ColorItemColorLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data; 
-    }
-}
-
-export interface IColorItemColorLookupTableDto {
-    id: number | undefined;
-    displayName: string | undefined;
-}
-
-export class PagedResultDtoOfGetColorForViewDto implements IPagedResultDtoOfGetColorForViewDto {
-    totalCount!: number | undefined;
-    items!: GetColorForViewDto[] | undefined;
-
-    constructor(data?: IPagedResultDtoOfGetColorForViewDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.totalCount = data["totalCount"];
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [] as any;
-                for (let item of data["items"])
-                    this.items!.push(GetColorForViewDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfGetColorForViewDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfGetColorForViewDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["totalCount"] = this.totalCount;
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface IPagedResultDtoOfGetColorForViewDto {
-    totalCount: number | undefined;
-    items: GetColorForViewDto[] | undefined;
-}
-
-export class GetColorForViewDto implements IGetColorForViewDto {
-    color!: ColorDto | undefined;
-
-    constructor(data?: IGetColorForViewDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.color = data["color"] ? ColorDto.fromJS(data["color"]) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): GetColorForViewDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetColorForViewDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["color"] = this.color ? this.color.toJSON() : <any>undefined;
-        return data; 
-    }
-}
-
-export interface IGetColorForViewDto {
-    color: ColorDto | undefined;
-}
-
-export class ColorDto implements IColorDto {
-    colorName!: string | undefined;
-    colorCode!: number | undefined;
-    id!: number | undefined;
-
-    constructor(data?: IColorDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.colorName = data["colorName"];
-            this.colorCode = data["colorCode"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): ColorDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ColorDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["colorName"] = this.colorName;
-        data["colorCode"] = this.colorCode;
-        data["id"] = this.id;
-        return data; 
-    }
-}
-
-export interface IColorDto {
-    colorName: string | undefined;
-    colorCode: number | undefined;
-    id: number | undefined;
-}
-
-export class GetColorForEditOutput implements IGetColorForEditOutput {
-    color!: CreateOrEditColorDto | undefined;
-
-    constructor(data?: IGetColorForEditOutput) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.color = data["color"] ? CreateOrEditColorDto.fromJS(data["color"]) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): GetColorForEditOutput {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetColorForEditOutput();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["color"] = this.color ? this.color.toJSON() : <any>undefined;
-        return data; 
-    }
-}
-
-export interface IGetColorForEditOutput {
-    color: CreateOrEditColorDto | undefined;
-}
-
-export class CreateOrEditColorDto implements ICreateOrEditColorDto {
-    colorName!: string;
-    colorCode!: number | undefined;
-    id!: number | undefined;
-
-    constructor(data?: ICreateOrEditColorDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.colorName = data["colorName"];
-            this.colorCode = data["colorCode"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): CreateOrEditColorDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new CreateOrEditColorDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["colorName"] = this.colorName;
-        data["colorCode"] = this.colorCode;
-        data["id"] = this.id;
-        return data; 
-    }
-}
-
-export interface ICreateOrEditColorDto {
-    colorName: string;
-    colorCode: number | undefined;
-    id: number | undefined;
 }
 
 export class ListResultDtoOfSubscribableEditionComboboxItemDto implements IListResultDtoOfSubscribableEditionComboboxItemDto {
@@ -22292,222 +19375,6 @@ export class SendTestEmailInput implements ISendTestEmailInput {
 
 export interface ISendTestEmailInput {
     emailAddress: string;
-}
-
-export class PagedResultDtoOfGetImageForViewDto implements IPagedResultDtoOfGetImageForViewDto {
-    totalCount!: number | undefined;
-    items!: GetImageForViewDto[] | undefined;
-
-    constructor(data?: IPagedResultDtoOfGetImageForViewDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.totalCount = data["totalCount"];
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [] as any;
-                for (let item of data["items"])
-                    this.items!.push(GetImageForViewDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfGetImageForViewDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfGetImageForViewDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["totalCount"] = this.totalCount;
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface IPagedResultDtoOfGetImageForViewDto {
-    totalCount: number | undefined;
-    items: GetImageForViewDto[] | undefined;
-}
-
-export class GetImageForViewDto implements IGetImageForViewDto {
-    image!: ImageDto | undefined;
-
-    constructor(data?: IGetImageForViewDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.image = data["image"] ? ImageDto.fromJS(data["image"]) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): GetImageForViewDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetImageForViewDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["image"] = this.image ? this.image.toJSON() : <any>undefined;
-        return data; 
-    }
-}
-
-export interface IGetImageForViewDto {
-    image: ImageDto | undefined;
-}
-
-export class ImageDto implements IImageDto {
-    name!: string | undefined;
-    url!: string | undefined;
-    description!: string | undefined;
-    id!: number | undefined;
-
-    constructor(data?: IImageDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.name = data["name"];
-            this.url = data["url"];
-            this.description = data["description"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): ImageDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ImageDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        data["url"] = this.url;
-        data["description"] = this.description;
-        data["id"] = this.id;
-        return data; 
-    }
-}
-
-export interface IImageDto {
-    name: string | undefined;
-    url: string | undefined;
-    description: string | undefined;
-    id: number | undefined;
-}
-
-export class GetImageForEditOutput implements IGetImageForEditOutput {
-    image!: CreateOrEditImageDto | undefined;
-
-    constructor(data?: IGetImageForEditOutput) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.image = data["image"] ? CreateOrEditImageDto.fromJS(data["image"]) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): GetImageForEditOutput {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetImageForEditOutput();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["image"] = this.image ? this.image.toJSON() : <any>undefined;
-        return data; 
-    }
-}
-
-export interface IGetImageForEditOutput {
-    image: CreateOrEditImageDto | undefined;
-}
-
-export class CreateOrEditImageDto implements ICreateOrEditImageDto {
-    name!: string;
-    url!: string;
-    description!: string | undefined;
-    id!: number | undefined;
-
-    constructor(data?: ICreateOrEditImageDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.name = data["name"];
-            this.url = data["url"];
-            this.description = data["description"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): CreateOrEditImageDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new CreateOrEditImageDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        data["url"] = this.url;
-        data["description"] = this.description;
-        data["id"] = this.id;
-        return data; 
-    }
-}
-
-export interface ICreateOrEditImageDto {
-    name: string;
-    url: string;
-    description: string | undefined;
-    id: number | undefined;
 }
 
 export class InstallDto implements IInstallDto {
@@ -26113,7 +22980,9 @@ export interface IGetProductImageForEditOutput {
 
 export class CreateOrEditProductImageDto implements ICreateOrEditProductImageDto {
     productId!: number | undefined;
-    imageId!: number | undefined;
+    name!: string | undefined;
+    url!: string;
+    description!: string | undefined;
     id!: number | undefined;
 
     constructor(data?: ICreateOrEditProductImageDto) {
@@ -26128,7 +22997,9 @@ export class CreateOrEditProductImageDto implements ICreateOrEditProductImageDto
     init(data?: any) {
         if (data) {
             this.productId = data["productId"];
-            this.imageId = data["imageId"];
+            this.name = data["name"];
+            this.url = data["url"];
+            this.description = data["description"];
             this.id = data["id"];
         }
     }
@@ -26143,7 +23014,9 @@ export class CreateOrEditProductImageDto implements ICreateOrEditProductImageDto
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["productId"] = this.productId;
-        data["imageId"] = this.imageId;
+        data["name"] = this.name;
+        data["url"] = this.url;
+        data["description"] = this.description;
         data["id"] = this.id;
         return data; 
     }
@@ -26151,7 +23024,9 @@ export class CreateOrEditProductImageDto implements ICreateOrEditProductImageDto
 
 export interface ICreateOrEditProductImageDto {
     productId: number | undefined;
-    imageId: number | undefined;
+    name: string | undefined;
+    url: string;
+    description: string | undefined;
     id: number | undefined;
 }
 
@@ -26239,94 +23114,6 @@ export class ProductImageProductLookupTableDto implements IProductImageProductLo
 }
 
 export interface IProductImageProductLookupTableDto {
-    id: number | undefined;
-    displayName: string | undefined;
-}
-
-export class PagedResultDtoOfProductImageImageLookupTableDto implements IPagedResultDtoOfProductImageImageLookupTableDto {
-    totalCount!: number | undefined;
-    items!: ProductImageImageLookupTableDto[] | undefined;
-
-    constructor(data?: IPagedResultDtoOfProductImageImageLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.totalCount = data["totalCount"];
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [] as any;
-                for (let item of data["items"])
-                    this.items!.push(ProductImageImageLookupTableDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfProductImageImageLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfProductImageImageLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["totalCount"] = this.totalCount;
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface IPagedResultDtoOfProductImageImageLookupTableDto {
-    totalCount: number | undefined;
-    items: ProductImageImageLookupTableDto[] | undefined;
-}
-
-export class ProductImageImageLookupTableDto implements IProductImageImageLookupTableDto {
-    id!: number | undefined;
-    displayName!: string | undefined;
-
-    constructor(data?: IProductImageImageLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.id = data["id"];
-            this.displayName = data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): ProductImageImageLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ProductImageImageLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data; 
-    }
-}
-
-export interface IProductImageImageLookupTableDto {
     id: number | undefined;
     displayName: string | undefined;
 }
@@ -26434,6 +23221,8 @@ export class ProductDto implements IProductDto {
     price!: number | undefined;
     inStock!: number | undefined;
     description!: string | undefined;
+    color!: string | undefined;
+    size!: number | undefined;
     title!: string | undefined;
     imageId!: number | undefined;
     brandId!: number | undefined;
@@ -26457,6 +23246,8 @@ export class ProductDto implements IProductDto {
             this.price = data["price"];
             this.inStock = data["inStock"];
             this.description = data["description"];
+            this.color = data["color"];
+            this.size = data["size"];
             this.title = data["title"];
             this.imageId = data["imageId"];
             this.brandId = data["brandId"];
@@ -26480,6 +23271,8 @@ export class ProductDto implements IProductDto {
         data["price"] = this.price;
         data["inStock"] = this.inStock;
         data["description"] = this.description;
+        data["color"] = this.color;
+        data["size"] = this.size;
         data["title"] = this.title;
         data["imageId"] = this.imageId;
         data["brandId"] = this.brandId;
@@ -26496,6 +23289,8 @@ export interface IProductDto {
     price: number | undefined;
     inStock: number | undefined;
     description: string | undefined;
+    color: string | undefined;
+    size: number | undefined;
     title: string | undefined;
     imageId: number | undefined;
     brandId: number | undefined;
@@ -26558,10 +23353,13 @@ export class CreateOrEditProductDto implements ICreateOrEditProductDto {
     price!: number | undefined;
     inStock!: number | undefined;
     description!: string | undefined;
+    color!: string | undefined;
+    size!: number | undefined;
     title!: string | undefined;
     imageId!: number | undefined;
     brandId!: number | undefined;
     categoryId!: number | undefined;
+    listProductImage!: CreateOrEditProductImageDto[] | undefined;
     id!: number | undefined;
 
     constructor(data?: ICreateOrEditProductDto) {
@@ -26581,10 +23379,17 @@ export class CreateOrEditProductDto implements ICreateOrEditProductDto {
             this.price = data["price"];
             this.inStock = data["inStock"];
             this.description = data["description"];
+            this.color = data["color"];
+            this.size = data["size"];
             this.title = data["title"];
             this.imageId = data["imageId"];
             this.brandId = data["brandId"];
             this.categoryId = data["categoryId"];
+            if (data["listProductImage"] && data["listProductImage"].constructor === Array) {
+                this.listProductImage = [] as any;
+                for (let item of data["listProductImage"])
+                    this.listProductImage!.push(CreateOrEditProductImageDto.fromJS(item));
+            }
             this.id = data["id"];
         }
     }
@@ -26604,10 +23409,17 @@ export class CreateOrEditProductDto implements ICreateOrEditProductDto {
         data["price"] = this.price;
         data["inStock"] = this.inStock;
         data["description"] = this.description;
+        data["color"] = this.color;
+        data["size"] = this.size;
         data["title"] = this.title;
         data["imageId"] = this.imageId;
         data["brandId"] = this.brandId;
         data["categoryId"] = this.categoryId;
+        if (this.listProductImage && this.listProductImage.constructor === Array) {
+            data["listProductImage"] = [];
+            for (let item of this.listProductImage)
+                data["listProductImage"].push(item.toJSON());
+        }
         data["id"] = this.id;
         return data; 
     }
@@ -26620,275 +23432,14 @@ export interface ICreateOrEditProductDto {
     price: number | undefined;
     inStock: number | undefined;
     description: string | undefined;
+    color: string | undefined;
+    size: number | undefined;
     title: string | undefined;
     imageId: number | undefined;
     brandId: number | undefined;
     categoryId: number | undefined;
+    listProductImage: CreateOrEditProductImageDto[] | undefined;
     id: number | undefined;
-}
-
-export class PagedResultDtoOfProductImageLookupTableDto implements IPagedResultDtoOfProductImageLookupTableDto {
-    totalCount!: number | undefined;
-    items!: ProductImageLookupTableDto[] | undefined;
-
-    constructor(data?: IPagedResultDtoOfProductImageLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.totalCount = data["totalCount"];
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [] as any;
-                for (let item of data["items"])
-                    this.items!.push(ProductImageLookupTableDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfProductImageLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfProductImageLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["totalCount"] = this.totalCount;
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface IPagedResultDtoOfProductImageLookupTableDto {
-    totalCount: number | undefined;
-    items: ProductImageLookupTableDto[] | undefined;
-}
-
-export class ProductImageLookupTableDto implements IProductImageLookupTableDto {
-    id!: number | undefined;
-    displayName!: string | undefined;
-
-    constructor(data?: IProductImageLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.id = data["id"];
-            this.displayName = data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): ProductImageLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ProductImageLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data; 
-    }
-}
-
-export interface IProductImageLookupTableDto {
-    id: number | undefined;
-    displayName: string | undefined;
-}
-
-export class PagedResultDtoOfProductBrandLookupTableDto implements IPagedResultDtoOfProductBrandLookupTableDto {
-    totalCount!: number | undefined;
-    items!: ProductBrandLookupTableDto[] | undefined;
-
-    constructor(data?: IPagedResultDtoOfProductBrandLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.totalCount = data["totalCount"];
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [] as any;
-                for (let item of data["items"])
-                    this.items!.push(ProductBrandLookupTableDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfProductBrandLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfProductBrandLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["totalCount"] = this.totalCount;
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface IPagedResultDtoOfProductBrandLookupTableDto {
-    totalCount: number | undefined;
-    items: ProductBrandLookupTableDto[] | undefined;
-}
-
-export class ProductBrandLookupTableDto implements IProductBrandLookupTableDto {
-    id!: number | undefined;
-    displayName!: string | undefined;
-
-    constructor(data?: IProductBrandLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.id = data["id"];
-            this.displayName = data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): ProductBrandLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ProductBrandLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data; 
-    }
-}
-
-export interface IProductBrandLookupTableDto {
-    id: number | undefined;
-    displayName: string | undefined;
-}
-
-export class PagedResultDtoOfProductCategoryLookupTableDto implements IPagedResultDtoOfProductCategoryLookupTableDto {
-    totalCount!: number | undefined;
-    items!: ProductCategoryLookupTableDto[] | undefined;
-
-    constructor(data?: IPagedResultDtoOfProductCategoryLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.totalCount = data["totalCount"];
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [] as any;
-                for (let item of data["items"])
-                    this.items!.push(ProductCategoryLookupTableDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfProductCategoryLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfProductCategoryLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["totalCount"] = this.totalCount;
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface IPagedResultDtoOfProductCategoryLookupTableDto {
-    totalCount: number | undefined;
-    items: ProductCategoryLookupTableDto[] | undefined;
-}
-
-export class ProductCategoryLookupTableDto implements IProductCategoryLookupTableDto {
-    id!: number | undefined;
-    displayName!: string | undefined;
-
-    constructor(data?: IProductCategoryLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.id = data["id"];
-            this.displayName = data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): ProductCategoryLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ProductCategoryLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data; 
-    }
-}
-
-export interface IProductCategoryLookupTableDto {
-    id: number | undefined;
-    displayName: string | undefined;
 }
 
 export class CurrentUserProfileEditDto implements ICurrentUserProfileEditDto {
@@ -28579,614 +25130,6 @@ export interface IUpdateUserSignInTokenOutput {
     signInToken: string | undefined;
     encodedUserId: string | undefined;
     encodedTenantId: string | undefined;
-}
-
-export class PagedResultDtoOfGetSizeItemForViewDto implements IPagedResultDtoOfGetSizeItemForViewDto {
-    totalCount!: number | undefined;
-    items!: GetSizeItemForViewDto[] | undefined;
-
-    constructor(data?: IPagedResultDtoOfGetSizeItemForViewDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.totalCount = data["totalCount"];
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [] as any;
-                for (let item of data["items"])
-                    this.items!.push(GetSizeItemForViewDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfGetSizeItemForViewDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfGetSizeItemForViewDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["totalCount"] = this.totalCount;
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface IPagedResultDtoOfGetSizeItemForViewDto {
-    totalCount: number | undefined;
-    items: GetSizeItemForViewDto[] | undefined;
-}
-
-export class GetSizeItemForViewDto implements IGetSizeItemForViewDto {
-    sizeItem!: SizeItemDto | undefined;
-    productName!: string | undefined;
-    sizeDisplayName!: string | undefined;
-
-    constructor(data?: IGetSizeItemForViewDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.sizeItem = data["sizeItem"] ? SizeItemDto.fromJS(data["sizeItem"]) : <any>undefined;
-            this.productName = data["productName"];
-            this.sizeDisplayName = data["sizeDisplayName"];
-        }
-    }
-
-    static fromJS(data: any): GetSizeItemForViewDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetSizeItemForViewDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["sizeItem"] = this.sizeItem ? this.sizeItem.toJSON() : <any>undefined;
-        data["productName"] = this.productName;
-        data["sizeDisplayName"] = this.sizeDisplayName;
-        return data; 
-    }
-}
-
-export interface IGetSizeItemForViewDto {
-    sizeItem: SizeItemDto | undefined;
-    productName: string | undefined;
-    sizeDisplayName: string | undefined;
-}
-
-export class SizeItemDto implements ISizeItemDto {
-    productId!: number | undefined;
-    sizeId!: number | undefined;
-    id!: number | undefined;
-
-    constructor(data?: ISizeItemDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.productId = data["productId"];
-            this.sizeId = data["sizeId"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): SizeItemDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new SizeItemDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["productId"] = this.productId;
-        data["sizeId"] = this.sizeId;
-        data["id"] = this.id;
-        return data; 
-    }
-}
-
-export interface ISizeItemDto {
-    productId: number | undefined;
-    sizeId: number | undefined;
-    id: number | undefined;
-}
-
-export class GetSizeItemForEditOutput implements IGetSizeItemForEditOutput {
-    sizeItem!: CreateOrEditSizeItemDto | undefined;
-    productName!: string | undefined;
-    sizeDisplayName!: string | undefined;
-
-    constructor(data?: IGetSizeItemForEditOutput) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.sizeItem = data["sizeItem"] ? CreateOrEditSizeItemDto.fromJS(data["sizeItem"]) : <any>undefined;
-            this.productName = data["productName"];
-            this.sizeDisplayName = data["sizeDisplayName"];
-        }
-    }
-
-    static fromJS(data: any): GetSizeItemForEditOutput {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetSizeItemForEditOutput();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["sizeItem"] = this.sizeItem ? this.sizeItem.toJSON() : <any>undefined;
-        data["productName"] = this.productName;
-        data["sizeDisplayName"] = this.sizeDisplayName;
-        return data; 
-    }
-}
-
-export interface IGetSizeItemForEditOutput {
-    sizeItem: CreateOrEditSizeItemDto | undefined;
-    productName: string | undefined;
-    sizeDisplayName: string | undefined;
-}
-
-export class CreateOrEditSizeItemDto implements ICreateOrEditSizeItemDto {
-    productId!: number | undefined;
-    sizeId!: number | undefined;
-    id!: number | undefined;
-
-    constructor(data?: ICreateOrEditSizeItemDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.productId = data["productId"];
-            this.sizeId = data["sizeId"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): CreateOrEditSizeItemDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new CreateOrEditSizeItemDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["productId"] = this.productId;
-        data["sizeId"] = this.sizeId;
-        data["id"] = this.id;
-        return data; 
-    }
-}
-
-export interface ICreateOrEditSizeItemDto {
-    productId: number | undefined;
-    sizeId: number | undefined;
-    id: number | undefined;
-}
-
-export class PagedResultDtoOfSizeItemProductLookupTableDto implements IPagedResultDtoOfSizeItemProductLookupTableDto {
-    totalCount!: number | undefined;
-    items!: SizeItemProductLookupTableDto[] | undefined;
-
-    constructor(data?: IPagedResultDtoOfSizeItemProductLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.totalCount = data["totalCount"];
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [] as any;
-                for (let item of data["items"])
-                    this.items!.push(SizeItemProductLookupTableDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfSizeItemProductLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfSizeItemProductLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["totalCount"] = this.totalCount;
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface IPagedResultDtoOfSizeItemProductLookupTableDto {
-    totalCount: number | undefined;
-    items: SizeItemProductLookupTableDto[] | undefined;
-}
-
-export class SizeItemProductLookupTableDto implements ISizeItemProductLookupTableDto {
-    id!: number | undefined;
-    displayName!: string | undefined;
-
-    constructor(data?: ISizeItemProductLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.id = data["id"];
-            this.displayName = data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): SizeItemProductLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new SizeItemProductLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data; 
-    }
-}
-
-export interface ISizeItemProductLookupTableDto {
-    id: number | undefined;
-    displayName: string | undefined;
-}
-
-export class PagedResultDtoOfSizeItemSizeLookupTableDto implements IPagedResultDtoOfSizeItemSizeLookupTableDto {
-    totalCount!: number | undefined;
-    items!: SizeItemSizeLookupTableDto[] | undefined;
-
-    constructor(data?: IPagedResultDtoOfSizeItemSizeLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.totalCount = data["totalCount"];
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [] as any;
-                for (let item of data["items"])
-                    this.items!.push(SizeItemSizeLookupTableDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfSizeItemSizeLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfSizeItemSizeLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["totalCount"] = this.totalCount;
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface IPagedResultDtoOfSizeItemSizeLookupTableDto {
-    totalCount: number | undefined;
-    items: SizeItemSizeLookupTableDto[] | undefined;
-}
-
-export class SizeItemSizeLookupTableDto implements ISizeItemSizeLookupTableDto {
-    id!: number | undefined;
-    displayName!: string | undefined;
-
-    constructor(data?: ISizeItemSizeLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.id = data["id"];
-            this.displayName = data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): SizeItemSizeLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new SizeItemSizeLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data; 
-    }
-}
-
-export interface ISizeItemSizeLookupTableDto {
-    id: number | undefined;
-    displayName: string | undefined;
-}
-
-export class PagedResultDtoOfGetSizeForViewDto implements IPagedResultDtoOfGetSizeForViewDto {
-    totalCount!: number | undefined;
-    items!: GetSizeForViewDto[] | undefined;
-
-    constructor(data?: IPagedResultDtoOfGetSizeForViewDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.totalCount = data["totalCount"];
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [] as any;
-                for (let item of data["items"])
-                    this.items!.push(GetSizeForViewDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfGetSizeForViewDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfGetSizeForViewDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["totalCount"] = this.totalCount;
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface IPagedResultDtoOfGetSizeForViewDto {
-    totalCount: number | undefined;
-    items: GetSizeForViewDto[] | undefined;
-}
-
-export class GetSizeForViewDto implements IGetSizeForViewDto {
-    size!: SizeDto | undefined;
-
-    constructor(data?: IGetSizeForViewDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.size = data["size"] ? SizeDto.fromJS(data["size"]) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): GetSizeForViewDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetSizeForViewDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["size"] = this.size ? this.size.toJSON() : <any>undefined;
-        return data; 
-    }
-}
-
-export interface IGetSizeForViewDto {
-    size: SizeDto | undefined;
-}
-
-export class SizeDto implements ISizeDto {
-    displayName!: string | undefined;
-    sizeNum!: number | undefined;
-    id!: number | undefined;
-
-    constructor(data?: ISizeDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.displayName = data["displayName"];
-            this.sizeNum = data["sizeNum"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): SizeDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new SizeDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["displayName"] = this.displayName;
-        data["sizeNum"] = this.sizeNum;
-        data["id"] = this.id;
-        return data; 
-    }
-}
-
-export interface ISizeDto {
-    displayName: string | undefined;
-    sizeNum: number | undefined;
-    id: number | undefined;
-}
-
-export class GetSizeForEditOutput implements IGetSizeForEditOutput {
-    size!: CreateOrEditSizeDto | undefined;
-
-    constructor(data?: IGetSizeForEditOutput) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.size = data["size"] ? CreateOrEditSizeDto.fromJS(data["size"]) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): GetSizeForEditOutput {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetSizeForEditOutput();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["size"] = this.size ? this.size.toJSON() : <any>undefined;
-        return data; 
-    }
-}
-
-export interface IGetSizeForEditOutput {
-    size: CreateOrEditSizeDto | undefined;
-}
-
-export class CreateOrEditSizeDto implements ICreateOrEditSizeDto {
-    displayName!: string;
-    sizeNum!: number | undefined;
-    id!: number | undefined;
-
-    constructor(data?: ICreateOrEditSizeDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.displayName = data["displayName"];
-            this.sizeNum = data["sizeNum"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): CreateOrEditSizeDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new CreateOrEditSizeDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["displayName"] = this.displayName;
-        data["sizeNum"] = this.sizeNum;
-        data["id"] = this.id;
-        return data; 
-    }
-}
-
-export interface ICreateOrEditSizeDto {
-    displayName: string;
-    sizeNum: number | undefined;
-    id: number | undefined;
 }
 
 export class PagedResultDtoOfGetStatusForViewDto implements IPagedResultDtoOfGetStatusForViewDto {

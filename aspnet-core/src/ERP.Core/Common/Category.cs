@@ -20,8 +20,5 @@ namespace ERP.Common
 
         public virtual long? ImageId { get; set; }
 
-        [ForeignKey("ImageId")]
-        public Image ImageFk { get; set; }
-
     }
 }

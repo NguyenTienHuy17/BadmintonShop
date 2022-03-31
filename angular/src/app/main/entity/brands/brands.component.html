@@ -95,12 +95,12 @@
                             <ng-template pTemplate="header">
                                 <tr>
                                     <th style="width: 130px" [hidden]="!isGrantedAny('Pages.Brands.Edit', 'Pages.Brands.Delete')">{{l('Actions')}}</th>
-                                    <th style="width: 150px" pSortableColumn="imageFk.name">
-                                        {{l('Name')}}
+                                    <!-- <th style="width: 150px" pSortableColumn="imageFk.name">
+                                        {{l('ImageName')}}
                                         <p-sortIcon field="imageName"></p-sortIcon>
-                                    </th>
+                                    </th> -->
                                     <th style="width: 150px" pSortableColumn="name">
-                                        {{l('Name')}}
+                                        {{l('BrandName')}}
                                         <p-sortIcon field="brand.name"></p-sortIcon>
                                     </th>
                                     <th style="width: 150px" pSortableColumn="country">
@@ -138,12 +138,12 @@
                                             </ul>
                                         </div>
                                     </td>
-                                    <td style="width:150px">
-												<span class="ui-column-title"> {{l('Name')}}</span>
+                                    <!-- <td style="width:150px">
+												<span class="ui-column-title"> {{l('ImageName')}}</span>
 												{{record.imageName}}
-											</td>
+											</td> -->
                                     <td style="width:150px">
-											<span class="ui-column-title"> {{l('Name')}}</span>
+											<span class="ui-column-title"> {{l('BrandName')}}</span>
 											{{record.brand.name}}
 										</td>
                                     <td style="width:150px">

@@ -1,14 +1,16 @@
 ﻿import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef} from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 import { finalize } from 'rxjs/operators';
-import { ProductsServiceProxy, CreateOrEditProductDto } from '@shared/service-proxies/service-proxies';
+import { ProductsServiceProxy, CreateOrEditProductDto, CreateOrEditProductImageDto, BrandsServiceProxy, GetBrandForViewDto, Brand, Category, CategoriesServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import * as moment from 'moment';
 
-import { ProductImageLookupTableModalComponent } from './product-image-lookup-table-modal.component';
-import { ProductBrandLookupTableModalComponent } from './product-brand-lookup-table-modal.component';
-import { ProductCategoryLookupTableModalComponent } from './product-category-lookup-table-modal.component';
-
+import { ModeImage } from '@app/shared/common/newUploadImage/modeImage';
+import { ImageProduct } from '@app/shared/common/newUploadImage/imageProduct';
+import { UploadSingleImageComponent } from '@app/shared/common/uploadSingleImage/uploadSingleImage.component';
+import { NewUploadImageComponent } from '@app/shared/common/newUploadImage/newUploadImage.component';
+import { AppConsts } from '@shared/AppConsts';
+import { HttpResponse, HttpClient } from '@angular/common/http'
 
 
 @Component({
@@ -18,9 +20,8 @@ import { ProductCategoryLookupTableModalComponent } from './product-category-loo
 export class CreateOrEditProductModalComponent extends AppComponentBase implements OnInit{
    
     @ViewChild('createOrEditModal', { static: true }) modal: ModalDirective;
-    @ViewChild('productImageLookupTableModal', { static: true }) productImageLookupTableModal: ProductImageLookupTableModalComponent;
-    @ViewChild('productBrandLookupTableModal', { static: true }) productBrandLookupTableModal: ProductBrandLookupTableModalComponent;
-    @ViewChild('productCategoryLookupTableModal', { static: true }) productCategoryLookupTableModal: ProductCategoryLookupTableModalComponent;
+    @ViewChild('singleUploadImage', { static: true }) singleUploadImage: UploadSingleImageComponent
+	@ViewChild('newUploadImage', { static: true }) newUploadImage: NewUploadImageComponent
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 
@@ -28,16 +29,27 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
     saving = false;
 
     product: CreateOrEditProductDto = new CreateOrEditProductDto();
-
+    listProductImage: CreateOrEditProductImageDto = new CreateOrEditProductImageDto();
+    listBrand: Brand [] = []
+    listCategory: Category [] = []
     imageName = '';
     brandName = '';
     categoryName = '';
 
-
+    modeImage: ModeImage;
+	listUrlImage: ImageProduct[] = []
+    
+	urlUploadAndCreate = AppConsts.remoteServiceBaseUrl + '/UploadImage/UploadMultipleFileToServerAndCreate'
+	newProductId: number = undefined
+	viewImageUrl = AppConsts.remoteServiceBaseUrl + '/UploadImage/GetImageProduct'
+    newlistProductImage = [];
+    
 
     constructor(
         injector: Injector,
-        private _productsServiceProxy: ProductsServiceProxy
+        private _productsServiceProxy: ProductsServiceProxy,
+        private _brandsServiceProxy: BrandsServiceProxy,
+        private _categoriesServiceProxy: CategoriesServiceProxy,
     ) {
         super(injector);
     }
@@ -74,9 +86,13 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
 
     save(): void {
             this.saving = true;
-            
-			
-			
+            this.listUrlImage.forEach(e => {
+                this.listProductImage.url = e.url;
+                this.listProductImage.name = e.name;
+                this.newlistProductImage.push(this.listProductImage)
+            });
+            this.product.listProductImage = this.newlistProductImage;
+            console.log(this.product)
             this._productsServiceProxy.createOrEdit(this.product)
              .pipe(finalize(() => { this.saving = false;}))
              .subscribe(() => {
@@ -86,21 +102,7 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
              });
     }
 
-    openSelectImageModal() {
-        this.productImageLookupTableModal.id = this.product.imageId;
-        this.productImageLookupTableModal.displayName = this.imageName;
-        this.productImageLookupTableModal.show();
-    }
-    openSelectBrandModal() {
-        this.productBrandLookupTableModal.id = this.product.brandId;
-        this.productBrandLookupTableModal.displayName = this.brandName;
-        this.productBrandLookupTableModal.show();
-    }
-    openSelectCategoryModal() {
-        this.productCategoryLookupTableModal.id = this.product.categoryId;
-        this.productCategoryLookupTableModal.displayName = this.categoryName;
-        this.productCategoryLookupTableModal.show();
-    }
+    
 
 
     setImageIdNull() {
@@ -116,33 +118,55 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
         this.categoryName = '';
     }
 
-
-    getNewImageId() {
-        this.product.imageId = this.productImageLookupTableModal.id;
-        this.imageName = this.productImageLookupTableModal.displayName;
-    }
-    getNewBrandId() {
-        this.product.brandId = this.productBrandLookupTableModal.id;
-        this.brandName = this.productBrandLookupTableModal.displayName;
-    }
-    getNewCategoryId() {
-        this.product.categoryId = this.productCategoryLookupTableModal.id;
-        this.categoryName = this.productCategoryLookupTableModal.displayName;
-    }
-
-
-
-
-
-
-
-
     close(): void {
         this.active = false;
         this.modal.hide();
+        this.listUrlImage = []
     }
     
      ngOnInit(): void {
-        
+		this.modeImage = ModeImage.AddNew
+        this._brandsServiceProxy.getAllForProduct().subscribe(result => {
+            this.listBrand = result
+        });
+        this._categoriesServiceProxy.getAllForProduct().subscribe(result => {
+            this.listCategory = result
+        });
      }    
+
+     changeMainImage(event) {
+		if (event) {
+            // this.listUrlImage = event
+			// this.singleUploadImage.previewUrl = event.url
+		} else {
+            // this.listUrlImage = undefined    
+			// this.singleUploadImage.previewUrl = undefined
+		}
+	}
+    uploadFileWhenEdit(files: FileList) {
+		this.newUploadImage.uploadImageWhenEdit(files, this.urlUploadAndCreate, this.newProductId.toString()).subscribe((result) => {
+			if (result instanceof HttpResponse) {
+				if (result.status == 200) {
+					let srcImageUploaded = (result.body as any).result
+					// this.srcImageUploadSuccess.emit(srcImageUploaded)
+
+					// this._sellingProductsServiceProxy.getPathFolderForProduct(this.newProductId).subscribe((pathFolder) => {
+					// 	let pathTenant = pathFolder.pathTenantFolder
+					// 	let pathStore = pathFolder.pathStoreFolder
+					// 	let pathProduct = pathFolder.pathProductFolder
+					// 	srcImageUploaded.forEach((item) => {
+					// 		var src = this.viewImageUrl + '?pathTenant=' + pathTenant + '&pathStore=' + pathStore + '&pathProduct=' + pathProduct + '&fileName=' + item.imageLink
+					// 		this.listUrlImage.push({
+					// 			id: item.id,
+					// 			url: src,
+					// 		})
+					// 	})
+					// })
+
+					this.notify.success(this.l('UploadImageSuccess'), '', { timeOut: 5000, extendedTimeOut: 1000, positionClass: 'toast-bottom-left' })
+				}
+			}
+		})
+	}
+
 }

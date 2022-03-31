@@ -36,7 +36,7 @@ export class BrandsComponent extends AppComponentBase {
     nameFilter = '';
     countryFilter = '';
     descriptionFilter = '';
-        imageNameFilter = '';
+    imageNameFilter = '';
 
 
 

@@ -1,6 +1,8 @@
 ﻿using System;
 using Abp.Application.Services.Dto;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using ERP.Common.Dtos;
 
 namespace ERP.Entity.Dtos
 {
@@ -23,6 +25,8 @@ namespace ERP.Entity.Dtos
         public int InStock { get; set; }
 
         public string Description { get; set; }
+        public virtual string Color { get; set; }
+        public virtual int? Size { get; set; }
 
         [StringLength(ProductConsts.MaxTitleLength, MinimumLength = ProductConsts.MinTitleLength)]
         public string Title { get; set; }
@@ -33,5 +37,6 @@ namespace ERP.Entity.Dtos
 
         public long? CategoryId { get; set; }
 
+        public List<CreateOrEditProductImageDto> ListProductImage { get; set; }
     }
 }

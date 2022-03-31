@@ -1,0 +1,16 @@
+<div class="image-input image-input-outline" id="kt_image_1">
+	<div class="image-input-wrapper" [ngStyle]="{'background-image': previewUrl ? 'url('+ previewUrl +')' : 'none'}">
+	</div>
+
+	<label [hidden]="disabled" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title=""
+		data-original-title="Change avatar">
+		<i class="fa fa-pen icon-sm text-muted"></i>
+		<input #inputFile type="file" id="file" name="profile_avatar" accept=".png, .jpg, .jpeg" (click)="inputFile.value = null" value="" (change)="fileProgress($event)" />
+		<input type="hidden" name="profile_avatar_remove" />
+	</label>
+
+	<span [hidden]="disabled" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar"
+		[ngStyle]="{'display': previewUrl!= null ? 'flex' : 'none' }" (click)="deleteImage()">
+		<i class="ki ki-bold-close icon-xs text-muted"></i>
+	</span>
+</div>

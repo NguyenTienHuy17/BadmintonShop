@@ -11,7 +11,6 @@ namespace ERP.Entity.Dtos
 
         public string Description { get; set; }
 
-        public long? ImageId { get; set; }
 
     }
 }

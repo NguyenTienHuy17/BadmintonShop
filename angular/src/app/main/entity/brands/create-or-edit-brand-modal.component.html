@@ -19,7 +19,7 @@
                         <div class="input-group">
                             <input class="form-control" id="ImageName" name="imageName" [(ngModel)]="imageName" type="text" disabled>     
                             <div class="input-group-append">
-                                <button class="btn btn-primary blue" (click)="openSelectImageModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                                <button class="btn btn-primary blue" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
                             </div> <div class="input-group-prepend">
                                 <button class="btn btn-danger btn-icon" type="button" (click)="setImageIdNull()"><i class="fa fa-times"></i></button>
                             </div>
@@ -54,7 +54,5 @@
                 </div>
             </form>
         </div>
-    </div>
-<brandImageLookupTableModal #brandImageLookupTableModal (modalSave)="getNewImageId()"></brandImageLookupTableModal>
-		 
+    </div>		 
 </div>

@@ -22,10 +22,5 @@ namespace ERP.Entity
 
         public virtual string Description { get; set; }
 
-        public virtual long? ImageId { get; set; }
-
-        [ForeignKey("ImageId")]
-        public Image ImageFk { get; set; }
-
     }
 }

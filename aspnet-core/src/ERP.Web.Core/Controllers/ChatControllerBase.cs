@@ -7,12 +7,15 @@ using Abp.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using ERP.Chat;
 using ERP.Storage;
+using System.Collections.Generic;
+using System;
 
 namespace ERP.Web.Controllers
 {
     public class ChatControllerBase : ERPControllerBase
     {
-        protected readonly IBinaryObjectManager BinaryObjectManager;
+		
+		protected readonly IBinaryObjectManager BinaryObjectManager;
         protected readonly IChatMessageManager ChatMessageManager;
 
         public ChatControllerBase(IBinaryObjectManager binaryObjectManager, IChatMessageManager chatMessageManager)
@@ -64,5 +67,5 @@ namespace ERP.Web.Controllers
                 return Json(new AjaxResponse(new ErrorInfo(ex.Message)));
             }
         }
-    }
+	}
 }

@@ -21,7 +21,5 @@ namespace ERP.Entity
 
         Task<FileDto> GetBrandsToExcel(GetAllBrandsForExcelInput input);
 
-        Task<PagedResultDto<BrandImageLookupTableDto>> GetAllImageForLookupTable(GetAllForLookupTableInput input);
-
     }
 }

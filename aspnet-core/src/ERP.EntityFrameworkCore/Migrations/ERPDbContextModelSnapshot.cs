@@ -1228,77 +1228,9 @@ namespace ERP.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ImageId");
-
                     b.HasIndex("TenantId");
 
                     b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("ERP.Common.Color", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ColorCode");
-
-                    b.Property<string>("ColorName")
-                        .IsRequired()
-                        .HasMaxLength(32);
-
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<long?>("CreatorUserId");
-
-                    b.Property<long?>("DeleterUserId");
-
-                    b.Property<DateTime?>("DeletionTime");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime");
-
-                    b.Property<long?>("LastModifierUserId");
-
-                    b.Property<int?>("TenantId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TenantId");
-
-                    b.ToTable("Colors");
-                });
-
-            modelBuilder.Entity("ERP.Common.ColorItem", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long?>("ColorId");
-
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<long?>("CreatorUserId");
-
-                    b.Property<DateTime?>("LastModificationTime");
-
-                    b.Property<long?>("LastModifierUserId");
-
-                    b.Property<long?>("ProductId");
-
-                    b.Property<int?>("TenantId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ColorId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("TenantId");
-
-                    b.ToTable("ColorItems");
                 });
 
             modelBuilder.Entity("ERP.Common.Discount", b =>
@@ -1339,45 +1271,6 @@ namespace ERP.Migrations
                     b.ToTable("Discounts");
                 });
 
-            modelBuilder.Entity("ERP.Common.Image", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<long?>("CreatorUserId");
-
-                    b.Property<long?>("DeleterUserId");
-
-                    b.Property<DateTime?>("DeletionTime");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(1024);
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime");
-
-                    b.Property<long?>("LastModifierUserId");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(64);
-
-                    b.Property<int?>("TenantId");
-
-                    b.Property<string>("Url")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TenantId");
-
-                    b.ToTable("Images");
-                });
-
             modelBuilder.Entity("ERP.Common.ProductImage", b =>
                 {
                     b.Property<long>("Id")
@@ -1388,91 +1281,31 @@ namespace ERP.Migrations
 
                     b.Property<long?>("CreatorUserId");
 
-                    b.Property<long?>("ImageId");
+                    b.Property<string>("Description")
+                        .HasMaxLength(1024);
 
                     b.Property<DateTime?>("LastModificationTime");
 
                     b.Property<long?>("LastModifierUserId");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(64);
+
                     b.Property<long?>("ProductId");
 
                     b.Property<int?>("TenantId");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Url")
+                        .IsRequired();
 
-                    b.HasIndex("ImageId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
                     b.HasIndex("TenantId");
 
                     b.ToTable("ProductImages");
-                });
-
-            modelBuilder.Entity("ERP.Common.Size", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<long?>("CreatorUserId");
-
-                    b.Property<long?>("DeleterUserId");
-
-                    b.Property<DateTime?>("DeletionTime");
-
-                    b.Property<string>("DisplayName")
-                        .IsRequired()
-                        .HasMaxLength(16);
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime");
-
-                    b.Property<long?>("LastModifierUserId");
-
-                    b.Property<int>("SizeNum");
-
-                    b.Property<int?>("TenantId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TenantId");
-
-                    b.ToTable("Sizes");
-                });
-
-            modelBuilder.Entity("ERP.Common.SizeItem", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<long?>("CreatorUserId");
-
-                    b.Property<DateTime?>("LastModificationTime");
-
-                    b.Property<long?>("LastModifierUserId");
-
-                    b.Property<long?>("ProductId");
-
-                    b.Property<long?>("SizeId");
-
-                    b.Property<int?>("TenantId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("SizeId");
-
-                    b.HasIndex("TenantId");
-
-                    b.ToTable("SizeItems");
                 });
 
             modelBuilder.Entity("ERP.Common.Status", b =>
@@ -1530,8 +1363,6 @@ namespace ERP.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<long?>("ImageId");
-
                     b.Property<bool>("IsDeleted");
 
                     b.Property<DateTime?>("LastModificationTime");
@@ -1545,8 +1376,6 @@ namespace ERP.Migrations
                     b.Property<int?>("TenantId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ImageId");
 
                     b.HasIndex("TenantId");
 
@@ -1566,6 +1395,8 @@ namespace ERP.Migrations
                     b.Property<string>("Code")
                         .HasMaxLength(128);
 
+                    b.Property<string>("Color");
+
                     b.Property<DateTime>("CreationTime");
 
                     b.Property<long?>("CreatorUserId");
@@ -1575,8 +1406,6 @@ namespace ERP.Migrations
                     b.Property<DateTime?>("DeletionTime");
 
                     b.Property<string>("Description");
-
-                    b.Property<long?>("ImageId");
 
                     b.Property<int>("InStock");
 
@@ -1596,6 +1425,8 @@ namespace ERP.Migrations
 
                     b.Property<long>("Price");
 
+                    b.Property<int?>("Size");
+
                     b.Property<int?>("TenantId");
 
                     b.Property<string>("Title")
@@ -1606,8 +1437,6 @@ namespace ERP.Migrations
                     b.HasIndex("BrandId");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("ImageId");
 
                     b.HasIndex("TenantId");
 
@@ -2117,51 +1946,11 @@ namespace ERP.Migrations
                         .HasForeignKey("LastModifierUserId");
                 });
 
-            modelBuilder.Entity("ERP.Common.Category", b =>
-                {
-                    b.HasOne("ERP.Common.Image", "ImageFk")
-                        .WithMany()
-                        .HasForeignKey("ImageId");
-                });
-
-            modelBuilder.Entity("ERP.Common.ColorItem", b =>
-                {
-                    b.HasOne("ERP.Common.Color", "ColorFk")
-                        .WithMany()
-                        .HasForeignKey("ColorId");
-
-                    b.HasOne("ERP.Entity.Product", "ProductFk")
-                        .WithMany()
-                        .HasForeignKey("ProductId");
-                });
-
             modelBuilder.Entity("ERP.Common.ProductImage", b =>
                 {
-                    b.HasOne("ERP.Common.Image", "ImageFk")
-                        .WithMany()
-                        .HasForeignKey("ImageId");
-
                     b.HasOne("ERP.Entity.Product", "ProductFk")
                         .WithMany()
                         .HasForeignKey("ProductId");
-                });
-
-            modelBuilder.Entity("ERP.Common.SizeItem", b =>
-                {
-                    b.HasOne("ERP.Entity.Product", "ProductFk")
-                        .WithMany()
-                        .HasForeignKey("ProductId");
-
-                    b.HasOne("ERP.Common.Size", "SizeFk")
-                        .WithMany()
-                        .HasForeignKey("SizeId");
-                });
-
-            modelBuilder.Entity("ERP.Entity.Brand", b =>
-                {
-                    b.HasOne("ERP.Common.Image", "ImageFk")
-                        .WithMany()
-                        .HasForeignKey("ImageId");
                 });
 
             modelBuilder.Entity("ERP.Entity.Product", b =>
@@ -2173,10 +1962,6 @@ namespace ERP.Migrations
                     b.HasOne("ERP.Common.Category", "CategoryFk")
                         .WithMany()
                         .HasForeignKey("CategoryId");
-
-                    b.HasOne("ERP.Common.Image", "ImageFk")
-                        .WithMany()
-                        .HasForeignKey("ImageId");
                 });
 
             modelBuilder.Entity("ERP.MultiTenancy.Payments.SubscriptionPayment", b =>
