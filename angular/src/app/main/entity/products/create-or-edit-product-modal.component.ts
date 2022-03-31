@@ -20,9 +20,11 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
    
     @ViewChild('createOrEditModal', { static: true }) modal: ModalDirective;
     @ViewChild('singleUploadImage', { static: true }) singleUploadImage: UploadSingleImageComponent
-	@ViewChild('newUploadImageComponent', { static: true }) newUploadImageComponent: NewUploadImageComponent
+	@ViewChild('newUploadImage', { static: true }) newUploadImage: NewUploadImageComponent
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
+
+	uploadUrl = AppConsts.remoteServiceBaseUrl + '/UploadImage/UploadMultipleFileToServer'
 
     active = false;
     saving = false;
@@ -91,17 +93,29 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
                 this.newlistProductImage.push(this.listProductImage)
             });
             this.product.listProductImage = this.newlistProductImage;
-            console.log(this.product)
             this._productsServiceProxy.createOrEdit(this.product)
              .pipe(finalize(() => { this.saving = false;}))
-             .subscribe(() => {
+             .subscribe((result) => {
+                this.newProductId = result
+                this.uploadFileToServer()
                 this.notify.info(this.l('SavedSuccessfully'));
                 this.close();
                 this.modalSave.emit(null);
              });
     }
 
-    
+    async uploadFileToServer(): Promise<void> {
+		var response = await this.newUploadImage.uploadImage(this.uploadUrl, this.newProductId.toString()).toPromise()
+		if (response instanceof HttpResponse) {
+			if (response.status == 200) {
+				let result = (response.body as any).result
+				this.product.listProductImage = result
+				this.product.id = this.newProductId
+			} else {
+				this.notify.error(this.l('UploadImageFails'), '', { timeOut: 5000, extendedTimeOut: 1000, positionClass: 'toast-bottom-left' })
+			}
+		}
+	}
 
 
     setImageIdNull() {
@@ -124,7 +138,7 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
     }
     
      ngOnInit(): void {
-        console.log("newUploadImage",this.newUploadImageComponent)
+        console.log("newUploadImage",this.newUploadImage)
         console.log("singleUploadImage",this.singleUploadImage)
         console.log("modal",this.modal)
 		this.modeImage = ModeImage.AddNew
@@ -138,7 +152,7 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
 
      changeMainImage(event) {
 		if (event) {
-            // this.listUrlImage = event
+            this.listUrlImage = event
 			// this.singleUploadImage.previewUrl = event.url
 		} else {
             // this.listUrlImage = undefined    
@@ -146,7 +160,7 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
 		}
 	}
     uploadFileWhenEdit(files: FileList) {
-		this.newUploadImageComponent.uploadImageWhenEdit(files, this.urlUploadAndCreate, this.newProductId.toString()).subscribe((result) => {
+		this.newUploadImage.uploadImageWhenEdit(files, this.urlUploadAndCreate, this.newProductId.toString()).subscribe((result) => {
 			if (result instanceof HttpResponse) {
 				if (result.status == 200) {
 					let srcImageUploaded = (result.body as any).result

@@ -1,7 +1,7 @@
 ﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form *ngIf="active" #productForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+            <form #productForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
                 <div class="modal-header">
                     <h4 class="modal-title">
                         <span *ngIf="product.id">{{l("EditProduct")}}</span>
@@ -85,18 +85,16 @@
 								    <validation-messages [formCtrl]="Product_Title"></validation-messages>
 								</div>
 
-                                <app-newUploadImage #newUploadImageComponent [modeImage]="modeImage" [listUrlImage]="listUrlImage" (filesNeedUpload)="uploadFileWhenEdit($event)"
+								<app-newUploadImage #newUploadImage [modeImage]="modeImage" [listUrlImage]="listUrlImage" (filesNeedUpload)="uploadFileWhenEdit($event)"
 												(changeMainImage)="changeMainImage($event)">
 											</app-newUploadImage>
-					
-
-                </div>
-                <div class="modal-footer">
-                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
-                    <button type="submit" class="btn btn-primary blue" [disabled]="!productForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
-                </div>
-            </form>
-        </div>
-    </div>
-		 
-</div>
+							</div>
+							<div class="modal-footer">
+								<button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+								<button type="submit" class="btn btn-primary blue" [disabled]="!productForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+							</div>
+						</form>
+					</div>
+				</div>
+				
+			</div>

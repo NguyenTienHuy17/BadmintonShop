@@ -197,7 +197,7 @@ namespace ERP.Entity
 
                 productId = await _productRepository.InsertAndGetIdAsync(product);
 
-                //await CreateProductImage(productId, input.ListProductImage);
+                await CreateProductImage(productId, input.ListProductImage);
             }
             catch (Exception ex)
             {
@@ -212,6 +212,7 @@ namespace ERP.Entity
         {
             var product = await _productRepository.FirstOrDefaultAsync((long)input.Id);
             ObjectMapper.Map(input, product);
+            await CreateProductImage((long)input.Id, input.ListProductImage);
             return (long)input.Id;
         }
 
