@@ -1,7 +1,7 @@
 ﻿import { Component, Injector, Output, EventEmitter, OnInit, ElementRef, ViewChild} from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
-import { finalize } from 'rxjs/operators';
-import { ProductsServiceProxy, CreateOrEditProductDto, CreateOrEditProductImageDto, BrandsServiceProxy, GetBrandForViewDto, Brand, Category, CategoriesServiceProxy } from '@shared/service-proxies/service-proxies';
+import { catchError, finalize } from 'rxjs/operators';
+import { ProductsServiceProxy, CreateOrEditProductDto, CreateOrEditProductImageDto, BrandsServiceProxy, GetBrandForViewDto, Brand, Category, CategoriesServiceProxy, ProductImagesServiceProxy, ProductImageUrl } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import * as moment from 'moment';
 import { AppConsts } from '@shared/AppConsts';
@@ -39,16 +39,17 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
 
     modeImage: ModeImage;
 	listUrlImage: ImageProduct[] = []
-    
 	urlUploadAndCreate = AppConsts.remoteServiceBaseUrl + '/UploadImage/UploadMultipleFileToServerAndCreate'
 	newProductId: number = undefined
 	viewImageUrl = AppConsts.remoteServiceBaseUrl + '/UploadImage/GetImageProduct'
     newlistProductImage = [];
+	productImage: ProductImageUrl = new ProductImageUrl()
     
 
     constructor(
         injector: Injector,
         private _productsServiceProxy: ProductsServiceProxy,
+        private _productImagesServiceProxy: ProductImagesServiceProxy,
         private _brandsServiceProxy: BrandsServiceProxy,
         private _categoriesServiceProxy: CategoriesServiceProxy,
     ) {
@@ -56,8 +57,7 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
     }
     
     show(productId?: number): void {
-    
-
+        this.listUrlImage = []
         if (!productId) {
             this.product = new CreateOrEditProductDto();
             this.product.id = productId;
@@ -71,13 +71,20 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
         } else {
             this._productsServiceProxy.getProductForEdit(productId).subscribe(result => {
                 this.product = result.product;
-
                 this.imageName = result.imageName;
                 this.brandName = result.brandName;
                 this.categoryName = result.categoryName;
-
-
                 this.active = true;
+            });
+
+            this._productImagesServiceProxy.getListProductImageUrlByProductId(productId).subscribe(result => {
+                console.log(result)
+                 result.forEach(e => {
+                    this.listUrlImage.push({
+						id: e.id,
+						url: e.url.replace("G:/HuySourceCode/BadmintonShop/angular/src/","http://localhost:4200/")
+					})
+                })
                 this.modal.show();
             });
         }
@@ -86,37 +93,45 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
     }
 
     save(): void {
-            this.saving = true;
-            this.listUrlImage.forEach(e => {
-                this.listProductImage.url = e.url;
-                this.listProductImage.name = e.name;
-                this.newlistProductImage.push(this.listProductImage)
+        this.saving = true;
+        this.listUrlImage.forEach(e => {
+            this.listProductImage.url = e.url;
+            this.listProductImage.name = e.name;
+            this.newlistProductImage.push(this.listProductImage)
+        });
+        this._productsServiceProxy.createOrEdit(this.product)
+            .pipe(finalize(() => { this.saving = false;}))
+            .subscribe(async (result) => {
+            this.newProductId = result
+
+            await this.uploadFileToServer()
+
+            this.notify.info(this.l('SavedSuccessfully'));
+            this.close();
+            this.modalSave.emit(null);
+            this._productsServiceProxy.createProductImage(this.productImage).pipe(
+                catchError((err, caught): any => {
+                    this.notify.error(this.l('Ntf_AddedFailed', this.l('Ntf_Product')), '', { timeOut: 5000, extendedTimeOut: 1000, positionClass: 'toast-bottom-left' })
+                })
+            )
+            .subscribe(() => {
+                this.notify.success(this.l('Ntf_AddedSuccessfully', this.l('Ntf_Product')), '', { timeOut: 5000, extendedTimeOut: 1000, positionClass: 'toast-bottom-left' })
+            })
             });
-            this.product.listProductImage = this.newlistProductImage;
-            this._productsServiceProxy.createOrEdit(this.product)
-             .pipe(finalize(() => { this.saving = false;}))
-             .subscribe((result) => {
-                this.newProductId = result
-                this.uploadFileToServer()
-                this.notify.info(this.l('SavedSuccessfully'));
-                this.close();
-                this.modalSave.emit(null);
-             });
     }
 
-    async uploadFileToServer(): Promise<void> {
+	async uploadFileToServer(): Promise<void> {
 		var response = await this.newUploadImage.uploadImage(this.uploadUrl, this.newProductId.toString()).toPromise()
 		if (response instanceof HttpResponse) {
 			if (response.status == 200) {
 				let result = (response.body as any).result
-				this.product.listProductImage = result
-				this.product.id = this.newProductId
+				this.productImage.listImageUrl = result
+				this.productImage.productId = this.newProductId
 			} else {
 				this.notify.error(this.l('UploadImageFails'), '', { timeOut: 5000, extendedTimeOut: 1000, positionClass: 'toast-bottom-left' })
 			}
 		}
 	}
-
 
     setImageIdNull() {
         this.product.imageId = null;
@@ -137,10 +152,7 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
         this.listUrlImage = []
     }
     
-     ngOnInit(): void {
-        console.log("newUploadImage",this.newUploadImage)
-        console.log("singleUploadImage",this.singleUploadImage)
-        console.log("modal",this.modal)
+    ngOnInit(): void {
 		this.modeImage = ModeImage.AddNew
         this._brandsServiceProxy.getAllForProduct().subscribe(result => {
             this.listBrand = result
@@ -148,9 +160,9 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
         this._categoriesServiceProxy.getAllForProduct().subscribe(result => {
             this.listCategory = result
         });
-     }    
+    }    
 
-     changeMainImage(event) {
+    changeMainImage(event) {
 		if (event) {
             this.listUrlImage = event
 			// this.singleUploadImage.previewUrl = event.url

@@ -197,7 +197,6 @@ namespace ERP.Entity
 
                 productId = await _productRepository.InsertAndGetIdAsync(product);
 
-                await CreateProductImage(productId, input.ListProductImage);
             }
             catch (Exception ex)
             {
@@ -212,7 +211,6 @@ namespace ERP.Entity
         {
             var product = await _productRepository.FirstOrDefaultAsync((long)input.Id);
             ObjectMapper.Map(input, product);
-            await CreateProductImage((long)input.Id, input.ListProductImage);
             return (long)input.Id;
         }
 
@@ -363,15 +361,30 @@ namespace ERP.Entity
         //    );
         //}
 
-        private async Task CreateProductImage(long productId, List<CreateOrEditProductImageDto> listProductImage)
+        public async Task CreateProductImage(ProductImageUrl input)
         {
-            foreach (var prod in listProductImage)
+            for (int i = 0; i < input.ListImageUrl.Count; i++)
             {
-                var productImage = ObjectMapper.Map<ProductImage>(prod);
+                try
+                {
+                    var productImage = new ProductImage
+                    {
+                        ProductId = input.ProductId,
+                        Url = input.ListImageUrl[i],
+                    };
 
-                productImage.ProductId = productId;
+                    productImage.ProductId = input.ProductId;
+                    productImage.Name = productImage.Url?.Substring(productImage.Url.LastIndexOf("\\") + 1);
+                    productImage.Url = input.ListImageUrl[i].Replace(@"\", @"/");
 
-                await _productImageRepository.InsertAsync(productImage);
+                    await _productImageRepository.InsertAsync(productImage);
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
+                
             }
         }
 
