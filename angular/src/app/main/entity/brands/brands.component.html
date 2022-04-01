@@ -107,6 +107,9 @@
                                         {{l('Country')}}
                                         <p-sortIcon field="brand.country"></p-sortIcon>
                                     </th>
+                                    <th style="width: 150px">
+                                        {{l('Image')}}
+                                    </th>
                                     <th style="width: 150px" pSortableColumn="description">
                                         {{l('Description')}}
                                         <p-sortIcon field="brand.description"></p-sortIcon>
@@ -149,6 +152,9 @@
                                     <td style="width:150px">
 											<span class="ui-column-title"> {{l('Country')}}</span>
 											{{record.brand.country}}
+										</td>
+                                    <td style="width:150px">
+                                        <img [src]="defaultRouter + record.brand.imageUrl" width="150" />
 										</td>
                                     <td style="width:150px">
 											<span class="ui-column-title"> {{l('Description')}}</span>

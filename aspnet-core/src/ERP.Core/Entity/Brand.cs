@@ -21,6 +21,8 @@ namespace ERP.Entity
         public virtual string Country { get; set; }
 
         public virtual string Description { get; set; }
+        public virtual string ImageUrl { get; set; }
+
 
     }
 }

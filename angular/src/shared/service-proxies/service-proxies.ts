@@ -16061,6 +16061,7 @@ export class BrandDto implements IBrandDto {
     name!: string | undefined;
     country!: string | undefined;
     description!: string | undefined;
+    imageUrl!: string | undefined;
     id!: number | undefined;
 
     constructor(data?: IBrandDto) {
@@ -16077,6 +16078,7 @@ export class BrandDto implements IBrandDto {
             this.name = data["name"];
             this.country = data["country"];
             this.description = data["description"];
+            this.imageUrl = data["imageUrl"];
             this.id = data["id"];
         }
     }
@@ -16093,6 +16095,7 @@ export class BrandDto implements IBrandDto {
         data["name"] = this.name;
         data["country"] = this.country;
         data["description"] = this.description;
+        data["imageUrl"] = this.imageUrl;
         data["id"] = this.id;
         return data; 
     }
@@ -16102,6 +16105,7 @@ export interface IBrandDto {
     name: string | undefined;
     country: string | undefined;
     description: string | undefined;
+    imageUrl: string | undefined;
     id: number | undefined;
 }
 
@@ -16149,7 +16153,7 @@ export class CreateOrEditBrandDto implements ICreateOrEditBrandDto {
     name!: string;
     country!: string;
     description!: string | undefined;
-    imageId!: number | undefined;
+    imageUrl!: string | undefined;
     id!: number | undefined;
 
     constructor(data?: ICreateOrEditBrandDto) {
@@ -16166,7 +16170,7 @@ export class CreateOrEditBrandDto implements ICreateOrEditBrandDto {
             this.name = data["name"];
             this.country = data["country"];
             this.description = data["description"];
-            this.imageId = data["imageId"];
+            this.imageUrl = data["imageUrl"];
             this.id = data["id"];
         }
     }
@@ -16183,7 +16187,7 @@ export class CreateOrEditBrandDto implements ICreateOrEditBrandDto {
         data["name"] = this.name;
         data["country"] = this.country;
         data["description"] = this.description;
-        data["imageId"] = this.imageId;
+        data["imageUrl"] = this.imageUrl;
         data["id"] = this.id;
         return data; 
     }
@@ -16193,7 +16197,7 @@ export interface ICreateOrEditBrandDto {
     name: string;
     country: string;
     description: string | undefined;
-    imageId: number | undefined;
+    imageUrl: string | undefined;
     id: number | undefined;
 }
 
@@ -16202,6 +16206,7 @@ export class Brand implements IBrand {
     name!: string;
     country!: string;
     description!: string | undefined;
+    imageUrl!: string | undefined;
     isDeleted!: boolean | undefined;
     deleterUserId!: number | undefined;
     deletionTime!: moment.Moment | undefined;
@@ -16226,6 +16231,7 @@ export class Brand implements IBrand {
             this.name = data["name"];
             this.country = data["country"];
             this.description = data["description"];
+            this.imageUrl = data["imageUrl"];
             this.isDeleted = data["isDeleted"];
             this.deleterUserId = data["deleterUserId"];
             this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
@@ -16250,6 +16256,7 @@ export class Brand implements IBrand {
         data["name"] = this.name;
         data["country"] = this.country;
         data["description"] = this.description;
+        data["imageUrl"] = this.imageUrl;
         data["isDeleted"] = this.isDeleted;
         data["deleterUserId"] = this.deleterUserId;
         data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
@@ -16267,6 +16274,7 @@ export interface IBrand {
     name: string;
     country: string;
     description: string | undefined;
+    imageUrl: string | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;

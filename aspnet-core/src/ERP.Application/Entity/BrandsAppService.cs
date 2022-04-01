@@ -53,6 +53,7 @@ namespace ERP.Entity
                              o.Name,
                              o.Country,
                              o.Description,
+                             o.ImageUrl,
                              Id = o.Id,
                          };
 
@@ -71,6 +72,7 @@ namespace ERP.Entity
                         Name = o.Name,
                         Country = o.Country,
                         Description = o.Description,
+                        ImageUrl = o.ImageUrl,
                         Id = o.Id,
                     },
                 };
@@ -162,6 +164,7 @@ namespace ERP.Entity
                                  Name = o.Name,
                                  Country = o.Country,
                                  Description = o.Description,
+                                 ImageUrl = o.ImageUrl,
                                  Id = o.Id
                              },
                          });

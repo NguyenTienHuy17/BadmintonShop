@@ -10,6 +10,7 @@ namespace ERP.Entity.Dtos
         public string Country { get; set; }
 
         public string Description { get; set; }
+        public string ImageUrl { get; set; }
 
 
     }

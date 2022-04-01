@@ -37,18 +37,11 @@ export class BrandsComponent extends AppComponentBase {
     countryFilter = '';
     descriptionFilter = '';
     imageNameFilter = '';
-
-
-
-
-
+    defaultRouter ='../../../../assets/common/images/';
 
     constructor(
         injector: Injector,
         private _brandsServiceProxy: BrandsServiceProxy,
-        private _notifyService: NotifyService,
-        private _tokenAuth: TokenAuthServiceProxy,
-        private _activatedRoute: ActivatedRoute,
         private _fileDownloadService: FileDownloadService
     ) {
         super(injector);
@@ -74,6 +67,7 @@ export class BrandsComponent extends AppComponentBase {
         ).subscribe(result => {
             this.primengTableHelper.totalRecordsCount = result.totalCount;
             this.primengTableHelper.records = result.items;
+            console.log(result.items)
             this.primengTableHelper.hideLoadingIndicator();
         });
     }
