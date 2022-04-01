@@ -212,5 +212,9 @@ namespace ERP.Common
             );
         }
 
+        public async Task<List<ProductImage>> GetListProductImageUrlByProductId(long productId)
+        {
+            return await _productImageRepository.GetAllListAsync(x => x.ProductId == productId);
+        }
     }
 }

@@ -72,7 +72,7 @@ export class NewUploadImageComponent extends AppComponentBase implements OnInit,
 		}
 	}
 
-	handleFileInput(files: FileList) {
+	handleFileInput(files: any) {
 		// Add mode
 		if (this.modeImage == ModeImage.AddNew) {
 			if (files != null) {
@@ -98,6 +98,7 @@ export class NewUploadImageComponent extends AppComponentBase implements OnInit,
 						temps.push({
 							id: maxId,
 							url: src,
+							name: files[i].name 
 						})
 						tempFiles.push(files[i])
 					} else {
@@ -152,7 +153,6 @@ export class NewUploadImageComponent extends AppComponentBase implements OnInit,
 	}
 
 	drop(event: CdkDragDrop<any>) {
-		console.log(event)
 		if (event.previousContainer.data['index'] != event.container.data['index']) {
 			this.listUrlImage[event.previousContainer.data['index']] = { ...event.container.data['item'] }
 			this.listUrlImage[event.container.data['index']] = { ...event.previousContainer.data['item'] }

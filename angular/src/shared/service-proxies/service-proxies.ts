@@ -8957,6 +8957,64 @@ export class ProductImagesServiceProxy {
         }
         return _observableOf<PagedResultDtoOfProductImageProductLookupTableDto>(<any>null);
     }
+
+    /**
+     * @param productId (optional) 
+     * @return Success
+     */
+    getListProductImageUrlByProductId(productId: number | null | undefined): Observable<ProductImage[]> {
+        let url_ = this.baseUrl + "/api/services/app/ProductImages/GetListProductImageUrlByProductId?";
+        if (productId !== undefined)
+            url_ += "productId=" + encodeURIComponent("" + productId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetListProductImageUrlByProductId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetListProductImageUrlByProductId(<any>response_);
+                } catch (e) {
+                    return <Observable<ProductImage[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProductImage[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetListProductImageUrlByProductId(response: HttpResponseBase): Observable<ProductImage[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ProductImage.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProductImage[]>(<any>null);
+    }
 }
 
 @Injectable()
@@ -9371,6 +9429,58 @@ export class ProductsServiceProxy {
             }));
         }
         return _observableOf<FileDto>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    createProductImage(input: ProductImageUrl | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Products/CreateProductImage";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateProductImage(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateProductImage(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateProductImage(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
     }
 }
 
@@ -23118,6 +23228,202 @@ export interface IProductImageProductLookupTableDto {
     displayName: string | undefined;
 }
 
+export class ProductImage implements IProductImage {
+    tenantId!: number | undefined;
+    productId!: number | undefined;
+    productFk!: Product | undefined;
+    name!: string;
+    url!: string;
+    description!: string | undefined;
+    lastModificationTime!: moment.Moment | undefined;
+    lastModifierUserId!: number | undefined;
+    creationTime!: moment.Moment | undefined;
+    creatorUserId!: number | undefined;
+    id!: number | undefined;
+
+    constructor(data?: IProductImage) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.tenantId = data["tenantId"];
+            this.productId = data["productId"];
+            this.productFk = data["productFk"] ? Product.fromJS(data["productFk"]) : <any>undefined;
+            this.name = data["name"];
+            this.url = data["url"];
+            this.description = data["description"];
+            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): ProductImage {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProductImage();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tenantId"] = this.tenantId;
+        data["productId"] = this.productId;
+        data["productFk"] = this.productFk ? this.productFk.toJSON() : <any>undefined;
+        data["name"] = this.name;
+        data["url"] = this.url;
+        data["description"] = this.description;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface IProductImage {
+    tenantId: number | undefined;
+    productId: number | undefined;
+    productFk: Product | undefined;
+    name: string;
+    url: string;
+    description: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class Product implements IProduct {
+    tenantId!: number | undefined;
+    name!: string;
+    madeIn!: string;
+    code!: string | undefined;
+    price!: number | undefined;
+    inStock!: number | undefined;
+    description!: string | undefined;
+    color!: string | undefined;
+    size!: number | undefined;
+    title!: string | undefined;
+    brandId!: number | undefined;
+    brandFk!: Brand | undefined;
+    categoryId!: number | undefined;
+    categoryFk!: Category | undefined;
+    isDeleted!: boolean | undefined;
+    deleterUserId!: number | undefined;
+    deletionTime!: moment.Moment | undefined;
+    lastModificationTime!: moment.Moment | undefined;
+    lastModifierUserId!: number | undefined;
+    creationTime!: moment.Moment | undefined;
+    creatorUserId!: number | undefined;
+    id!: number | undefined;
+
+    constructor(data?: IProduct) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.tenantId = data["tenantId"];
+            this.name = data["name"];
+            this.madeIn = data["madeIn"];
+            this.code = data["code"];
+            this.price = data["price"];
+            this.inStock = data["inStock"];
+            this.description = data["description"];
+            this.color = data["color"];
+            this.size = data["size"];
+            this.title = data["title"];
+            this.brandId = data["brandId"];
+            this.brandFk = data["brandFk"] ? Brand.fromJS(data["brandFk"]) : <any>undefined;
+            this.categoryId = data["categoryId"];
+            this.categoryFk = data["categoryFk"] ? Category.fromJS(data["categoryFk"]) : <any>undefined;
+            this.isDeleted = data["isDeleted"];
+            this.deleterUserId = data["deleterUserId"];
+            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): Product {
+        data = typeof data === 'object' ? data : {};
+        let result = new Product();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tenantId"] = this.tenantId;
+        data["name"] = this.name;
+        data["madeIn"] = this.madeIn;
+        data["code"] = this.code;
+        data["price"] = this.price;
+        data["inStock"] = this.inStock;
+        data["description"] = this.description;
+        data["color"] = this.color;
+        data["size"] = this.size;
+        data["title"] = this.title;
+        data["brandId"] = this.brandId;
+        data["brandFk"] = this.brandFk ? this.brandFk.toJSON() : <any>undefined;
+        data["categoryId"] = this.categoryId;
+        data["categoryFk"] = this.categoryFk ? this.categoryFk.toJSON() : <any>undefined;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface IProduct {
+    tenantId: number | undefined;
+    name: string;
+    madeIn: string;
+    code: string | undefined;
+    price: number | undefined;
+    inStock: number | undefined;
+    description: string | undefined;
+    color: string | undefined;
+    size: number | undefined;
+    title: string | undefined;
+    brandId: number | undefined;
+    brandFk: Brand | undefined;
+    categoryId: number | undefined;
+    categoryFk: Category | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
 export class PagedResultDtoOfGetProductForViewDto implements IPagedResultDtoOfGetProductForViewDto {
     totalCount!: number | undefined;
     items!: GetProductForViewDto[] | undefined;
@@ -23440,6 +23746,54 @@ export interface ICreateOrEditProductDto {
     categoryId: number | undefined;
     listProductImage: CreateOrEditProductImageDto[] | undefined;
     id: number | undefined;
+}
+
+export class ProductImageUrl implements IProductImageUrl {
+    productId!: number | undefined;
+    listImageUrl!: string[] | undefined;
+
+    constructor(data?: IProductImageUrl) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.productId = data["productId"];
+            if (data["listImageUrl"] && data["listImageUrl"].constructor === Array) {
+                this.listImageUrl = [] as any;
+                for (let item of data["listImageUrl"])
+                    this.listImageUrl!.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): ProductImageUrl {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProductImageUrl();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["productId"] = this.productId;
+        if (this.listImageUrl && this.listImageUrl.constructor === Array) {
+            data["listImageUrl"] = [];
+            for (let item of this.listImageUrl)
+                data["listImageUrl"].push(item);
+        }
+        return data; 
+    }
+}
+
+export interface IProductImageUrl {
+    productId: number | undefined;
+    listImageUrl: string[] | undefined;
 }
 
 export class CurrentUserProfileEditDto implements ICurrentUserProfileEditDto {
