@@ -1,0 +1,38 @@
+<div [@routerTransition]>
+    <div class="kt-content">
+        <div class="kt-portlet kt-portlet--mobile">
+            <div class="kt-portlet__body">
+                <div class="row align-items-center">
+                    <div class="primeng-datatable-container col-12">
+                        <!-- <div class="content_main">
+                            <div *ngFor="let product of listProduct" class="card" style="width: 90%;">
+                                <img class="card-img-top" [src]="defaultRouter + product.productImageUrl" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{product.name}}</h5>
+                                    <p class="card-text">{{product.description}}</p>
+                                    <a href="#" class="btn btn-primary">Add to cart</a>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="content_main">
+                            <div *ngFor="let product of listProduct" class="product-grid-item card" style="width: 90%;">
+                                <div class="product-grid-item-top">
+                                    <img class="card-img-top" [src]="defaultRouter + product.productImageUrl" alt="Card image cap">
+                                </div>
+                                <div class="product-grid-item-content">
+                                    <div class="product-name">{{product.name}}</div>
+                                    <div class="product-description">{{product.description}}</div>
+                                </div>
+                                <div class="product-grid-item-bottom">
+                                    <span class="product-price">{{product.price}}VND</span>
+                                    <p-button icon="pi pi-shopping-cart" [disabled]="product.inStock === 0">
+                                    </p-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>

@@ -30,15 +30,21 @@ namespace ERP.Entity
         private readonly IProductsExcelExporter _productsExcelExporter;
         private readonly IRepository<Brand, long> _lookup_brandRepository;
         private readonly IRepository<Category, long> _lookup_categoryRepository;
+        private readonly IRepository<ProductImage, long> _lookup_productImageRepository;
 
-        public ProductsAppService(IRepository<Product, long> productRepository, IRepository<ProductImage, long> productImageRepository,
-            IProductsExcelExporter productsExcelExporter, IRepository<Brand, long> lookup_brandRepository, IRepository<Category, long> lookup_categoryRepository)
+        public ProductsAppService(IRepository<Product, long> productRepository, 
+            IRepository<ProductImage, long> productImageRepository,
+            IProductsExcelExporter productsExcelExporter, 
+            IRepository<Brand, long> lookup_brandRepository, 
+            IRepository<Category, long> lookup_categoryRepository,
+            IRepository<ProductImage, long> lookup_productImageRepository)
         {
             _productRepository = productRepository;
             _productImageRepository = productImageRepository;
             _productsExcelExporter = productsExcelExporter;
             _lookup_brandRepository = lookup_brandRepository;
             _lookup_categoryRepository = lookup_categoryRepository;
+            _lookup_productImageRepository = lookup_productImageRepository;
 
         }
 
@@ -388,5 +394,46 @@ namespace ERP.Entity
             }
         }
 
+        public async Task<List<ProductDto>> GetProductForDashBoard()
+        {
+
+            try
+            {
+                var filteredProducts = _productRepository.GetAll();
+
+                var pagedAndFilteredProducts = filteredProducts
+                    .Take(10);
+
+                var products = await (from o in pagedAndFilteredProducts
+
+                                      join o2 in _lookup_brandRepository.GetAll() on o.BrandId equals o2.Id into j2
+                                      from s2 in j2.DefaultIfEmpty()
+
+                                      join o3 in _lookup_productImageRepository.GetAll() on o.Id equals o3.ProductId
+
+                                      select new ProductDto
+                                      {
+                                          Name = o.Name,
+                                          MadeIn = o.MadeIn,
+                                          Code = o.Code,
+                                          Price = o.Price,
+                                          InStock = o.InStock,
+                                          Description = o.Description,
+                                          Title = o.Title,
+                                          Id = o.Id,
+                                          Color = o.Color,
+                                          Size = o.Size,
+                                          BrandName = s2 == null || s2.Name == null ? "" : s2.Name.ToString(),
+                                          ProductImageUrl = o3.Url.ToString()
+                                      }).ToListAsync();
+                return products;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
     }
 }

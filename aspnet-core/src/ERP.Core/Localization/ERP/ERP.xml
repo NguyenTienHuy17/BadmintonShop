@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
-  <texts>
+  <texts>    <text name="Cart">Cart</text>
+    <text name="ERP.Common.Cart">Cart</text>
+    <text name="quantity">quantity</text>
+    <text name="CartsHeaderInfo">Carts header info</text>
+    <text name="CreateNewCart">Create new cart</text>
+    <text name="EditCart">Edit cart</text>
+    <text name="DeleteCart">Delete cart</text>
+    <text name="Carts">Carts</text>
+
     <text name="ReturnProd">Return prod</text>
     <text name="ERP.Purchase.ReturnProd">ReturnProd</text>
     <text name="Reason">Reason</text>

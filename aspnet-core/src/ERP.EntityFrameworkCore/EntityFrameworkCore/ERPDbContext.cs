@@ -19,6 +19,8 @@ namespace ERP.EntityFrameworkCore
 {
     public class ERPDbContext : AbpZeroDbContext<Tenant, Role, User, ERPDbContext>, IAbpPersistedGrantDbContext
     {
+        public virtual DbSet<Cart> Carts { get; set; }
+
         public virtual DbSet<ReturnProd> ReturnProds { get; set; }
 
         public virtual DbSet<OrderItem> OrderItems { get; set; }
@@ -67,10 +69,14 @@ namespace ERP.EntityFrameworkCore
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<ReturnProd>(r =>
+            modelBuilder.Entity<Cart>(c =>
             {
-                r.HasIndex(e => new { e.TenantId });
+                c.HasIndex(e => new { e.TenantId });
             });
+            modelBuilder.Entity<ReturnProd>(r =>
+                       {
+                           r.HasIndex(e => new { e.TenantId });
+                       });
             modelBuilder.Entity<OrderItem>(o =>
                        {
                            o.HasIndex(e => new { e.TenantId });
@@ -87,12 +93,12 @@ namespace ERP.EntityFrameworkCore
                        {
                            p.HasIndex(e => new { e.TenantId });
                        });
-            
+
             modelBuilder.Entity<Product>(p =>
                        {
                            p.HasIndex(e => new { e.TenantId });
                        });
-            
+
             modelBuilder.Entity<Category>(c =>
                        {
                            c.HasIndex(e => new { e.TenantId });

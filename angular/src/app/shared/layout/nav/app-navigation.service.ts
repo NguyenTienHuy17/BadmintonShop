@@ -19,11 +19,12 @@ export class AppNavigationService {
         return new AppMenu('MainMenu', 'MainMenu', [
             new AppMenuItem('Dashboard', 'Pages.Administration.Host.Dashboard', 'flaticon-line-graph', '/app/admin/hostDashboard'),
             new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),
+            new AppMenuItem('Dashboard', '', 'flaticon-line-graph', '/app/main/user-dashboard'),
             // new AppMenuItem('Tenants', 'Pages.Tenants', 'flaticon-list-3', '/app/admin/tenants'),
             // new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
             new AppMenuItem('Store', '', 'flaticon-interface-8', '', [
            
-                new AppMenuItem('Bookings', 'Pages.Bookings', 'flaticon-more', '/app/main/common/bookings'),
+                new AppMenuItem('Bookings', 'Pages.Bookings', 'flaticon-calendar', '/app/main/common/bookings'),
                 
                 new AppMenuItem('Blogs', 'Pages.Blogs', 'flaticon-more', '/app/main/common/blogs'),
                 
@@ -46,8 +47,11 @@ export class AppNavigationService {
                 new AppMenuItem('OrderItems', 'Pages.OrderItems', 'flaticon-more', '/app/main/purchase/orderItems'),
                 
                 new AppMenuItem('ReturnProds', 'Pages.ReturnProds', 'flaticon-more', '/app/main/purchase/returnProds'),
+                
+                new AppMenuItem('Carts', 'Pages.Carts', 'flaticon-more', '/app/main/common/carts'),
             ]),
 
+            
              new AppMenuItem('Administration', '', 'flaticon-interface-8', '', [
                 // new AppMenuItem('OrganizationUnits', 'Pages.Administration.OrganizationUnits', 'flaticon-map', '/app/admin/organization-units'),
                 new AppMenuItem('Roles', 'Pages.Administration.Roles', 'flaticon-suitcase', '/app/admin/roles'),

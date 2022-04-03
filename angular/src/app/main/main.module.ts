@@ -2,6 +2,11 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppCommonModule } from '@app/shared/common/app-common.module';
+import { CartsComponent } from './common/carts/carts.component';
+import { ViewCartModalComponent } from './common/carts/view-cart-modal.component';
+import { CreateOrEditCartModalComponent } from './common/carts/create-or-edit-cart-modal.component';
+import { CartProductLookupTableModalComponent } from './common/carts/cart-product-lookup-table-modal.component';
+
 import { ReturnProdsComponent } from './purchase/returnProds/returnProds.component';
 import { ViewReturnProdModalComponent } from './purchase/returnProds/view-returnProd-modal.component';
 import { CreateOrEditReturnProdModalComponent } from './purchase/returnProds/create-or-edit-returnProd-modal.component';
@@ -55,6 +60,7 @@ import { ViewBookingModalComponent } from './common/bookings/view-booking-modal.
 import { CreateOrEditBookingModalComponent } from './common/bookings/create-or-edit-booking-modal.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { PaginatorModule } from 'primeng/paginator';
+import { DataViewModule } from 'primeng/dataview';
 import { EditorModule } from 'primeng/editor';
 import { InputMaskModule } from 'primeng/inputmask';import { FileUploadModule } from 'primeng/fileupload';
 import { TableModule } from 'primeng/table';
@@ -74,7 +80,8 @@ import { ShowImageModalComponent } from './newUploadImage/showImageModal/showIma
 import { DragDropDirective } from './newUploadImage/drag-and-drop.directive';
 import { UploadSingleImageComponent } from './uploadSingleImage/uploadSingleImage.component';
 import { NewUploadImageService } from './newUploadImage/newUploadImage.service';
-import { UploadSingleImageService } from './uploadSingleImage/uploadSingleImage.service';
+import { UploadSingleImageService } from './uploadSingleImage/uploadSingleImage.service';;
+import { UserDashboardComponent } from './user-dashboard/user-dashboard.component'
 
 NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
@@ -99,9 +106,15 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
         BsDatepickerModule.forRoot(),
         BsDropdownModule.forRoot(),
         PopoverModule.forRoot(),
-        ImageCropperModule
+        ImageCropperModule,
+		DataViewModule
     ],
     declarations: [
+		CartsComponent,
+
+		ViewCartModalComponent,
+		CreateOrEditCartModalComponent,
+    CartProductLookupTableModalComponent,
 		ReturnProdsComponent,
 
 		ViewReturnProdModalComponent,
@@ -159,6 +172,7 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
         ShowImageModalComponent,
         DragDropDirective,
         UploadSingleImageComponent,
+        UserDashboardComponent
     ],
     providers: [
 		NewUploadImageService,
@@ -166,6 +180,7 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
         { provide: BsDatepickerConfig, useFactory: NgxBootstrapDatePickerConfigService.getDatepickerConfig },
         { provide: BsDaterangepickerConfig, useFactory: NgxBootstrapDatePickerConfigService.getDaterangepickerConfig },
         { provide: BsLocaleService, useFactory: NgxBootstrapDatePickerConfigService.getDatepickerLocale }
+		
     ]
 })
 export class MainModule { }

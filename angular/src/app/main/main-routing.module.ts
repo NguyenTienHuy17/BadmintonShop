@@ -1,5 +1,6 @@
 ﻿import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CartsComponent } from './common/carts/carts.component';
 import { ReturnProdsComponent } from './purchase/returnProds/returnProds.component';
 import { OrderItemsComponent } from './purchase/orderItems/orderItems.component';
 import { OrdersComponent } from './purchase/orders/orders.component';
@@ -12,6 +13,7 @@ import { DiscountsComponent } from './common/discounts/discounts.component';
 import { BlogsComponent } from './common/blogs/blogs.component';
 import { BookingsComponent } from './common/bookings/bookings.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 
 @NgModule({
     imports: [
@@ -19,6 +21,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
             {
                 path: '',
                 children: [
+                    { path: 'common/carts', component: CartsComponent, data: { permission: 'Pages.Carts' }  },
                     { path: 'purchase/returnProds', component: ReturnProdsComponent, data: { permission: 'Pages.ReturnProds' }  },
                     { path: 'purchase/orderItems', component: OrderItemsComponent, data: { permission: 'Pages.OrderItems' }  },
                     { path: 'purchase/orders', component: OrdersComponent, data: { permission: 'Pages.Orders' }  },
@@ -30,7 +33,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
                     { path: 'common/discounts', component: DiscountsComponent, data: { permission: 'Pages.Discounts' }  },
                     { path: 'common/blogs', component: BlogsComponent, data: { permission: 'Pages.Blogs' }  },
                     { path: 'common/bookings', component: BookingsComponent, data: { permission: 'Pages.Bookings' }  },
-                    { path: 'dashboard', component: DashboardComponent, data: { permission: 'Pages.Tenant.Dashboard' } }
+                    { path: 'dashboard', component: DashboardComponent, data: { permission: 'Pages.Tenant.Dashboard' } },
+                    { path: 'user-dashboard', component: UserDashboardComponent, data: { permission: '' } }
                 ]
             }
         ])

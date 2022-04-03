@@ -43,7 +43,6 @@ namespace ERP.Entity.Exporting
                         L("InStock"),
                         L("Description"),
                         L("Title"),
-                        (L("Image")) + L("Name"),
                         (L("Brand")) + L("Name"),
                         (L("Category")) + L("Name")
                         );
@@ -57,7 +56,6 @@ namespace ERP.Entity.Exporting
                         _ => _.Product.InStock,
                         _ => _.Product.Description,
                         _ => _.Product.Title,
-                        _ => _.ImageName,
                         _ => _.BrandName,
                         _ => _.CategoryName
                         );

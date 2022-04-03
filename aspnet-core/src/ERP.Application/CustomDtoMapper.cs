@@ -47,6 +47,8 @@ namespace ERP
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditCartDto, Cart>().ReverseMap();
+            configuration.CreateMap<CartDto, Cart>().ReverseMap();
             configuration.CreateMap<CreateOrEditReturnProdDto, ReturnProd>().ReverseMap();
             configuration.CreateMap<ReturnProdDto, ReturnProd>().ReverseMap();
             configuration.CreateMap<CreateOrEditOrderItemDto, OrderItem>().ReverseMap();

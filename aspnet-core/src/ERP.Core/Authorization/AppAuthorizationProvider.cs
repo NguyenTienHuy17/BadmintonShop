@@ -30,6 +30,11 @@ namespace ERP.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var carts = pages.CreateChildPermission(AppPermissions.Pages_Carts, L("Carts"));
+            carts.CreateChildPermission(AppPermissions.Pages_Carts_Create, L("CreateNewCart"));
+            carts.CreateChildPermission(AppPermissions.Pages_Carts_Edit, L("EditCart"));
+            carts.CreateChildPermission(AppPermissions.Pages_Carts_Delete, L("DeleteCart"));
+
             var returnProds = pages.CreateChildPermission(AppPermissions.Pages_ReturnProds, L("ReturnProds"));
             returnProds.CreateChildPermission(AppPermissions.Pages_ReturnProds_Create, L("CreateNewReturnProd"));
             returnProds.CreateChildPermission(AppPermissions.Pages_ReturnProds_Edit, L("EditReturnProd"));

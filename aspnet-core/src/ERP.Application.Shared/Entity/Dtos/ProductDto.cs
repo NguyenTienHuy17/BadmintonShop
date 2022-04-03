@@ -26,5 +26,11 @@ namespace ERP.Entity.Dtos
 
         public long? CategoryId { get; set; }
 
+        public string ProductImageUrl { get; set; }
+
+        public string BrandName { get; set; }
+
+        public string CategoryName { get; set; }
+
     }
 }

@@ -122,14 +122,14 @@ namespace ERP.Web.Controllers
 
 					var productId = Convert.ToInt32(Request.Form[Request.Form.Keys.FirstOrDefault()]);
 
-					DirectoryHelper.CreateIfNotExists("G:/HuySourceCode/BadmintonShop/angular/src/assets/common/images");
+					DirectoryHelper.CreateIfNotExists("E:/Đồ án tốt nghiệp/ERP/angular/src/assets/common/images");
 
 					var tempFileName = System.Guid.NewGuid() + Path.GetExtension(file.FileName);
-					var tempFilePath = Path.Combine("G:/HuySourceCode/BadmintonShop/angular/src/assets/common/images", tempFileName);
+					var tempFilePath = Path.Combine("E:/Đồ án tốt nghiệp/ERP/angular/src/assets/common/images", tempFileName);
 
 					System.IO.File.WriteAllBytes(tempFilePath, fileBytes);
 
-					result.Add(tempFilePath);
+					result.Add(tempFileName);
 				}
 
 				return result;
