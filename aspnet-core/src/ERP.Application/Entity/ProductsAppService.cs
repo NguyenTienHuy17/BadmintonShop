@@ -404,12 +404,22 @@ namespace ERP.Entity
                 var pagedAndFilteredProducts = filteredProducts
                     .Take(10);
 
+                var productImages = _lookup_productImageRepository.GetAll().GroupBy(x=> x.ProductId);
+
+                var listProdImg = new List<ProductImage>();
+                //iterate each group        
+                foreach (var productImage in productImages)
+                {
+                    //Each group has a key
+                    listProdImg.Add((ProductImage)productImage.FirstOrDefault());
+                }
+
                 var products = await (from o in pagedAndFilteredProducts
 
                                       join o2 in _lookup_brandRepository.GetAll() on o.BrandId equals o2.Id into j2
                                       from s2 in j2.DefaultIfEmpty()
 
-                                      join o3 in _lookup_productImageRepository.GetAll() on o.Id equals o3.ProductId
+                                      join o3 in listProdImg on o.Id equals o3.ProductId
 
                                       select new ProductDto
                                       {
