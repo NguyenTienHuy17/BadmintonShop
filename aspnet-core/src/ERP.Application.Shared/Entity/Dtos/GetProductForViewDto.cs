@@ -6,7 +6,9 @@ namespace ERP.Entity.Dtos
     {
         public ProductDto Product { get; set; }
 
-        public string ProductImageUrl { get; set; }
+        public List<string> ProductImageUrl { get; set; }
+        public List<string> ProductColor { get; set; }
+        public List<string> ProductSize { get; set; }
 
         public string BrandName { get; set; }
 

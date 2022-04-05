@@ -81,7 +81,8 @@ import { DragDropDirective } from './newUploadImage/drag-and-drop.directive';
 import { UploadSingleImageComponent } from './uploadSingleImage/uploadSingleImage.component';
 import { NewUploadImageService } from './newUploadImage/newUploadImage.service';
 import { UploadSingleImageService } from './uploadSingleImage/uploadSingleImage.service';;
-import { UserDashboardComponent } from './user-dashboard/user-dashboard.component'
+import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
+import { ProductDetailComponent } from './entity/product-detail/product-detail.component'
 
 NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
@@ -107,14 +108,14 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
         BsDropdownModule.forRoot(),
         PopoverModule.forRoot(),
         ImageCropperModule,
-		DataViewModule
+		DataViewModule,
     ],
     declarations: [
 		CartsComponent,
 
 		ViewCartModalComponent,
 		CreateOrEditCartModalComponent,
-    CartProductLookupTableModalComponent,
+    	CartProductLookupTableModalComponent,
 		ReturnProdsComponent,
 
 		ViewReturnProdModalComponent,
@@ -173,6 +174,8 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
         DragDropDirective,
         UploadSingleImageComponent,
         UserDashboardComponent
+,
+        ProductDetailComponent
     ],
     providers: [
 		NewUploadImageService,

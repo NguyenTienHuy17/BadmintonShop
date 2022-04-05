@@ -16,17 +16,19 @@
                         </div> -->
                         <div class="content_main">
                             <div *ngFor="let product of listProduct" class="product-grid-item card" style="width: 90%;">
-                                <div class="product-grid-item-top">
-                                    <img class="card-img-top" [src]="defaultRouter + product.productImageUrl" alt="Card image cap">
-                                </div>
-                                <div class="product-grid-item-content">
-                                    <div class="product-name">{{product.name}}</div>
-                                    <div class="product-description">{{product.description}}</div>
-                                </div>
-                                <div class="product-grid-item-bottom">
-                                    <span class="product-price">{{product.price}}VND</span>
-                                    <p-button icon="pi pi-shopping-cart" [disabled]="product.inStock === 0">
-                                    </p-button>
+                                <div (click)="detail(product)">
+                                    <div class="product-grid-item-top">
+                                        <img class="card-img-top" [src]="defaultRouter + product.productImageUrl" alt="Card image cap">
+                                    </div>
+                                    <div class="product-grid-item-content">
+                                        <div class="product-name">{{product.name}}</div>
+                                        <div class="product-description">{{product.description}}</div>
+                                    </div>
+                                    <div class="product-grid-item-bottom text-center">
+                                        <span class="product-price">{{product.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}}</span>
+                                        <!-- <p-button icon="pi pi-info-circle" [disabled]="product.inStock === 0" (click)="detail(product)">
+                                        </p-button> -->
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -9549,12 +9549,15 @@ export class ProductsServiceProxy {
 
     /**
      * @param id (optional) 
+     * @param name (optional) 
      * @return Success
      */
-    getProductForView(id: number | null | undefined): Observable<GetProductForViewDto> {
+    getProductForView(id: number | null | undefined, name: string | null | undefined): Observable<GetProductForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/Products/GetProductForView?";
         if (id !== undefined)
             url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+        if (name !== undefined)
+            url_ += "name=" + encodeURIComponent("" + name) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -9956,6 +9959,66 @@ export class ProductsServiceProxy {
             }));
         }
         return _observableOf<ProductDto[]>(<any>null);
+    }
+
+    /**
+     * @param name (optional) 
+     * @param size (optional) 
+     * @param color (optional) 
+     * @return Success
+     */
+    getProductId(name: string | null | undefined, size: string | null | undefined, color: string | null | undefined): Observable<number> {
+        let url_ = this.baseUrl + "/api/services/app/Products/GetProductId?";
+        if (name !== undefined)
+            url_ += "name=" + encodeURIComponent("" + name) + "&"; 
+        if (size !== undefined)
+            url_ += "size=" + encodeURIComponent("" + size) + "&"; 
+        if (color !== undefined)
+            url_ += "color=" + encodeURIComponent("" + color) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetProductId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetProductId(<any>response_);
+                } catch (e) {
+                    return <Observable<number>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<number>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetProductId(response: HttpResponseBase): Observable<number> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<number>(<any>null);
     }
 }
 
@@ -24100,7 +24163,7 @@ export class Product implements IProduct {
     inStock!: number | undefined;
     description!: string | undefined;
     color!: string | undefined;
-    size!: number | undefined;
+    size!: string | undefined;
     title!: string | undefined;
     brandId!: number | undefined;
     brandFk!: Brand | undefined;
@@ -24195,7 +24258,7 @@ export interface IProduct {
     inStock: number | undefined;
     description: string | undefined;
     color: string | undefined;
-    size: number | undefined;
+    size: string | undefined;
     title: string | undefined;
     brandId: number | undefined;
     brandFk: Brand | undefined;
@@ -24261,7 +24324,9 @@ export interface IPagedResultDtoOfGetProductForViewDto {
 
 export class GetProductForViewDto implements IGetProductForViewDto {
     product!: ProductDto | undefined;
-    productImageUrl!: string | undefined;
+    productImageUrl!: string[] | undefined;
+    productColor!: string[] | undefined;
+    productSize!: string[] | undefined;
     brandName!: string | undefined;
     categoryName!: string | undefined;
 
@@ -24277,7 +24342,21 @@ export class GetProductForViewDto implements IGetProductForViewDto {
     init(data?: any) {
         if (data) {
             this.product = data["product"] ? ProductDto.fromJS(data["product"]) : <any>undefined;
-            this.productImageUrl = data["productImageUrl"];
+            if (data["productImageUrl"] && data["productImageUrl"].constructor === Array) {
+                this.productImageUrl = [] as any;
+                for (let item of data["productImageUrl"])
+                    this.productImageUrl!.push(item);
+            }
+            if (data["productColor"] && data["productColor"].constructor === Array) {
+                this.productColor = [] as any;
+                for (let item of data["productColor"])
+                    this.productColor!.push(item);
+            }
+            if (data["productSize"] && data["productSize"].constructor === Array) {
+                this.productSize = [] as any;
+                for (let item of data["productSize"])
+                    this.productSize!.push(item);
+            }
             this.brandName = data["brandName"];
             this.categoryName = data["categoryName"];
         }
@@ -24293,7 +24372,21 @@ export class GetProductForViewDto implements IGetProductForViewDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["product"] = this.product ? this.product.toJSON() : <any>undefined;
-        data["productImageUrl"] = this.productImageUrl;
+        if (this.productImageUrl && this.productImageUrl.constructor === Array) {
+            data["productImageUrl"] = [];
+            for (let item of this.productImageUrl)
+                data["productImageUrl"].push(item);
+        }
+        if (this.productColor && this.productColor.constructor === Array) {
+            data["productColor"] = [];
+            for (let item of this.productColor)
+                data["productColor"].push(item);
+        }
+        if (this.productSize && this.productSize.constructor === Array) {
+            data["productSize"] = [];
+            for (let item of this.productSize)
+                data["productSize"].push(item);
+        }
         data["brandName"] = this.brandName;
         data["categoryName"] = this.categoryName;
         return data; 
@@ -24302,7 +24395,9 @@ export class GetProductForViewDto implements IGetProductForViewDto {
 
 export interface IGetProductForViewDto {
     product: ProductDto | undefined;
-    productImageUrl: string | undefined;
+    productImageUrl: string[] | undefined;
+    productColor: string[] | undefined;
+    productSize: string[] | undefined;
     brandName: string | undefined;
     categoryName: string | undefined;
 }
@@ -24315,7 +24410,7 @@ export class ProductDto implements IProductDto {
     inStock!: number | undefined;
     description!: string | undefined;
     color!: string | undefined;
-    size!: number | undefined;
+    size!: string | undefined;
     title!: string | undefined;
     imageId!: number | undefined;
     brandId!: number | undefined;
@@ -24392,7 +24487,7 @@ export interface IProductDto {
     inStock: number | undefined;
     description: string | undefined;
     color: string | undefined;
-    size: number | undefined;
+    size: string | undefined;
     title: string | undefined;
     imageId: number | undefined;
     brandId: number | undefined;
@@ -24459,7 +24554,7 @@ export class CreateOrEditProductDto implements ICreateOrEditProductDto {
     inStock!: number | undefined;
     description!: string | undefined;
     color!: string | undefined;
-    size!: number | undefined;
+    size!: string | undefined;
     title!: string | undefined;
     imageId!: number | undefined;
     brandId!: number | undefined;
@@ -24538,7 +24633,7 @@ export interface ICreateOrEditProductDto {
     inStock: number | undefined;
     description: string | undefined;
     color: string | undefined;
-    size: number | undefined;
+    size: string | undefined;
     title: string | undefined;
     imageId: number | undefined;
     brandId: number | undefined;

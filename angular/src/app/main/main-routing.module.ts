@@ -14,6 +14,7 @@ import { BlogsComponent } from './common/blogs/blogs.component';
 import { BookingsComponent } from './common/bookings/bookings.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
+import { ProductDetailComponent } from './entity/product-detail/product-detail.component';
 
 @NgModule({
     imports: [
@@ -28,6 +29,7 @@ import { UserDashboardComponent } from './user-dashboard/user-dashboard.componen
                     { path: 'common/statuses', component: StatusesComponent, data: { permission: 'Pages.Statuses' }  },
                     { path: 'common/productImages', component: ProductImagesComponent, data: { permission: 'Pages.ProductImages' }  },
                     { path: 'entity/products', component: ProductsComponent, data: { permission: 'Pages.Products' }  },
+                    { path: 'entity/product-detail/:id/:name', component: ProductDetailComponent, data: { permission: 'Pages.Products' }  },
                     { path: 'common/categories', component: CategoriesComponent, data: { permission: 'Pages.Categories' }  },
                     { path: 'entity/brands', component: BrandsComponent, data: { permission: 'Pages.Brands' }  },
                     { path: 'common/discounts', component: DiscountsComponent, data: { permission: 'Pages.Discounts' }  },

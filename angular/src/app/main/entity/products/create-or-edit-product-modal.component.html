@@ -23,7 +23,7 @@
 								<div class="form-group">
 									<label for="Product_Brand">{{l("Brand")}} *</label>
 									<select id="Brand" name="Brand" [(ngModel)]="product.brandId"  class="form-control">
-                                        <option value="">{{"Select" | localize}}</option>
+                                        <option disabled value="">{{"Select" | localize}}</option>
                                         <option *ngFor="let brand of listBrand" [value]="brand.id">{{brand.name}}</option>
                                     </select>
 								</div>
@@ -31,7 +31,7 @@
                                 <div class="form-group">
 									<label for="Product_Category">{{l("Category")}} *</label>
 									<select id="Category" name="Category" [(ngModel)]="product.categoryId"  class="form-control">
-                                        <option value="">{{"Select" | localize}}</option>
+                                        <option disabled value="">{{"Select" | localize}}</option>
                                         <option *ngFor="let category of listCategory" [value]="category.id">{{category.name}}</option>
                                     </select>
 								</div>

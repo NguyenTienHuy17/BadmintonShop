@@ -1,4 +1,5 @@
 import { Component, Injector, OnInit} from "@angular/core";
+import { Router } from "@angular/router";
 import { appModuleAnimation } from "@shared/animations/routerTransition";
 import { AppComponentBase } from "@shared/common/app-component-base";
 import {
@@ -18,6 +19,7 @@ export class UserDashboardComponent extends AppComponentBase implements OnInit {
     constructor(
         injector: Injector,
         private _productsServiceProxy: ProductsServiceProxy,
+        private router: Router
     ) {
         super(injector);
     }
@@ -31,5 +33,9 @@ export class UserDashboardComponent extends AppComponentBase implements OnInit {
                 this.listProduct = result
                 console.log(this.listProduct)
             });
+    }
+
+    detail(product: ProductDto){
+        this.router.navigate(['/app/main/entity/product-detail', product.id, product.name]);  // define your component where you want to go
     }
 }

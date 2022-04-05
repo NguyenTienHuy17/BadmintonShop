@@ -4,6 +4,7 @@
 	<text name="ReturnProd">Đổi trả</text>
 	<text name="ERP.Purchase.ReturnProd">Đổi trả</text>
 	<text name="Reason">Lý do</text>
+	<text name="Condition">Tình trạng</text>
 	<text name="ReturnProdsHeaderInfo">Return prods header info</text>
 	<text name="CreateNewReturnProd">Tạo mới yêu cầu đổi trả</text>
 	<text name="EditReturnProd">Chỉnh sửa yêu cầu đổi trả</text>
@@ -108,7 +109,9 @@
 	<text name="DeleteCategory">Xóa thể loại</text>
 	<text name="Categories">Thể loại</text>
 	<text name="Entity">Thực thể</text>
-	<text name="Brand">Hãng</text>
+	<text name="Brand">Nhà sản xuất</text>
+	<text name="AddToCart">Thêm vào giỏ hàng</text>
+	<text name="Price">Giá sản phẩm</text>
 	<text name="ERP.Entity.Brand">Hãng</text>
 	<text name="Country">Đất nước</text>
 	<text name="BrandsHeaderInfo">Brands header info</text>

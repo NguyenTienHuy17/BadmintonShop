@@ -133,11 +133,18 @@ namespace ERP.Entity
 
         }
 
-        public async Task<GetProductForViewDto> GetProductForView(long id)
+        public async Task<GetProductForViewDto> GetProductForView(long id, string name)
         {
             var product = await _productRepository.GetAsync(id);
 
+            var listProduct = _productRepository.GetAll().Where(x => x.Name.Equals(name) && x.InStock > 0);
+
+            var listProductImg = _productImageRepository.GetAll().Where(x => x.ProductId == id);
+
             var output = new GetProductForViewDto { Product = ObjectMapper.Map<ProductDto>(product) };
+            output.ProductImageUrl = new List<string>();
+            output.ProductColor = new List<string>();
+            output.ProductSize = new List<string>();
 
             if (output.Product.BrandId != null)
             {
@@ -149,6 +156,24 @@ namespace ERP.Entity
             {
                 var _lookupCategory = await _lookup_categoryRepository.FirstOrDefaultAsync((long)output.Product.CategoryId);
                 output.CategoryName = _lookupCategory?.Name?.ToString();
+            }
+            foreach (var productImage in listProductImg)
+            {
+                //Each group has a key
+                output.ProductImageUrl.Add(productImage.Url);
+            }
+
+            foreach (var prod in listProduct)
+            {
+                //Each group has a key
+                if(product.Color != null)
+                {
+                    output.ProductColor.Add(prod.Color);
+                }
+                if(prod.Size != "")
+                {
+                    output.ProductSize.Add(prod.Size);
+                }
             }
 
             return output;
@@ -444,6 +469,26 @@ namespace ERP.Entity
                 throw;
             }
 
+        }
+
+        public async Task<long> GetProductId(string name, string size, string color)
+        {
+            if (size == null)
+            {
+                size = "";
+            }
+            if (color == null)
+            {
+                color = "";
+            }
+            var listProduct = _productRepository.GetAll().Where(x => x.Name.Equals(name) && x.Size.Equals(size) && x.Color.Equals(color));
+
+            long id = 0;
+            foreach(var prod in listProduct)
+            {
+                id = prod.Id;
+            }
+            return id;
         }
     }
 }

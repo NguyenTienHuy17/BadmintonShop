@@ -8,8 +8,7 @@
     margin: .5em;
     border: 1px solid #dee2e6;
 }
-.product-grid-item-top,
-.product-grid-item-bottom {
+.product-grid-item-top{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -29,7 +28,13 @@ img {
     text-align: center;
 }
 
+.product-name{
+    font-size: 1.5rem;
+    color: black;
+}
+
 .product-price {
     font-size: 1.5rem;
     font-weight: 600;
+    color: black;
 }

@@ -31,7 +31,7 @@ namespace ERP.Entity
 
         public virtual string Description { get; set; }
         public virtual string Color { get; set; }
-        public virtual int? Size { get; set; }
+        public virtual string Size { get; set; }
 
         [StringLength(ProductConsts.MaxTitleLength, MinimumLength = ProductConsts.MinTitleLength)]
         public virtual string Title { get; set; }

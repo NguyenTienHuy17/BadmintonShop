@@ -11,7 +11,7 @@ namespace ERP.Entity
     {
         Task<PagedResultDto<GetProductForViewDto>> GetAll(GetAllProductsInput input);
 
-        Task<GetProductForViewDto> GetProductForView(long id);
+        Task<GetProductForViewDto> GetProductForView(long id, string name);
 
         Task<GetProductForEditOutput> GetProductForEdit(EntityDto<long> input);
 
