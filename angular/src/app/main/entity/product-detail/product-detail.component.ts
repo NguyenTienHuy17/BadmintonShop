@@ -3,6 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { CartsServiceProxy, CreateOrEditCartDto, GetProductForViewDto, ProductDto, ProductsServiceProxy } from '@shared/service-proxies/service-proxies';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-detail',
@@ -18,6 +19,8 @@ export class ProductDetailComponent extends AppComponentBase implements OnInit {
   defaultRouter ='../../../../assets/common/images/';
   quantity: number = 1;
   cart: CreateOrEditCartDto;
+  saving = false;
+
   constructor(injector: Injector,
     private _activatedRoute: ActivatedRoute,
     private _productsServiceProxy: ProductsServiceProxy,
@@ -44,17 +47,19 @@ export class ProductDetailComponent extends AppComponentBase implements OnInit {
     });
   }
   
-  addToCart(){
-    this._productsServiceProxy.getProductId(this.productName, 
+  async addToCart(){
+    this.cart.productId = await this._productsServiceProxy.getProductId(this.productName, 
       this.product.product.size, 
       this.product.product.color)
-      .subscribe(result => {
-                this.cart.quantity = this.quantity;
-                this.cart.productId = result
-              });
-    this._cartServiceProxy.createOrEdit(this.cart);
-    this.notify.success(this.l('SuccessfullyRegistered'));
-    this.router.navigate(['/app/main/user-dashboard']);  // define your component where you want to go
+      .toPromise();
+    this.cart.quantity = this.quantity;
+    this.saving = true;
+    await this._cartServiceProxy.addProductToCart(this.cart)
+    .pipe(finalize(() => { this.saving = false;}))
+    .subscribe(() => {
+      this.notify.success(this.l('SuccessfullyAddedToCart'));
+      this.router.navigate(['/app/main/user-dashboard']);
+    });
   }
 
   add(){

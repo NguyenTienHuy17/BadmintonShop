@@ -219,5 +219,18 @@ namespace ERP.Common
             );
         }
 
+        public async Task AddProductToCart(CreateOrEditCartDto input)
+        {
+            var listCart = _cartRepository.GetAll().Where(x => x.ProductId == input.ProductId).FirstOrDefault();
+            if (listCart != null)
+            {
+                listCart.quantity += input.quantity;
+                return;
+            }
+            if (input.Id == null)
+            {
+                await Create(input);
+            }
+        }
     }
 }

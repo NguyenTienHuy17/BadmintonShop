@@ -31,7 +31,6 @@ export class UserDashboardComponent extends AppComponentBase implements OnInit {
         this._productsServiceProxy.getProductForDashBoard()
             .subscribe((result) => {
                 this.listProduct = result
-                console.log(this.listProduct)
             });
     }
 

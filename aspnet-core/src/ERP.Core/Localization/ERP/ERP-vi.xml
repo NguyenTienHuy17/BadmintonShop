@@ -13,6 +13,8 @@
 	<text name="OrderItem">Mặt hàng trong hóa đơn</text>
 	<text name="ERP.Purchase.OrderItem">Mặt hàng trong hóa đơn</text>
 	<text name="Quantity">Số lượng</text>
+	<text name="quantity">Số lượng</text>
+	<text name="SuccessfullyAddedToCart">Thêm vào giỏ hàng thành công</text>
 	<text name="OrderItemsHeaderInfo">Order items header info</text>
 	<text name="CreateNewOrderItem">Tạo mới mặt hàng trong đơn</text>
 	<text name="EditOrderItem">Sửa mặt hàng trong đơn</text>
@@ -94,6 +96,7 @@
 	<text name="DeleteSize">Xóa kích thước</text>
 	<text name="Sizes">Kích thước</text>
 	<text name="Colors">Màu</text>
+	<text name="Color">Màu sắc</text>
 	<text name="ERP.Common.Color">Màu</text>
 	<text name="ColorName">Tên màu</text>
 	<text name="ColorCode">Mã màu</text>
