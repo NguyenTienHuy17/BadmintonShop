@@ -8,6 +8,7 @@ import { AppConsts } from '@shared/AppConsts';
 import { ThemesLayoutBaseComponent } from '@app/shared/layout/themes/themes-layout-base.component';
 import { ChangeUserLanguageDto, LinkedUserDto, ProfileServiceProxy, UserLinkServiceProxy } from '@shared/service-proxies/service-proxies';
 import * as _ from 'lodash';
+import { Router } from '@angular/router';
 
 @Component({
     templateUrl: './topbar.component.html',
@@ -40,7 +41,8 @@ export class TopBarComponent extends ThemesLayoutBaseComponent implements OnInit
         private _userLinkServiceProxy: UserLinkServiceProxy,
         private _authService: AppAuthService,
         private _impersonationService: ImpersonationService,
-        private _linkedAccountService: LinkedAccountService
+        private _linkedAccountService: LinkedAccountService,
+        private router: Router
     ) {
         super(injector);
     }
@@ -166,5 +168,9 @@ export class TopBarComponent extends ThemesLayoutBaseComponent implements OnInit
         this._profileServiceProxy.prepareCollectedData().subscribe(() => {
             this.message.success(this.l('GdprDataPrepareStartedNotification'));
         });
+    }
+
+    cartDetail(){
+        this.router.navigate(['/app/main/cart-detail']);  // define your component where you want to go
     }
 }

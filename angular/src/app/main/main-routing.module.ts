@@ -15,6 +15,7 @@ import { BookingsComponent } from './common/bookings/bookings.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 import { ProductDetailComponent } from './entity/product-detail/product-detail.component';
+import { CartDetailComponent } from './common/cart-detail/cart-detail.component';
 
 @NgModule({
     imports: [
@@ -36,7 +37,8 @@ import { ProductDetailComponent } from './entity/product-detail/product-detail.c
                     { path: 'common/blogs', component: BlogsComponent, data: { permission: 'Pages.Blogs' }  },
                     { path: 'common/bookings', component: BookingsComponent, data: { permission: 'Pages.Bookings' }  },
                     { path: 'dashboard', component: DashboardComponent, data: { permission: 'Pages.Tenant.Dashboard' } },
-                    { path: 'user-dashboard', component: UserDashboardComponent, data: { permission: '' } }
+                    { path: 'user-dashboard', component: UserDashboardComponent, data: { permission: '' } },
+                    { path: 'cart-detail', component: CartDetailComponent, data: { permission: '' } }
                 ]
             }
         ])

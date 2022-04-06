@@ -2838,6 +2838,61 @@ export class CartsServiceProxy {
         }
         return _observableOf<void>(<any>null);
     }
+
+    /**
+     * @return Success
+     */
+    getAllForCart(): Observable<GetCartForViewDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Carts/GetAllForCart";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllForCart(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllForCart(<any>response_);
+                } catch (e) {
+                    return <Observable<GetCartForViewDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<GetCartForViewDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllForCart(response: HttpResponseBase): Observable<GetCartForViewDto[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(GetCartForViewDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<GetCartForViewDto[]>(<any>null);
+    }
 }
 
 @Injectable()
@@ -17152,6 +17207,8 @@ export interface IPagedResultDtoOfGetCartForViewDto {
 export class GetCartForViewDto implements IGetCartForViewDto {
     cart!: CartDto | undefined;
     productName!: string | undefined;
+    productImageUrl!: string | undefined;
+    productPrice!: number | undefined;
 
     constructor(data?: IGetCartForViewDto) {
         if (data) {
@@ -17166,6 +17223,8 @@ export class GetCartForViewDto implements IGetCartForViewDto {
         if (data) {
             this.cart = data["cart"] ? CartDto.fromJS(data["cart"]) : <any>undefined;
             this.productName = data["productName"];
+            this.productImageUrl = data["productImageUrl"];
+            this.productPrice = data["productPrice"];
         }
     }
 
@@ -17180,6 +17239,8 @@ export class GetCartForViewDto implements IGetCartForViewDto {
         data = typeof data === 'object' ? data : {};
         data["cart"] = this.cart ? this.cart.toJSON() : <any>undefined;
         data["productName"] = this.productName;
+        data["productImageUrl"] = this.productImageUrl;
+        data["productPrice"] = this.productPrice;
         return data; 
     }
 }
@@ -17187,6 +17248,8 @@ export class GetCartForViewDto implements IGetCartForViewDto {
 export interface IGetCartForViewDto {
     cart: CartDto | undefined;
     productName: string | undefined;
+    productImageUrl: string | undefined;
+    productPrice: number | undefined;
 }
 
 export class CartDto implements ICartDto {

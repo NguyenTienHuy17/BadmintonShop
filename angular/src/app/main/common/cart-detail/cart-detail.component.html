@@ -1,0 +1,48 @@
+<div [@routerTransition]>
+  <div class="kt-content">
+    <div class="kt-portlet kt-portlet--mobile">
+      <div class="kt-portlet__body d-flex flex-row">
+        <div class="col-9">
+          <div *ngFor="let cart of listCart">
+            <div class="col-12">
+              <div class="product-list-item">
+                <img class="mr-3" style="width: 20%;" [src]="defaultRouter + cart.productImageUrl"
+                  [alt]="cart.productName" />
+                <div class="product-list-detail">
+                  <div class="product-name">{{cart.productName}}</div>
+                  <div class="d-flex mt-2">
+                    <span class="mt-1">{{l('Quantity')}}</span>
+                    <div class="custom custom-btn-number form-control">
+                      <input #qty="ngModel" [(ngModel)]="cart.cart.quantity" type="input"
+                        class="input-text qty number-sidebar" id="qty" title="Số lượng" name="so_luong" max="1">
+                      <div class="gp-btn">
+                        <button (click)="add(cart)" class="btn-plus btn-cts" type="button">+</button>
+                        <button (click)="minus(cart)" class="btn-minus btn-cts" type="button">–</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="product-list-action">
+                  <span>{{l('Price')}}:</span>
+                  <span class="product-price">{{(cart.productPrice * cart.cart.quantity).toLocaleString('it-IT', {style
+                    :'currency', currency : 'VND'})}}</span>
+                </div>
+                <div class="delete-button">
+                  <button (click)="delete(cart)" type="button">X</button>
+                </div>
+              </div>
+              <hr />
+            </div>
+          </div>
+        </div>
+        <div class="col-3 text-center">
+          <div class="mt-3 mb-3">
+            <span>{{l('TotalPrice')}}: </span>
+            <span class="product-price">{{totalPrice.toLocaleString('it-IT', {style:'currency', currency : 'VND'})}}</span><br>
+          </div>
+          <button class="purchase-button d-flex align-items-center"><i class="pi pi-shopping-cart"></i>{{l('Purchase')}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

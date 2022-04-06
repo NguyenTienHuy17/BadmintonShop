@@ -7,8 +7,26 @@
             <div class="content_main">
               <div class="product-grid-item card p-5">
                 <div class="row">
-                  <div *ngFor="let url of product.productImageUrl" class="col-3">
-                    <img [src]="defaultRouter + url" alt="Card image cap" style="width: 80%;">
+                  <div class="col-3">
+                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                      <div class="carousel-inner">
+                        <div class="carousel-item active">
+                          <img [src]="defaultRouter + product.productImageUrl[0]" class="d-block w-100" alt="Card image cap">
+                        </div>
+                        <div class="carousel-item" *ngFor="let url of product.productImageUrl" >
+                          <img [src]="defaultRouter + url" class="d-block w-100" alt="Card image cap">
+                        </div>
+                      </div>
+                      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                      </a>
+                    </div>
+                    <!-- <img [src]="defaultRouter + url" alt="Card image cap" style="width: 80%;"> -->
                   </div>
                   <div class="col-6">
                     <h1>{{product.product.name}}</h1>

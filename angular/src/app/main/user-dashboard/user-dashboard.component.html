@@ -16,7 +16,7 @@
                         </div> -->
                         <div class="content_main">
                             <div *ngFor="let product of listProduct" class="product-grid-item card" style="width: 90%;">
-                                <div (click)="detail(product)">
+                                <div (click)="detail(product)" style="cursor: pointer;">
                                     <div class="product-grid-item-top">
                                         <img class="card-img-top" [src]="defaultRouter + product.productImageUrl" alt="Card image cap">
                                     </div>

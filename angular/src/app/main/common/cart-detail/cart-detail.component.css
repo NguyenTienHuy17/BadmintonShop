@@ -1,0 +1,124 @@
+.custom-btn-number #qty {
+    float: left;
+    margin-right: 2px !important;
+    border-radius: 10%;
+    border: 1px solid #e8e8e8;
+    height: 40px;
+    font-size: 1em;
+    margin: 0;
+    width: 60px;
+    padding: 0 2px;
+    text-align: center;
+}
+.custom-btn-number {
+    position: relative;
+    padding: 0;
+    margin-bottom: 20px;
+    border: none;
+    box-shadow: none;
+    height: auto;
+}
+
+.product-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.product-description {
+    margin: 0 0 1rem 0;
+}
+
+.product-category-icon {
+    vertical-align: middle;
+    margin-right: .5rem;
+}
+
+.product-category {
+    font-weight: 600;
+    vertical-align: middle;
+}
+
+.product-list-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    width: 100%;
+}
+.product-list-item .img {
+    width: 150px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    margin-right: 2rem;
+}
+
+.product-list-item .product-list-detail {
+    flex: 1 1 0;
+}
+
+.product-list-item .p-rating {
+    margin: 0 0 .5rem 0;
+}
+
+.product-price {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: .5rem;
+    align-self: flex-end;
+}
+
+.product-list-item .product-list-action {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-list-item .p-button {
+    margin-bottom: .5rem;
+}
+
+.gp-btn {
+    float: left;
+    width: 20px;
+}
+.gp-btn button {
+    background-color: #fff;
+    border: 1px solid #e8e8e8;
+    outline: none;
+    box-shadow: none;
+    height: 19px;
+    width: 20px;
+    padding: 0;
+    text-align: center;
+    line-height: 10px;
+    font-size: 14px;
+    margin: 0;
+    float: left;
+    border-radius: 10%;
+}
+
+.gp-btn button:last-child {
+    margin-top: 2px;
+}
+
+.delete-button button{
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+    border: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+}
+
+.purchase-button{
+    width: 50%;
+    height: 15%;
+    background-color: greenyellow;
+    border: none;
+    border-radius: 50%;
+    font-size: 18px;
+    margin: auto;
+}
+
+.purchase-button i{
+    font-size: 30px;
+}
