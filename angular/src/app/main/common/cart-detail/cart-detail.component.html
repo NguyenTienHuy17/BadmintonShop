@@ -21,9 +21,14 @@
                       </div>
                     </div>
                   </div>
+                  <div>
+                    <span>{{l('Price')}}: </span>
+                    <span class="product-price">{{cart.productPrice.toLocaleString('it-IT', {style
+                      :'currency', currency : 'VND'})}}</span>
+                  </div>
                 </div>
                 <div class="product-list-action">
-                  <span>{{l('Price')}}:</span>
+                  <span>{{l('ToPrice')}}: </span>
                   <span class="product-price">{{(cart.productPrice * cart.cart.quantity).toLocaleString('it-IT', {style
                     :'currency', currency : 'VND'})}}</span>
                 </div>
@@ -40,9 +45,10 @@
             <span>{{l('TotalPrice')}}: </span>
             <span class="product-price">{{totalPrice.toLocaleString('it-IT', {style:'currency', currency : 'VND'})}}</span><br>
           </div>
-          <button class="purchase-button d-flex align-items-center"><i class="pi pi-shopping-cart"></i>{{l('Purchase')}}</button>
+          <button (click)="orrderDetailModal.show()" class="purchase-button d-flex align-items-center"><i class="pi pi-shopping-cart"></i>{{l('Purchase')}}</button>
         </div>
       </div>
     </div>
   </div>
 </div>
+<orrder-detail-modal #orrderDetailModal  [listCart]="listCart"></orrder-detail-modal>

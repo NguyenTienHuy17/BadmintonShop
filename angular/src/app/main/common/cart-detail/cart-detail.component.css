@@ -66,8 +66,9 @@
 }
 
 .product-list-item .product-list-action {
+    height: 37px;
     display: flex;
-    flex-direction: column;
+    align-items: center;
 }
 
 .product-list-item .p-button {

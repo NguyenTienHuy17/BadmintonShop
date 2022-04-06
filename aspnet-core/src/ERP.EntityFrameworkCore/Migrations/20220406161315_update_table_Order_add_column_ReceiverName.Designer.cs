@@ -4,14 +4,16 @@ using ERP.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ERP.Migrations
 {
     [DbContext(typeof(ERPDbContext))]
-    partial class ERPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220406161315_update_table_Order_add_column_ReceiverName")]
+    partial class update_table_Order_add_column_ReceiverName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

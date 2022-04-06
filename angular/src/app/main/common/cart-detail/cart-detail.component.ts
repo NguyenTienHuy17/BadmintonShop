@@ -1,4 +1,5 @@
-import { Component, Injector, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Injector, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { OrrderDetailModalComponent } from '@app/main/purchase/orrder-detail-modal/orrder-detail-modal.component';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { CartsServiceProxy, GetCartForViewDto } from '@shared/service-proxies/service-proxies';
@@ -11,6 +12,7 @@ import { runInThisContext } from 'vm';
   animations: [appModuleAnimation()]
 })
 export class CartDetailComponent extends AppComponentBase implements OnInit {
+  @ViewChild('orrderDetailModal', { static: true }) orrderDetailModal: OrrderDetailModalComponent;
 
   listCart: GetCartForViewDto[];  
   defaultRouter ='../../../../assets/common/images/';
@@ -36,12 +38,20 @@ export class CartDetailComponent extends AppComponentBase implements OnInit {
   }
 
   add(cart: GetCartForViewDto){
+    this.totalPrice = 0;
     cart.cart.quantity +=1;
+    this.listCart.forEach(x => {
+      this.totalPrice += x.productPrice * x.cart.quantity
+    });
   }
 
   minus(cart: GetCartForViewDto){
+    this.totalPrice = 0;
     if(cart.cart.quantity > 1)
       cart.cart.quantity -=1;
+    this.listCart.forEach(x => {
+      this.totalPrice += x.productPrice * x.cart.quantity
+    });
   }
 
   delete(cart: GetCartForViewDto){
@@ -58,6 +68,9 @@ export class CartDetailComponent extends AppComponentBase implements OnInit {
           }
       }
   );
+  }
+  purchase(listCart: GetCartForViewDto[]){
+    console.log(listCart)
   }
 
 }

@@ -22217,6 +22217,7 @@ export interface IGetOrderForViewDto {
 }
 
 export class OrderDto implements IOrderDto {
+    receiverName!: string | undefined;
     orderCode!: string | undefined;
     totalPrice!: string | undefined;
     shippingAddress!: string | undefined;
@@ -22238,6 +22239,7 @@ export class OrderDto implements IOrderDto {
 
     init(data?: any) {
         if (data) {
+            this.receiverName = data["receiverName"];
             this.orderCode = data["orderCode"];
             this.totalPrice = data["totalPrice"];
             this.shippingAddress = data["shippingAddress"];
@@ -22259,6 +22261,7 @@ export class OrderDto implements IOrderDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["receiverName"] = this.receiverName;
         data["orderCode"] = this.orderCode;
         data["totalPrice"] = this.totalPrice;
         data["shippingAddress"] = this.shippingAddress;
@@ -22273,6 +22276,7 @@ export class OrderDto implements IOrderDto {
 }
 
 export interface IOrderDto {
+    receiverName: string | undefined;
     orderCode: string | undefined;
     totalPrice: string | undefined;
     shippingAddress: string | undefined;
@@ -22329,6 +22333,7 @@ export interface IGetOrderForEditOutput {
 }
 
 export class CreateOrEditOrderDto implements ICreateOrEditOrderDto {
+    receiverName!: string;
     orderCode!: string;
     totalPrice!: string;
     shippingAddress!: string;
@@ -22350,6 +22355,7 @@ export class CreateOrEditOrderDto implements ICreateOrEditOrderDto {
 
     init(data?: any) {
         if (data) {
+            this.receiverName = data["receiverName"];
             this.orderCode = data["orderCode"];
             this.totalPrice = data["totalPrice"];
             this.shippingAddress = data["shippingAddress"];
@@ -22371,6 +22377,7 @@ export class CreateOrEditOrderDto implements ICreateOrEditOrderDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["receiverName"] = this.receiverName;
         data["orderCode"] = this.orderCode;
         data["totalPrice"] = this.totalPrice;
         data["shippingAddress"] = this.shippingAddress;
@@ -22385,6 +22392,7 @@ export class CreateOrEditOrderDto implements ICreateOrEditOrderDto {
 }
 
 export interface ICreateOrEditOrderDto {
+    receiverName: string;
     orderCode: string;
     totalPrice: string;
     shippingAddress: string;

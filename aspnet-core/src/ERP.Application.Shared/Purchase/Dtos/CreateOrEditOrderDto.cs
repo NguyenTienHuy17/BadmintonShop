@@ -6,6 +6,8 @@ namespace ERP.Purchase.Dtos
 {
     public class CreateOrEditOrderDto : EntityDto<long?>
     {
+        [Required]
+        public string ReceiverName { get; set; }
 
         [Required]
         public string OrderCode { get; set; }

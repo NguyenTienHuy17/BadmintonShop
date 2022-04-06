@@ -14,6 +14,10 @@ namespace ERP.Purchase
         public int? TenantId { get; set; }
 
         [Required]
+        public virtual string ReceiverName { get; set; }
+
+
+        [Required]
         public virtual string OrderCode { get; set; }
 
         [Required]

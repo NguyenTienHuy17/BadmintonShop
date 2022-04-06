@@ -1,0 +1,34 @@
+<div bsModal #purchaseModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="purchaseModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form #purchaseForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+        <div class="modal-header">
+          <h4 class="modal-title">
+            <span>{{l("Purchase")}}</span>
+          </h4>
+          <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group m-form__group">
+
+          </div>
+
+          <div class="form-group m-form__group">
+
+          </div>
+
+          <div class="form-group">
+
+          </div>
+
+        </div>
+        <div class="modal-footer">
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

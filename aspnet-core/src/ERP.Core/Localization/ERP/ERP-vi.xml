@@ -115,6 +115,7 @@
 	<text name="Brand">Nhà sản xuất</text>
 	<text name="AddToCart">Thêm vào giỏ hàng</text>
 	<text name="Price">Giá sản phẩm</text>
+	<text name="ToPrice">Thành tiền</text>
 	<text name="ERP.Entity.Brand">Hãng</text>
 	<text name="Country">Đất nước</text>
 	<text name="BrandsHeaderInfo">Brands header info</text>

@@ -5,6 +5,7 @@ namespace ERP.Purchase.Dtos
 {
     public class OrderDto : EntityDto<long>
     {
+        public string ReceiverName { get; set; }
         public string OrderCode { get; set; }
 
         public string TotalPrice { get; set; }
