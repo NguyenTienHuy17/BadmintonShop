@@ -5,7 +5,7 @@ namespace ERP.Purchase.Dtos
 {
     public class OrderItemDto : EntityDto<long>
     {
-        public string Quantity { get; set; }
+        public long Quantity { get; set; }
 
         public long ProductId { get; set; }
 

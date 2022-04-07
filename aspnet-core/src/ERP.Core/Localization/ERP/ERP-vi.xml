@@ -202,6 +202,7 @@
     <text name="Delete">Xóa bỏ</text>
     <text name="SavedSuccessfully">Đã lưu thành công.</text>
     <text name="AreYouSure">Bạn có chắc không?</text>
+    <text name="AreYouSureToPurchase">Bạn đã chắc chắn mua hàng?</text>
     <text name="YesDelete">Có, xóa!</text>
     <text name="DeletingUser">Đang xóa người dùng</text>
     <text name="UsersHeaderInfo">Quản lý tài khoản người dùng và phân quyền.</text>

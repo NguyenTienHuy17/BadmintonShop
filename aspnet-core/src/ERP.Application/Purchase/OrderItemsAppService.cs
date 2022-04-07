@@ -28,14 +28,19 @@ namespace ERP.Purchase
         private readonly IOrderItemsExcelExporter _orderItemsExcelExporter;
         private readonly IRepository<Product, long> _lookup_productRepository;
         private readonly IRepository<Order, long> _lookup_orderRepository;
+        private readonly IRepository<Product, long> _productRepository;
 
-        public OrderItemsAppService(IRepository<OrderItem, long> orderItemRepository, IOrderItemsExcelExporter orderItemsExcelExporter, IRepository<Product, long> lookup_productRepository, IRepository<Order, long> lookup_orderRepository)
+        public OrderItemsAppService(IRepository<OrderItem, long> orderItemRepository, 
+            IOrderItemsExcelExporter orderItemsExcelExporter, 
+            IRepository<Product, long> lookup_productRepository, 
+            IRepository<Order, long> lookup_orderRepository,
+            IRepository<Product, long> productRepository)
         {
             _orderItemRepository = orderItemRepository;
             _orderItemsExcelExporter = orderItemsExcelExporter;
             _lookup_productRepository = lookup_productRepository;
             _lookup_orderRepository = lookup_orderRepository;
-
+            _productRepository = productRepository;
         }
 
         public async Task<PagedResultDto<GetOrderItemForViewDto>> GetAll(GetAllOrderItemsInput input)
@@ -44,8 +49,6 @@ namespace ERP.Purchase
             var filteredOrderItems = _orderItemRepository.GetAll()
                         .Include(e => e.ProductFk)
                         .Include(e => e.OrderFk)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Quantity.Contains(input.Filter))
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.QuantityFilter), e => e.Quantity == input.QuantityFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.ProductNameFilter), e => e.ProductFk != null && e.ProductFk.Name == input.ProductNameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.OrderOrderCodeFilter), e => e.OrderFk != null && e.OrderFk.OrderCode == input.OrderOrderCodeFilter);
 
@@ -165,6 +168,9 @@ namespace ERP.Purchase
 
             await _orderItemRepository.InsertAsync(orderItem);
 
+            var product = await _productRepository.GetAsync(input.ProductId);
+
+            product.InStock -= int.Parse(input.Quantity.ToString());
         }
 
         [AbpAuthorize(AppPermissions.Pages_OrderItems_Edit)]
@@ -173,6 +179,11 @@ namespace ERP.Purchase
             var orderItem = await _orderItemRepository.FirstOrDefaultAsync((long)input.Id);
             ObjectMapper.Map(input, orderItem);
 
+            await _orderItemRepository.InsertAsync(orderItem);
+
+            var product = await _productRepository.GetAsync(input.ProductId);
+
+            product.InStock -= int.Parse(input.Quantity.ToString());
         }
 
         [AbpAuthorize(AppPermissions.Pages_OrderItems_Delete)]
@@ -187,8 +198,7 @@ namespace ERP.Purchase
             var filteredOrderItems = _orderItemRepository.GetAll()
                         .Include(e => e.ProductFk)
                         .Include(e => e.OrderFk)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Quantity.Contains(input.Filter))
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.QuantityFilter), e => e.Quantity == input.QuantityFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.ProductNameFilter), e => e.ProductFk != null && e.ProductFk.Name == input.ProductNameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.OrderOrderCodeFilter), e => e.OrderFk != null && e.OrderFk.OrderCode == input.OrderOrderCodeFilter);
 

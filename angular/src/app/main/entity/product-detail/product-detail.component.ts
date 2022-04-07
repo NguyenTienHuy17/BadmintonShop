@@ -63,7 +63,9 @@ export class ProductDetailComponent extends AppComponentBase implements OnInit {
   }
 
   add(){
-    this.quantity += 1;
+    if(this.quantity<this.product.product.inStock){
+      this.quantity += 1;
+    }
   }
 
   minus(){

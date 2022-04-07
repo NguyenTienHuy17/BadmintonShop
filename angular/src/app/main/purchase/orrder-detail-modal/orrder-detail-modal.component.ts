@@ -1,6 +1,8 @@
 import { Component, Injector, Input, OnInit, ViewChild } from '@angular/core';
+import { async } from '@angular/core/testing';
+import { Router } from '@angular/router';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CreateOrEditOrderDto, CreateOrEditOrderItemDto, Discount, DiscountsServiceProxy, GetCartForViewDto } from '@shared/service-proxies/service-proxies';
+import { CartsServiceProxy, CreateOrEditOrderDto, CreateOrEditOrderItemDto, Discount, DiscountsServiceProxy, GetCartForViewDto, OrderItemsServiceProxy, OrdersServiceProxy } from '@shared/service-proxies/service-proxies';
 import { ModalDirective } from 'ngx-bootstrap';
 
 @Component({
@@ -20,11 +22,17 @@ export class OrrderDetailModalComponent extends AppComponentBase implements OnIn
   discountCode: string;
   discount: Discount = new Discount();
   actualPrice: number;
+  orderId: number;
   constructor(injector: Injector,
-    private _discountsServiceProxy: DiscountsServiceProxy
+    private _discountsServiceProxy: DiscountsServiceProxy,
+    private _ordersServiceProxy: OrdersServiceProxy,
+    private _orderItemsServiceProxy: OrderItemsServiceProxy,
+    private _cartsServiceProxy: CartsServiceProxy,
+    private router: Router
     ) { 
     super(injector);
     this.actualPrice = 0;
+    this.orderId = 0;
   }
 
   ngOnInit() {
@@ -46,16 +54,43 @@ export class OrrderDetailModalComponent extends AppComponentBase implements OnIn
           result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
       }
     this.order.orderCode = result;
+    this.order.totalPrice = this.totalPrice.toString();
+    this.order.actualPrice = this.actualPrice;
+    this.order.discountAmount = this.totalPrice - this.actualPrice;
+    this.message.confirm(
+      '',
+      this.l('AreYouSureToPurchase'),
+      async (isConfirmed) => {
+          if (isConfirmed) {
+            this.orderId = await this._ordersServiceProxy.createAndGetId(this.order).toPromise()
+            this.listCart.forEach(x => {
+              this.orderItem.orderId = this.orderId;
+              this.orderItem.productId = x.cart.productId;
+              this.orderItem.quantity = x.cart.quantity;
+              this._cartsServiceProxy.delete(x.cart.id).toPromise();
+              this._orderItemsServiceProxy.createOrEdit(this.orderItem).toPromise();
+              this.notify.success(this.l('SuccessfullyPurchased'));
+              this.close();
+              this.router.navigate(['/app/main/user-dashboard']);  // define your component where you want to go
+            });
+          }
+        }
+    );
   }
 
   getDiscountId(){
-    this._discountsServiceProxy.getDiscount(this.discountCode).subscribe(result =>{
-        this.discount = result
-        if(this.discount.discountNum != null){
-          this.actualPrice -= this.totalPrice * (this.discount.discountNum / 100)
+    if(this.discountCode!=""){
+      this._discountsServiceProxy.getDiscount(this.discountCode).subscribe(result =>{
+          this.discount = result
+          if(this.discount.discountNum != null){
+            this.actualPrice -= this.totalPrice * (this.discount.discountNum / 100)
+          }
         }
-      }
-    )
+      )
+    }
+    else{
+      this.actualPrice = this.totalPrice
+    }
   }
 
 }

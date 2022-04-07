@@ -304,5 +304,26 @@ namespace ERP.Purchase
             );
         }
 
+
+        public async Task<long> CreateAndGetId(CreateOrEditOrderDto input)
+        {
+            try
+            {
+                var order = ObjectMapper.Map<Order>(input);
+
+                if (AbpSession.TenantId != null)
+                {
+                    order.TenantId = (int?)AbpSession.TenantId;
+                }
+                long id = 0;
+                id = await _orderRepository.InsertAndGetIdAsync(order);
+                return id;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
     }
 }

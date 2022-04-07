@@ -8,7 +8,7 @@ namespace ERP.Purchase.Dtos
     {
 
         [Required]
-        public string Quantity { get; set; }
+        public long Quantity { get; set; }
 
         public long ProductId { get; set; }
 

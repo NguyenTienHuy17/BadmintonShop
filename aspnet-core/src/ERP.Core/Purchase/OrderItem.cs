@@ -14,7 +14,7 @@ namespace ERP.Purchase
         public int? TenantId { get; set; }
 
         [Required]
-        public virtual string Quantity { get; set; }
+        public virtual long Quantity { get; set; }
 
         public virtual long ProductId { get; set; }
 

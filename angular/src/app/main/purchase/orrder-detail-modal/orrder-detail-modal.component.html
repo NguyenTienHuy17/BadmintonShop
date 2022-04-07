@@ -53,11 +53,11 @@
               <validation-messages [formCtrl]="Order_OrderCode"></validation-messages>
           </div> -->
     
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="Order_TotalPrice">{{l("TotalPrice")}} *</label>
             <input type="text" #Order_TotalPrice="ngModel" id="Order_TotalPrice" class="form-control" [(ngModel)]="order.totalPrice" name="TotalPrice"     required/>
               <validation-messages [formCtrl]="Order_TotalPrice"></validation-messages>
-          </div>
+          </div> -->
     
           <div class="form-group">
             <label for="Order_ShippingAddress">{{l("ShippingAddress")}} *</label>
@@ -88,7 +88,7 @@
         </div>
         <div class="modal-footer">
           <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
-          <button type="submit" class="btn btn-primary blue" [disabled]="!purchaseForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+          <button type="submit" class="btn btn-primary blue" [disabled]="!purchaseForm.form.valid" [buttonBusy]="saving" [busyText]="l('Purchase')"><i class="fa fa-save"></i> <span>{{l("Purchase")}}</span></button>
         </div>
       </form>
     </div>

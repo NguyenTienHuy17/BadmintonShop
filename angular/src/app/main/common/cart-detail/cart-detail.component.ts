@@ -1,8 +1,9 @@
 import { Component, Injector, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { async } from '@angular/core/testing';
 import { OrrderDetailModalComponent } from '@app/main/purchase/orrder-detail-modal/orrder-detail-modal.component';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CartsServiceProxy, GetCartForViewDto } from '@shared/service-proxies/service-proxies';
+import { CartsServiceProxy, GetCartForViewDto, GetProductForViewDto, ProductsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { runInThisContext } from 'vm';
 
 @Component({
@@ -17,8 +18,11 @@ export class CartDetailComponent extends AppComponentBase implements OnInit {
   listCart: GetCartForViewDto[];  
   defaultRouter ='../../../../assets/common/images/';
   totalPrice: number;
+  product: GetProductForViewDto = new GetProductForViewDto();
   constructor(injector: Injector,
-    private _cartsServiceProxy: CartsServiceProxy) {
+    private _cartsServiceProxy: CartsServiceProxy,
+    private _productsServiceProxy: ProductsServiceProxy,
+    ) {
     super(injector);
     this.listCart = [];
    }
@@ -37,12 +41,16 @@ export class CartDetailComponent extends AppComponentBase implements OnInit {
     });
   }
 
-  add(cart: GetCartForViewDto){
+  async add(cart: GetCartForViewDto){
     this.totalPrice = 0;
-    cart.cart.quantity +=1;
-    this.listCart.forEach(x => {
-      this.totalPrice += x.productPrice * x.cart.quantity
-    });
+    this.product = await this._productsServiceProxy.getProductForView(cart.cart.productId, cart.productName).toPromise()
+    if(cart.cart.quantity<this.product.product.inStock){
+      cart.cart.quantity +=1;
+      this.listCart.forEach(x => {
+        this.totalPrice += x.productPrice * x.cart.quantity
+      });
+    }
+    
   }
 
   minus(cart: GetCartForViewDto){
