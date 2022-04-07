@@ -170,5 +170,10 @@ namespace ERP.Common
             return _discountsExcelExporter.ExportToFile(discountListDtos);
         }
 
+        public async Task<Discount> GetDiscount(string discountCode)
+        {
+            var discount = _discountRepository.GetAll().Where(x=>x.DiscountCode.Equals(discountCode)).FirstOrDefault();
+            return discount;
+        }
     }
 }

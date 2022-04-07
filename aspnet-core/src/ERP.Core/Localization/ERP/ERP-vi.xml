@@ -117,6 +117,7 @@
 	<text name="Price">Giá sản phẩm</text>
 	<text name="ToPrice">Thành tiền</text>
 	<text name="ERP.Entity.Brand">Hãng</text>
+	<text name="ReceiverName">Họ tên người nhận</text>
 	<text name="Country">Đất nước</text>
 	<text name="BrandsHeaderInfo">Brands header info</text>
 	<text name="CreateNewBrand">Tạo mới hãng</text>

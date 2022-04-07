@@ -13,20 +13,82 @@
         </div>
         <div class="modal-body">
           <div class="form-group m-form__group">
-
-          </div>
-
-          <div class="form-group m-form__group">
-
+            <div *ngFor="let cart of listCart">
+              <div class="col-12">
+                <div class="product-list-item d-flex justify-content-around">
+                  <img class="mr-3" style="width: 20%;" [src]="defaultRouter + cart.productImageUrl"
+                    [alt]="cart.productName" />
+                  <div class="product-list-detail">
+                    <div class="product-name">{{cart.productName}}</div>
+                    <div class="d-flex mt-2 mb-2">
+                      <span class="mr-1">{{l('Quantity')}}: </span>
+                      <span>{{cart.cart.quantity}}</span>
+                    </div>
+                    <div>
+                      <span>{{l('Price')}}: </span>
+                      <span class="product-price">{{cart.productPrice.toLocaleString('it-IT', {style
+                        :'currency', currency : 'VND'})}}</span>
+                    </div>
+                  </div>
+                  <div class="product-list-action">
+                    <span>{{l('ToPrice')}}: </span>
+                    <span class="product-price">{{(cart.productPrice * cart.cart.quantity).toLocaleString('it-IT', {style
+                      :'currency', currency : 'VND'})}}</span>
+                  </div>
+                </div>
+                <hr />
+              </div>
+            </div>
           </div>
 
           <div class="form-group">
+            <label for="Order_ReceiverName">{{l("ReceiverName")}} *</label>
+            <input type="text" #Order_ReceiverName="ngModel" id="Order_ReceiverName" class="form-control" [(ngModel)]="order.receiverName" name="ReceiverName"     required/>
+              <validation-messages [formCtrl]="Order_ReceiverName"></validation-messages>
+          </div>
 
+          <!-- <div class="form-group">
+            <label for="Order_OrderCode">{{l("OrderCode")}} *</label>
+            <input type="text" #Order_OrderCode="ngModel" id="Order_OrderCode" class="form-control" [(ngModel)]="order.orderCode" name="OrderCode"     required/>
+              <validation-messages [formCtrl]="Order_OrderCode"></validation-messages>
+          </div> -->
+    
+          <div class="form-group">
+            <label for="Order_TotalPrice">{{l("TotalPrice")}} *</label>
+            <input type="text" #Order_TotalPrice="ngModel" id="Order_TotalPrice" class="form-control" [(ngModel)]="order.totalPrice" name="TotalPrice"     required/>
+              <validation-messages [formCtrl]="Order_TotalPrice"></validation-messages>
+          </div>
+    
+          <div class="form-group">
+            <label for="Order_ShippingAddress">{{l("ShippingAddress")}} *</label>
+            <input type="text" #Order_ShippingAddress="ngModel" id="Order_ShippingAddress" class="form-control" [(ngModel)]="order.shippingAddress" name="ShippingAddress"   minlength="0"  maxlength="1028"  required/>
+              <validation-messages [formCtrl]="Order_ShippingAddress"></validation-messages>
+          </div>
+    
+          <div class="form-group">
+            <label for="Order_ShippingNumber">{{l("ShippingNumber")}} *</label>
+            <input type="text" #Order_ShippingNumber="ngModel" id="Order_ShippingNumber" class="form-control" [(ngModel)]="order.shippingNumber" name="ShippingNumber"   minlength="0"  maxlength="32"  required/>
+              <validation-messages [formCtrl]="Order_ShippingNumber"></validation-messages>
+          </div>
+    
+          <div class="form-group">
+            <label for="Order_DiscountCode">{{l("DiscountCode")}}</label>
+            <input type="text" #Order_DiscountCode="ngModel" id="Order_DiscountCode" class="form-control" [(ngModel)]="discountCode" (change)="getDiscountId()" name="DiscountCode"   />
+            <validation-messages [formCtrl]="Order_DiscountCode"></validation-messages>
+          </div>
+
+          <div class="form-group m-form__group">
+            <div class="text-center" style="font-size: 25px; color: black; font-weight:500">
+              <span>{{l('TotalPrice')}}: </span>
+              <span class="product-price">{{actualPrice.toLocaleString('it-IT', {style
+                :'currency', currency : 'VND'})}}</span>
+            </div>
           </div>
 
         </div>
         <div class="modal-footer">
-
+          <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+          <button type="submit" class="btn btn-primary blue" [disabled]="!purchaseForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
         </div>
       </form>
     </div>
