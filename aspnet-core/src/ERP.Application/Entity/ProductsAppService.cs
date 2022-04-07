@@ -490,5 +490,109 @@ namespace ERP.Entity
             }
             return id;
         }
+
+        public async Task<List<ProductDto>> GetProductByBrandId(long brandId)
+        {
+
+            try
+            {
+                var filteredProducts = _productRepository.GetAll().Where(x=> x.BrandId == brandId);
+
+                var pagedAndFilteredProducts = filteredProducts
+                    .OrderBy(x => x.Name);
+
+                var productImages = _lookup_productImageRepository.GetAll().GroupBy(x => x.ProductId);
+
+                var listProdImg = new List<ProductImage>();
+                //iterate each group        
+                foreach (var productImage in productImages)
+                {
+                    //Each group has a key
+                    listProdImg.Add((ProductImage)productImage.FirstOrDefault());
+                }
+
+                var products = await (from o in pagedAndFilteredProducts
+
+                                      join o2 in _lookup_brandRepository.GetAll() on o.BrandId equals o2.Id into j2
+                                      from s2 in j2.DefaultIfEmpty()
+
+                                      join o3 in listProdImg on o.Id equals o3.ProductId
+
+                                      select new ProductDto
+                                      {
+                                          Name = o.Name,
+                                          MadeIn = o.MadeIn,
+                                          Code = o.Code,
+                                          Price = o.Price,
+                                          InStock = o.InStock,
+                                          Description = o.Description,
+                                          Title = o.Title,
+                                          Id = o.Id,
+                                          Color = o.Color,
+                                          Size = o.Size,
+                                          BrandName = s2 == null || s2.Name == null ? "" : s2.Name.ToString(),
+                                          ProductImageUrl = o3.Url.ToString()
+                                      }).ToListAsync();
+                return products;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+
+        public async Task<List<ProductDto>> GetProductByCategoryId(long categoryId)
+        {
+
+            try
+            {
+                var filteredProducts = _productRepository.GetAll().Where(x => x.CategoryId == categoryId);
+
+                var pagedAndFilteredProducts = filteredProducts
+                    .OrderBy(x => x.Name);
+
+                var productImages = _lookup_productImageRepository.GetAll().GroupBy(x => x.ProductId);
+
+                var listProdImg = new List<ProductImage>();
+                //iterate each group        
+                foreach (var productImage in productImages)
+                {
+                    //Each group has a key
+                    listProdImg.Add((ProductImage)productImage.FirstOrDefault());
+                }
+
+                var products = await (from o in pagedAndFilteredProducts
+
+                                      join o2 in _lookup_brandRepository.GetAll() on o.BrandId equals o2.Id into j2
+                                      from s2 in j2.DefaultIfEmpty()
+
+                                      join o3 in listProdImg on o.Id equals o3.ProductId
+
+                                      select new ProductDto
+                                      {
+                                          Name = o.Name,
+                                          MadeIn = o.MadeIn,
+                                          Code = o.Code,
+                                          Price = o.Price,
+                                          InStock = o.InStock,
+                                          Description = o.Description,
+                                          Title = o.Title,
+                                          Id = o.Id,
+                                          Color = o.Color,
+                                          Size = o.Size,
+                                          BrandName = s2 == null || s2.Name == null ? "" : s2.Name.ToString(),
+                                          ProductImageUrl = o3.Url.ToString()
+                                      }).ToListAsync();
+                return products;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
     }
 }

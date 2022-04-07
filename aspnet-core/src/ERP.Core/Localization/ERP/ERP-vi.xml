@@ -13,6 +13,7 @@
 	<text name="OrderItem">Mặt hàng trong hóa đơn</text>
 	<text name="ERP.Purchase.OrderItem">Mặt hàng trong hóa đơn</text>
 	<text name="Quantity">Số lượng</text>
+	<text name="AllProduct">Tất cả sản phẩm</text>
 	<text name="quantity">Số lượng</text>
 	<text name="SuccessfullyAddedToCart">Thêm vào giỏ hàng thành công</text>
 	<text name="OrderItemsHeaderInfo">Order items header info</text>

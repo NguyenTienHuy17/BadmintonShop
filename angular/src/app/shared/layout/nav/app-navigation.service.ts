@@ -22,6 +22,26 @@ export class AppNavigationService {
             new AppMenuItem('Dashboard', '', 'flaticon-line-graph', '/app/main/user-dashboard'),
             // new AppMenuItem('Tenants', 'Pages.Tenants', 'flaticon-list-3', '/app/admin/tenants'),
             // new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
+            new AppMenuItem('Product', '', 'flaticon-interface-8', '', [
+                new AppMenuItem('AllProduct', 'Pages.Bookings', 'flaticon-more', '/app/main/user/all-product'),
+                new AppMenuItem('Brand', 'Pages.Bookings', 'flaticon-more', '', [
+                    new AppMenuItem('Yonex', 'Pages.Bookings', 'flaticon-more', '/app/main/user/brand/1'),
+                    new AppMenuItem('Victor', 'Pages.Bookings', 'flaticon-more', '/app/main/user/brand/2'),
+                    new AppMenuItem('Li-Ning', 'Pages.Bookings', 'flaticon-more', '/app/main/user/brand/3'),
+                    new AppMenuItem('Mizuno', 'Pages.Bookings', 'flaticon-more', '/app/main/user/brand/8'),
+                    new AppMenuItem('Fleet', 'Pages.Bookings', 'flaticon-more', '/app/main/user/brand/9'),
+                    new AppMenuItem('Kawasaki', 'Pages.Bookings', 'flaticon-more', '/app/main/user/brand/10'),
+                    new AppMenuItem('Apacs', 'Pages.Bookings', 'flaticon-more', '/app/main/user/brand/11'),
+                ]),
+                new AppMenuItem('Category', 'Pages.Bookings', 'flaticon-more', '', [
+                    new AppMenuItem('Vợt cầu lông', 'Pages.Bookings', 'flaticon-more', '/app/main/user/category/1'),
+                    new AppMenuItem('Áo', 'Pages.Bookings', 'flaticon-more', '/app/main/user/brand/2'),
+                    new AppMenuItem('Quần', 'Pages.Bookings', 'flaticon-more', '/app/main/user/brand/3'),
+                    new AppMenuItem('Giày', 'Pages.Bookings', 'flaticon-more', '/app/main/user/brand/4'),
+                    new AppMenuItem('Phụ kiện ', 'Pages.Bookings', 'flaticon-more', '/app/main/user/brand/5'),
+                ]),
+                
+            ]),
             new AppMenuItem('Store', '', 'flaticon-interface-8', '', [
            
                 new AppMenuItem('Bookings', 'Pages.Bookings', 'flaticon-calendar', '/app/main/common/bookings'),
