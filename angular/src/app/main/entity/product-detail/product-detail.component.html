@@ -11,7 +11,7 @@
                     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                       <div class="carousel-inner">
                         <div class="carousel-item active">
-                          <img [src]="defaultRouter + product.productImageUrl[0]" class="d-block w-100" alt="Card image cap">
+                          <img [src]="defaultRouter + product.productImageUrl[position]" class="d-block w-100" alt="Card image cap">
                         </div>
                         <div class="carousel-item" *ngFor="let url of product.productImageUrl" >
                           <img [src]="defaultRouter + url" class="d-block w-100" alt="Card image cap">

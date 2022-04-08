@@ -427,7 +427,7 @@ namespace ERP.Entity
                 var filteredProducts = _productRepository.GetAll();
 
                 var pagedAndFilteredProducts = filteredProducts
-                    .Take(10);
+                    .Take(9);
 
                 var productImages = _lookup_productImageRepository.GetAll().GroupBy(x=> x.ProductId);
 
@@ -491,15 +491,32 @@ namespace ERP.Entity
             return id;
         }
 
-        public async Task<List<ProductDto>> GetProductByBrandId(long brandId)
+        public async Task<PagedResultDto<ProductDto>> GetAllProduct(GetAllProductsInput input)
         {
 
             try
             {
-                var filteredProducts = _productRepository.GetAll().Where(x=> x.BrandId == brandId);
+                var filteredProducts = _productRepository.GetAll()
+                        .Include(e => e.BrandFk)
+                        .Include(e => e.CategoryFk)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.MadeIn.Contains(input.Filter) || e.Code.Contains(input.Filter) || e.Description.Contains(input.Filter) || e.Title.Contains(input.Filter))
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name == input.NameFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.MadeInFilter), e => e.MadeIn == input.MadeInFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.CodeFilter), e => e.Code == input.CodeFilter)
+                        .WhereIf(input.MinPriceFilter != null, e => e.Price >= input.MinPriceFilter)
+                        .WhereIf(input.MaxPriceFilter != null, e => e.Price <= input.MaxPriceFilter)
+                        .WhereIf(input.MinInStockFilter != null, e => e.InStock >= input.MinInStockFilter)
+                        .WhereIf(input.MaxInStockFilter != null, e => e.InStock <= input.MaxInStockFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionFilter), e => e.Description == input.DescriptionFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.TitleFilter), e => e.Title == input.TitleFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.BrandNameFilter), e => e.BrandFk != null && e.BrandFk.Name == input.BrandNameFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.CategoryNameFilter), e => e.CategoryFk != null && e.CategoryFk.Name == input.CategoryNameFilter);
 
                 var pagedAndFilteredProducts = filteredProducts
-                    .OrderBy(x => x.Name);
+                    .OrderBy(input.Sorting ?? "id asc")
+                    .PageBy(input);
+
+                var totalCount = await filteredProducts.CountAsync();
 
                 var productImages = _lookup_productImageRepository.GetAll().GroupBy(x => x.ProductId);
 
@@ -510,30 +527,35 @@ namespace ERP.Entity
                     //Each group has a key
                     listProdImg.Add((ProductImage)productImage.FirstOrDefault());
                 }
+                var products = new List<ProductDto>();
+                products = await (from o in pagedAndFilteredProducts
 
-                var products = await (from o in pagedAndFilteredProducts
+                                  join o2 in _lookup_brandRepository.GetAll() on o.BrandId equals o2.Id into j2
+                                  from s2 in j2.DefaultIfEmpty()
 
-                                      join o2 in _lookup_brandRepository.GetAll() on o.BrandId equals o2.Id into j2
-                                      from s2 in j2.DefaultIfEmpty()
+                                  join o3 in listProdImg on o.Id equals o3.ProductId
 
-                                      join o3 in listProdImg on o.Id equals o3.ProductId
+                                  select new ProductDto
+                                  {
+                                      Name = o.Name,
+                                      MadeIn = o.MadeIn,
+                                      Code = o.Code,
+                                      Price = o.Price,
+                                      InStock = o.InStock,
+                                      Description = o.Description,
+                                      Title = o.Title,
+                                      Id = o.Id,
+                                      Color = o.Color,
+                                      Size = o.Size,
+                                      BrandName = s2 == null || s2.Name == null ? "" : s2.Name.ToString(),
+                                      ProductImageUrl = o3.Url.ToString()
+                                  }).ToListAsync();
 
-                                      select new ProductDto
-                                      {
-                                          Name = o.Name,
-                                          MadeIn = o.MadeIn,
-                                          Code = o.Code,
-                                          Price = o.Price,
-                                          InStock = o.InStock,
-                                          Description = o.Description,
-                                          Title = o.Title,
-                                          Id = o.Id,
-                                          Color = o.Color,
-                                          Size = o.Size,
-                                          BrandName = s2 == null || s2.Name == null ? "" : s2.Name.ToString(),
-                                          ProductImageUrl = o3.Url.ToString()
-                                      }).ToListAsync();
-                return products;
+
+                return new PagedResultDto<ProductDto>(
+                    totalCount,
+                    products
+                );
             }
             catch (Exception ex)
             {
@@ -543,15 +565,33 @@ namespace ERP.Entity
 
         }
 
-        public async Task<List<ProductDto>> GetProductByCategoryId(long categoryId)
+        public async Task<PagedResultDto<ProductDto>> GetAllByBrandId(GetAllProductsInput input, long brandId)
         {
 
             try
             {
-                var filteredProducts = _productRepository.GetAll().Where(x => x.CategoryId == categoryId);
+                var filteredProducts = _productRepository.GetAll()
+                        .Where(x => x.BrandId == brandId)
+                        .Include(e => e.BrandFk)
+                        .Include(e => e.CategoryFk)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.MadeIn.Contains(input.Filter) || e.Code.Contains(input.Filter) || e.Description.Contains(input.Filter) || e.Title.Contains(input.Filter))
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name == input.NameFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.MadeInFilter), e => e.MadeIn == input.MadeInFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.CodeFilter), e => e.Code == input.CodeFilter)
+                        .WhereIf(input.MinPriceFilter != null, e => e.Price >= input.MinPriceFilter)
+                        .WhereIf(input.MaxPriceFilter != null, e => e.Price <= input.MaxPriceFilter)
+                        .WhereIf(input.MinInStockFilter != null, e => e.InStock >= input.MinInStockFilter)
+                        .WhereIf(input.MaxInStockFilter != null, e => e.InStock <= input.MaxInStockFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionFilter), e => e.Description == input.DescriptionFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.TitleFilter), e => e.Title == input.TitleFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.BrandNameFilter), e => e.BrandFk != null && e.BrandFk.Name == input.BrandNameFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.CategoryNameFilter), e => e.CategoryFk != null && e.CategoryFk.Name == input.CategoryNameFilter);
 
                 var pagedAndFilteredProducts = filteredProducts
-                    .OrderBy(x => x.Name);
+                    .OrderBy(input.Sorting ?? "id asc")
+                    .PageBy(input);
+
+                var totalCount = await filteredProducts.CountAsync();
 
                 var productImages = _lookup_productImageRepository.GetAll().GroupBy(x => x.ProductId);
 
@@ -562,8 +602,8 @@ namespace ERP.Entity
                     //Each group has a key
                     listProdImg.Add((ProductImage)productImage.FirstOrDefault());
                 }
-
-                var products = await (from o in pagedAndFilteredProducts
+                var products = new List<ProductDto>();
+                products = await (from o in pagedAndFilteredProducts
 
                                       join o2 in _lookup_brandRepository.GetAll() on o.BrandId equals o2.Id into j2
                                       from s2 in j2.DefaultIfEmpty()
@@ -585,7 +625,87 @@ namespace ERP.Entity
                                           BrandName = s2 == null || s2.Name == null ? "" : s2.Name.ToString(),
                                           ProductImageUrl = o3.Url.ToString()
                                       }).ToListAsync();
-                return products;
+
+
+                return new PagedResultDto<ProductDto>(
+                    totalCount,
+                    products
+                );
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+
+        public async Task<PagedResultDto<ProductDto>> GetAllByCategoryId(GetAllProductsInput input, long categoryId)
+        {
+
+            try
+            {
+                var filteredProducts = _productRepository.GetAll()
+                        .Where(x => x.CategoryId == categoryId)
+                        .Include(e => e.BrandFk)
+                        .Include(e => e.CategoryFk)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.MadeIn.Contains(input.Filter) || e.Code.Contains(input.Filter) || e.Description.Contains(input.Filter) || e.Title.Contains(input.Filter))
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name == input.NameFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.MadeInFilter), e => e.MadeIn == input.MadeInFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.CodeFilter), e => e.Code == input.CodeFilter)
+                        .WhereIf(input.MinPriceFilter != null, e => e.Price >= input.MinPriceFilter)
+                        .WhereIf(input.MaxPriceFilter != null, e => e.Price <= input.MaxPriceFilter)
+                        .WhereIf(input.MinInStockFilter != null, e => e.InStock >= input.MinInStockFilter)
+                        .WhereIf(input.MaxInStockFilter != null, e => e.InStock <= input.MaxInStockFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionFilter), e => e.Description == input.DescriptionFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.TitleFilter), e => e.Title == input.TitleFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.BrandNameFilter), e => e.BrandFk != null && e.BrandFk.Name == input.BrandNameFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.CategoryNameFilter), e => e.CategoryFk != null && e.CategoryFk.Name == input.CategoryNameFilter);
+
+                var pagedAndFilteredProducts = filteredProducts
+                    .OrderBy(input.Sorting ?? "id asc")
+                    .PageBy(input);
+
+                var totalCount = await filteredProducts.CountAsync();
+
+                var productImages = _lookup_productImageRepository.GetAll().GroupBy(x => x.ProductId);
+
+                var listProdImg = new List<ProductImage>();
+                //iterate each group        
+                foreach (var productImage in productImages)
+                {
+                    //Each group has a key
+                    listProdImg.Add((ProductImage)productImage.FirstOrDefault());
+                }
+                var products = new List<ProductDto>();
+                products = await (from o in pagedAndFilteredProducts
+
+                                  join o2 in _lookup_brandRepository.GetAll() on o.BrandId equals o2.Id into j2
+                                  from s2 in j2.DefaultIfEmpty()
+
+                                  join o3 in listProdImg on o.Id equals o3.ProductId
+
+                                  select new ProductDto
+                                  {
+                                      Name = o.Name,
+                                      MadeIn = o.MadeIn,
+                                      Code = o.Code,
+                                      Price = o.Price,
+                                      InStock = o.InStock,
+                                      Description = o.Description,
+                                      Title = o.Title,
+                                      Id = o.Id,
+                                      Color = o.Color,
+                                      Size = o.Size,
+                                      BrandName = s2 == null || s2.Name == null ? "" : s2.Name.ToString(),
+                                      ProductImageUrl = o3.Url.ToString()
+                                  }).ToListAsync();
+
+
+                return new PagedResultDto<ProductDto>(
+                    totalCount,
+                    products
+                );
             }
             catch (Exception ex)
             {

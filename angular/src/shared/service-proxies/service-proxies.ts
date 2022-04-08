@@ -10237,6 +10237,309 @@ export class ProductsServiceProxy {
         }
         return _observableOf<number>(<any>null);
     }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param madeInFilter (optional) 
+     * @param codeFilter (optional) 
+     * @param maxPriceFilter (optional) 
+     * @param minPriceFilter (optional) 
+     * @param maxInStockFilter (optional) 
+     * @param minInStockFilter (optional) 
+     * @param descriptionFilter (optional) 
+     * @param titleFilter (optional) 
+     * @param imageNameFilter (optional) 
+     * @param brandNameFilter (optional) 
+     * @param categoryNameFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAllProduct(filter: string | null | undefined, nameFilter: string | null | undefined, madeInFilter: string | null | undefined, codeFilter: string | null | undefined, maxPriceFilter: number | null | undefined, minPriceFilter: number | null | undefined, maxInStockFilter: number | null | undefined, minInStockFilter: number | null | undefined, descriptionFilter: string | null | undefined, titleFilter: string | null | undefined, imageNameFilter: string | null | undefined, brandNameFilter: string | null | undefined, categoryNameFilter: string | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfProductDto> {
+        let url_ = this.baseUrl + "/api/services/app/Products/GetAllProduct?";
+        if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
+        if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&"; 
+        if (madeInFilter !== undefined)
+            url_ += "MadeInFilter=" + encodeURIComponent("" + madeInFilter) + "&"; 
+        if (codeFilter !== undefined)
+            url_ += "CodeFilter=" + encodeURIComponent("" + codeFilter) + "&"; 
+        if (maxPriceFilter !== undefined)
+            url_ += "MaxPriceFilter=" + encodeURIComponent("" + maxPriceFilter) + "&"; 
+        if (minPriceFilter !== undefined)
+            url_ += "MinPriceFilter=" + encodeURIComponent("" + minPriceFilter) + "&"; 
+        if (maxInStockFilter !== undefined)
+            url_ += "MaxInStockFilter=" + encodeURIComponent("" + maxInStockFilter) + "&"; 
+        if (minInStockFilter !== undefined)
+            url_ += "MinInStockFilter=" + encodeURIComponent("" + minInStockFilter) + "&"; 
+        if (descriptionFilter !== undefined)
+            url_ += "DescriptionFilter=" + encodeURIComponent("" + descriptionFilter) + "&"; 
+        if (titleFilter !== undefined)
+            url_ += "TitleFilter=" + encodeURIComponent("" + titleFilter) + "&"; 
+        if (imageNameFilter !== undefined)
+            url_ += "ImageNameFilter=" + encodeURIComponent("" + imageNameFilter) + "&"; 
+        if (brandNameFilter !== undefined)
+            url_ += "BrandNameFilter=" + encodeURIComponent("" + brandNameFilter) + "&"; 
+        if (categoryNameFilter !== undefined)
+            url_ += "CategoryNameFilter=" + encodeURIComponent("" + categoryNameFilter) + "&"; 
+        if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
+        if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllProduct(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllProduct(<any>response_);
+                } catch (e) {
+                    return <Observable<PagedResultDtoOfProductDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PagedResultDtoOfProductDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllProduct(response: HttpResponseBase): Observable<PagedResultDtoOfProductDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PagedResultDtoOfProductDto.fromJS(resultData200) : new PagedResultDtoOfProductDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PagedResultDtoOfProductDto>(<any>null);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param madeInFilter (optional) 
+     * @param codeFilter (optional) 
+     * @param maxPriceFilter (optional) 
+     * @param minPriceFilter (optional) 
+     * @param maxInStockFilter (optional) 
+     * @param minInStockFilter (optional) 
+     * @param descriptionFilter (optional) 
+     * @param titleFilter (optional) 
+     * @param imageNameFilter (optional) 
+     * @param brandNameFilter (optional) 
+     * @param categoryNameFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @param brandId (optional) 
+     * @return Success
+     */
+    getAllByBrandId(filter: string | null | undefined, nameFilter: string | null | undefined, madeInFilter: string | null | undefined, codeFilter: string | null | undefined, maxPriceFilter: number | null | undefined, minPriceFilter: number | null | undefined, maxInStockFilter: number | null | undefined, minInStockFilter: number | null | undefined, descriptionFilter: string | null | undefined, titleFilter: string | null | undefined, imageNameFilter: string | null | undefined, brandNameFilter: string | null | undefined, categoryNameFilter: string | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined, brandId: number | null | undefined): Observable<PagedResultDtoOfProductDto> {
+        let url_ = this.baseUrl + "/api/services/app/Products/GetAllByBrandId?";
+        if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
+        if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&"; 
+        if (madeInFilter !== undefined)
+            url_ += "MadeInFilter=" + encodeURIComponent("" + madeInFilter) + "&"; 
+        if (codeFilter !== undefined)
+            url_ += "CodeFilter=" + encodeURIComponent("" + codeFilter) + "&"; 
+        if (maxPriceFilter !== undefined)
+            url_ += "MaxPriceFilter=" + encodeURIComponent("" + maxPriceFilter) + "&"; 
+        if (minPriceFilter !== undefined)
+            url_ += "MinPriceFilter=" + encodeURIComponent("" + minPriceFilter) + "&"; 
+        if (maxInStockFilter !== undefined)
+            url_ += "MaxInStockFilter=" + encodeURIComponent("" + maxInStockFilter) + "&"; 
+        if (minInStockFilter !== undefined)
+            url_ += "MinInStockFilter=" + encodeURIComponent("" + minInStockFilter) + "&"; 
+        if (descriptionFilter !== undefined)
+            url_ += "DescriptionFilter=" + encodeURIComponent("" + descriptionFilter) + "&"; 
+        if (titleFilter !== undefined)
+            url_ += "TitleFilter=" + encodeURIComponent("" + titleFilter) + "&"; 
+        if (imageNameFilter !== undefined)
+            url_ += "ImageNameFilter=" + encodeURIComponent("" + imageNameFilter) + "&"; 
+        if (brandNameFilter !== undefined)
+            url_ += "BrandNameFilter=" + encodeURIComponent("" + brandNameFilter) + "&"; 
+        if (categoryNameFilter !== undefined)
+            url_ += "CategoryNameFilter=" + encodeURIComponent("" + categoryNameFilter) + "&"; 
+        if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
+        if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        if (brandId !== undefined)
+            url_ += "brandId=" + encodeURIComponent("" + brandId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllByBrandId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllByBrandId(<any>response_);
+                } catch (e) {
+                    return <Observable<PagedResultDtoOfProductDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PagedResultDtoOfProductDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllByBrandId(response: HttpResponseBase): Observable<PagedResultDtoOfProductDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PagedResultDtoOfProductDto.fromJS(resultData200) : new PagedResultDtoOfProductDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PagedResultDtoOfProductDto>(<any>null);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param madeInFilter (optional) 
+     * @param codeFilter (optional) 
+     * @param maxPriceFilter (optional) 
+     * @param minPriceFilter (optional) 
+     * @param maxInStockFilter (optional) 
+     * @param minInStockFilter (optional) 
+     * @param descriptionFilter (optional) 
+     * @param titleFilter (optional) 
+     * @param imageNameFilter (optional) 
+     * @param brandNameFilter (optional) 
+     * @param categoryNameFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @param categoryId (optional) 
+     * @return Success
+     */
+    getAllByCategoryId(filter: string | null | undefined, nameFilter: string | null | undefined, madeInFilter: string | null | undefined, codeFilter: string | null | undefined, maxPriceFilter: number | null | undefined, minPriceFilter: number | null | undefined, maxInStockFilter: number | null | undefined, minInStockFilter: number | null | undefined, descriptionFilter: string | null | undefined, titleFilter: string | null | undefined, imageNameFilter: string | null | undefined, brandNameFilter: string | null | undefined, categoryNameFilter: string | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined, categoryId: number | null | undefined): Observable<PagedResultDtoOfProductDto> {
+        let url_ = this.baseUrl + "/api/services/app/Products/GetAllByCategoryId?";
+        if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
+        if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&"; 
+        if (madeInFilter !== undefined)
+            url_ += "MadeInFilter=" + encodeURIComponent("" + madeInFilter) + "&"; 
+        if (codeFilter !== undefined)
+            url_ += "CodeFilter=" + encodeURIComponent("" + codeFilter) + "&"; 
+        if (maxPriceFilter !== undefined)
+            url_ += "MaxPriceFilter=" + encodeURIComponent("" + maxPriceFilter) + "&"; 
+        if (minPriceFilter !== undefined)
+            url_ += "MinPriceFilter=" + encodeURIComponent("" + minPriceFilter) + "&"; 
+        if (maxInStockFilter !== undefined)
+            url_ += "MaxInStockFilter=" + encodeURIComponent("" + maxInStockFilter) + "&"; 
+        if (minInStockFilter !== undefined)
+            url_ += "MinInStockFilter=" + encodeURIComponent("" + minInStockFilter) + "&"; 
+        if (descriptionFilter !== undefined)
+            url_ += "DescriptionFilter=" + encodeURIComponent("" + descriptionFilter) + "&"; 
+        if (titleFilter !== undefined)
+            url_ += "TitleFilter=" + encodeURIComponent("" + titleFilter) + "&"; 
+        if (imageNameFilter !== undefined)
+            url_ += "ImageNameFilter=" + encodeURIComponent("" + imageNameFilter) + "&"; 
+        if (brandNameFilter !== undefined)
+            url_ += "BrandNameFilter=" + encodeURIComponent("" + brandNameFilter) + "&"; 
+        if (categoryNameFilter !== undefined)
+            url_ += "CategoryNameFilter=" + encodeURIComponent("" + categoryNameFilter) + "&"; 
+        if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
+        if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        if (categoryId !== undefined)
+            url_ += "categoryId=" + encodeURIComponent("" + categoryId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllByCategoryId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllByCategoryId(<any>response_);
+                } catch (e) {
+                    return <Observable<PagedResultDtoOfProductDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PagedResultDtoOfProductDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllByCategoryId(response: HttpResponseBase): Observable<PagedResultDtoOfProductDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PagedResultDtoOfProductDto.fromJS(resultData200) : new PagedResultDtoOfProductDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PagedResultDtoOfProductDto>(<any>null);
+    }
 }
 
 @Injectable()
@@ -25001,6 +25304,54 @@ export class ProductImageUrl implements IProductImageUrl {
 export interface IProductImageUrl {
     productId: number | undefined;
     listImageUrl: string[] | undefined;
+}
+
+export class PagedResultDtoOfProductDto implements IPagedResultDtoOfProductDto {
+    totalCount!: number | undefined;
+    items!: ProductDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfProductDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.totalCount = data["totalCount"];
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [] as any;
+                for (let item of data["items"])
+                    this.items!.push(ProductDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfProductDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfProductDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface IPagedResultDtoOfProductDto {
+    totalCount: number | undefined;
+    items: ProductDto[] | undefined;
 }
 
 export class CurrentUserProfileEditDto implements ICurrentUserProfileEditDto {

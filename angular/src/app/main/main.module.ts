@@ -87,6 +87,9 @@ import { ProductDetailComponent } from './entity/product-detail/product-detail.c
 import { CartDetailComponent } from './common/cart-detail/cart-detail.component';
 import { OrrderDetailModalComponent } from './purchase/orrder-detail-modal/orrder-detail-modal.component'
 ;
+import { ProductBrandComponent } from './user/product-brand/product-brand.component';;
+import { ProductCategoryComponent } from './user/product-category/product-category.component';
+import { AllProductComponent } from './user/all-product/all-product.component'
 
 NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
@@ -183,7 +186,10 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 ,
         CartDetailComponent,
         OrrderDetailModalComponent
-    ],
+,
+        ProductBrandComponent ,
+        ProductCategoryComponent ,
+        AllProductComponent  ],
     providers: [
 		NewUploadImageService,
 		UploadSingleImageService,

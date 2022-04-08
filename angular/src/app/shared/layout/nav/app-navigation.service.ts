@@ -17,62 +17,62 @@ export class AppNavigationService {
 
     getMenu(): AppMenu {
         return new AppMenu('MainMenu', 'MainMenu', [
-            new AppMenuItem('Dashboard', 'Pages.Administration.Host.Dashboard', 'flaticon-line-graph', '/app/admin/hostDashboard'),
-            new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),
-            new AppMenuItem('Dashboard', '', 'flaticon-line-graph', '/app/main/user-dashboard'),
+            new AppMenuItem('Dashboard', 'Pages.Administration.Host.Dashboard', 'pi pi-home', '/app/admin/hostDashboard'),
+            new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'pi pi-home', '/app/main/dashboard'),
+            new AppMenuItem('Dashboard', '', 'pi pi-home', '/app/main/user-dashboard'),
             // new AppMenuItem('Tenants', 'Pages.Tenants', 'flaticon-list-3', '/app/admin/tenants'),
             // new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
-            new AppMenuItem('Product', '', 'flaticon-interface-8', '', [
-                new AppMenuItem('AllProduct', 'Pages.Bookings', 'flaticon-more', '/app/main/user/all-product'),
-                new AppMenuItem('Brand', 'Pages.Bookings', 'flaticon-more', '', [
-                    new AppMenuItem('Yonex', 'Pages.Bookings', 'flaticon-more', '/app/main/user/brand/1'),
-                    new AppMenuItem('Victor', 'Pages.Bookings', 'flaticon-more', '/app/main/user/brand/2'),
-                    new AppMenuItem('Li-Ning', 'Pages.Bookings', 'flaticon-more', '/app/main/user/brand/3'),
-                    new AppMenuItem('Mizuno', 'Pages.Bookings', 'flaticon-more', '/app/main/user/brand/8'),
-                    new AppMenuItem('Fleet', 'Pages.Bookings', 'flaticon-more', '/app/main/user/brand/9'),
-                    new AppMenuItem('Kawasaki', 'Pages.Bookings', 'flaticon-more', '/app/main/user/brand/10'),
-                    new AppMenuItem('Apacs', 'Pages.Bookings', 'flaticon-more', '/app/main/user/brand/11'),
+            new AppMenuItem('Product', '', 'pi pi-list', '', [
+                new AppMenuItem('AllProduct', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/all-product'),
+                new AppMenuItem('Brand', 'Pages.Bookings', 'pi pi-arrow-circle-right', '', [
+                    new AppMenuItem('Yonex', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/product-brand/1'),
+                    new AppMenuItem('Victor', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/product-brand/2'),
+                    new AppMenuItem('Li-Ning', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/product-brand/3'),
+                    new AppMenuItem('Mizuno', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/product-brand/8'),
+                    new AppMenuItem('Fleet', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/product-brand/9'),
+                    new AppMenuItem('Kawasaki', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/product-brand/10'),
+                    new AppMenuItem('Apacs', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/product-brand/11'),
                 ]),
-                new AppMenuItem('Category', 'Pages.Bookings', 'flaticon-more', '', [
-                    new AppMenuItem('Vợt cầu lông', 'Pages.Bookings', 'flaticon-more', '/app/main/user/category/1'),
-                    new AppMenuItem('Áo', 'Pages.Bookings', 'flaticon-more', '/app/main/user/brand/2'),
-                    new AppMenuItem('Quần', 'Pages.Bookings', 'flaticon-more', '/app/main/user/brand/3'),
-                    new AppMenuItem('Giày', 'Pages.Bookings', 'flaticon-more', '/app/main/user/brand/4'),
-                    new AppMenuItem('Phụ kiện ', 'Pages.Bookings', 'flaticon-more', '/app/main/user/brand/5'),
+                new AppMenuItem('Category', 'Pages.Bookings', 'pi pi-arrow-circle-right', '', [
+                    new AppMenuItem('Vợt cầu lông', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/product-category/1'),
+                    new AppMenuItem('Áo', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/product-category/2'),
+                    new AppMenuItem('Quần', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/product-category/3'),
+                    new AppMenuItem('Giày', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/product-category/4'),
+                    new AppMenuItem('Phụ kiện ', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/product-category/5'),
                 ]),
                 
             ]),
-            new AppMenuItem('Store', '', 'flaticon-interface-8', '', [
+            new AppMenuItem('Store', '', 'pi pi-list', '', [
            
-                new AppMenuItem('Bookings', 'Pages.Bookings', 'flaticon-calendar', '/app/main/common/bookings'),
+                new AppMenuItem('Bookings', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/common/bookings'),
                 
-                new AppMenuItem('Blogs', 'Pages.Blogs', 'flaticon-more', '/app/main/common/blogs'),
+                new AppMenuItem('Blogs', 'Pages.Blogs', 'pi pi-arrow-circle-right', '/app/main/common/blogs'),
                 
-                new AppMenuItem('Discounts', 'Pages.Discounts', 'flaticon-more', '/app/main/common/discounts'),
-                
-                
-                new AppMenuItem('Brands', 'Pages.Brands', 'flaticon-more', '/app/main/entity/brands'),
-                
-                new AppMenuItem('Categories', 'Pages.Categories', 'flaticon-more', '/app/main/common/categories'),
+                new AppMenuItem('Discounts', 'Pages.Discounts', 'pi pi-arrow-circle-right', '/app/main/common/discounts'),
                 
                 
-                new AppMenuItem('Products', 'Pages.Products', 'flaticon-more', '/app/main/entity/products'),
+                new AppMenuItem('Brands', 'Pages.Brands', 'pi pi-arrow-circle-right', '/app/main/entity/brands'),
                 
-                new AppMenuItem('ProductImages', 'Pages.ProductImages', 'flaticon-more', '/app/main/common/productImages'),
+                new AppMenuItem('Categories', 'Pages.Categories', 'pi pi-arrow-circle-right', '/app/main/common/categories'),
                 
-                new AppMenuItem('Statuses', 'Pages.Statuses', 'flaticon-more', '/app/main/common/statuses'),
                 
-                new AppMenuItem('Orders', 'Pages.Orders', 'flaticon-more', '/app/main/purchase/orders'),
+                new AppMenuItem('Products', 'Pages.Products', 'pi pi-arrow-circle-right', '/app/main/entity/products'),
                 
-                new AppMenuItem('OrderItems', 'Pages.OrderItems', 'flaticon-more', '/app/main/purchase/orderItems'),
+                new AppMenuItem('ProductImages', 'Pages.ProductImages', 'pi pi-arrow-circle-right', '/app/main/common/productImages'),
                 
-                new AppMenuItem('ReturnProds', 'Pages.ReturnProds', 'flaticon-more', '/app/main/purchase/returnProds'),
+                new AppMenuItem('Statuses', 'Pages.Statuses', 'pi pi-arrow-circle-right', '/app/main/common/statuses'),
                 
-                new AppMenuItem('Carts', 'Pages.Carts', 'flaticon-more', '/app/main/common/carts'),
+                new AppMenuItem('Orders', 'Pages.Orders', 'pi pi-arrow-circle-right', '/app/main/purchase/orders'),
+                
+                new AppMenuItem('OrderItems', 'Pages.OrderItems', 'pi pi-arrow-circle-right', '/app/main/purchase/orderItems'),
+                
+                new AppMenuItem('ReturnProds', 'Pages.ReturnProds', 'pi pi-arrow-circle-right', '/app/main/purchase/returnProds'),
+                
+                new AppMenuItem('Carts', 'Pages.Carts', 'pi pi-arrow-circle-right', '/app/main/common/carts'),
             ]),
 
             
-             new AppMenuItem('Administration', '', 'flaticon-interface-8', '', [
+             new AppMenuItem('Administration', '', 'pi pi-star-o', '', [
                 // new AppMenuItem('OrganizationUnits', 'Pages.Administration.OrganizationUnits', 'flaticon-map', '/app/admin/organization-units'),
                 new AppMenuItem('Roles', 'Pages.Administration.Roles', 'flaticon-suitcase', '/app/admin/roles'),
                 new AppMenuItem('Users', 'Pages.Administration.Users', 'flaticon-users', '/app/admin/users'),

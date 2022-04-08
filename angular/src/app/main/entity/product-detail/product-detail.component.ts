@@ -20,7 +20,7 @@ export class ProductDetailComponent extends AppComponentBase implements OnInit {
   quantity: number = 1;
   cart: CreateOrEditCartDto;
   saving = false;
-
+  position: number;
   constructor(injector: Injector,
     private _activatedRoute: ActivatedRoute,
     private _productsServiceProxy: ProductsServiceProxy,
@@ -33,6 +33,7 @@ export class ProductDetailComponent extends AppComponentBase implements OnInit {
     this.product.product.price = 0;
     this.product.productSize = [];
     this.product.productColor = [];
+    this.position = 0;
     this.cart = new CreateOrEditCartDto();
   }
 

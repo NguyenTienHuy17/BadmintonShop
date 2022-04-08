@@ -16,6 +16,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 import { ProductDetailComponent } from './entity/product-detail/product-detail.component';
 import { CartDetailComponent } from './common/cart-detail/cart-detail.component';
+import { ProductBrandComponent } from './user/product-brand/product-brand.component';
+import { ProductCategoryComponent } from './user/product-category/product-category.component';
+import { AllProductComponent } from './user/all-product/all-product.component';
 
 @NgModule({
     imports: [
@@ -38,7 +41,10 @@ import { CartDetailComponent } from './common/cart-detail/cart-detail.component'
                     { path: 'common/bookings', component: BookingsComponent, data: { permission: 'Pages.Bookings' }  },
                     { path: 'dashboard', component: DashboardComponent, data: { permission: 'Pages.Tenant.Dashboard' } },
                     { path: 'user-dashboard', component: UserDashboardComponent, data: { permission: '' } },
-                    { path: 'cart-detail', component: CartDetailComponent, data: { permission: '' } }
+                    { path: 'cart-detail', component: CartDetailComponent, data: { permission: '' } },
+                    { path: 'user/all-product', component: AllProductComponent, data: { permission: '' } },
+                    { path: 'user/product-brand/:brandId', component: ProductBrandComponent, data: { permission: '' } },
+                    { path: 'user/product-category/:categoryId', component: ProductCategoryComponent, data: { permission: '' } }
                 ]
             }
         ])
