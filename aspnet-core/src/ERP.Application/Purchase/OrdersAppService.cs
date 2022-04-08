@@ -18,6 +18,7 @@ using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Abp.UI;
 using ERP.Storage;
+using Abp.Runtime.Session;
 
 namespace ERP.Purchase
 {
@@ -28,14 +29,18 @@ namespace ERP.Purchase
         private readonly IOrdersExcelExporter _ordersExcelExporter;
         private readonly IRepository<Status, long> _lookup_statusRepository;
         private readonly IRepository<Discount, long> _lookup_discountRepository;
-
-        public OrdersAppService(IRepository<Order, long> orderRepository, IOrdersExcelExporter ordersExcelExporter, IRepository<Status, long> lookup_statusRepository, IRepository<Discount, long> lookup_discountRepository)
+        private readonly IAbpSession _abpSession;
+        public OrdersAppService(IRepository<Order, long> orderRepository, 
+            IOrdersExcelExporter ordersExcelExporter, 
+            IRepository<Status, long> lookup_statusRepository, 
+            IRepository<Discount, long> lookup_discountRepository,
+            IAbpSession abpSession)
         {
             _orderRepository = orderRepository;
             _ordersExcelExporter = ordersExcelExporter;
             _lookup_statusRepository = lookup_statusRepository;
             _lookup_discountRepository = lookup_discountRepository;
-
+            _abpSession = abpSession;
         }
 
         public async Task<PagedResultDto<GetOrderForViewDto>> GetAll(GetAllOrdersInput input)
@@ -324,6 +329,63 @@ namespace ERP.Purchase
 
                 throw;
             }
+        }
+
+        public async Task<List<GetOrderForViewDto>> GetAllUserOrder()
+        {
+
+            var filteredOrders = _orderRepository.GetAll().Where(x => x.CreatorUserId == _abpSession.UserId);
+            var pagedAndFilteredOrders = filteredOrders
+                .OrderBy(x=> x.CreationTime);
+
+            var orders = from o in pagedAndFilteredOrders
+                         join o1 in _lookup_statusRepository.GetAll() on o.StatusId equals o1.Id into j1
+                         from s1 in j1.DefaultIfEmpty()
+
+                         join o2 in _lookup_discountRepository.GetAll() on o.DiscountId equals o2.Id into j2
+                         from s2 in j2.DefaultIfEmpty()
+
+                         select new
+                         {
+
+                             o.OrderCode,
+                             o.TotalPrice,
+                             o.ShippingAddress,
+                             o.ShippingNumber,
+                             o.DiscountAmount,
+                             o.ActualPrice,
+                             Id = o.Id,
+                             StatusName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
+                             DiscountDiscountCode = s2 == null || s2.DiscountCode == null ? "" : s2.DiscountCode.ToString()
+                         };
+
+            var dbList = await orders.ToListAsync();
+            var results = new List<GetOrderForViewDto>();
+
+            foreach (var o in dbList)
+            {
+                var res = new GetOrderForViewDto()
+                {
+                    Order = new OrderDto
+                    {
+
+                        OrderCode = o.OrderCode,
+                        TotalPrice = o.TotalPrice,
+                        ShippingAddress = o.ShippingAddress,
+                        ShippingNumber = o.ShippingNumber,
+                        DiscountAmount = o.DiscountAmount,
+                        ActualPrice = o.ActualPrice,
+                        Id = o.Id,
+                    },
+                    StatusName = o.StatusName,
+                    DiscountDiscountCode = o.DiscountDiscountCode
+                };
+
+                results.Add(res);
+            }
+
+            return results;
+
         }
     }
 }

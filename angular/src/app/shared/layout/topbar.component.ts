@@ -173,4 +173,12 @@ export class TopBarComponent extends ThemesLayoutBaseComponent implements OnInit
     cartDetail(){
         this.router.navigate(['/app/main/cart-detail']);  // define your component where you want to go
     }
+
+    signUp(){
+
+    }
+
+    signIn(){
+        
+    }
 }

@@ -19,6 +19,8 @@ import { CartDetailComponent } from './common/cart-detail/cart-detail.component'
 import { ProductBrandComponent } from './user/product-brand/product-brand.component';
 import { ProductCategoryComponent } from './user/product-category/product-category.component';
 import { AllProductComponent } from './user/all-product/all-product.component';
+import { BookingComponent } from './user/booking/booking.component';
+import { ReturnProdComponent } from './user/return-prod/return-prod.component';
 
 @NgModule({
     imports: [
@@ -44,6 +46,8 @@ import { AllProductComponent } from './user/all-product/all-product.component';
                     { path: 'cart-detail', component: CartDetailComponent, data: { permission: '' } },
                     { path: 'user/all-product', component: AllProductComponent, data: { permission: '' } },
                     { path: 'user/product-brand/:brandId', component: ProductBrandComponent, data: { permission: '' } },
+                    { path: 'user/booking', component: BookingComponent, data: { permission: '' } },
+                    { path: 'user/returnProd', component: ReturnProdComponent, data: { permission: '' } },
                     { path: 'user/product-category/:categoryId', component: ProductCategoryComponent, data: { permission: '' } }
                 ]
             }

@@ -1,0 +1,35 @@
+<div [@routerTransition]>
+  <div class="kt-content">
+    <div class="kt-portlet kt-portlet--mobile">
+      <div class="kt-portlet__body">
+        <form #returnProdForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+          <div class="modal-body">
+
+
+            <div class="form-group">
+              <label for="Product_orderId">{{l("OrderCode")}} *</label>
+              <select id="orderId" name="orderId" [(ngModel)]="returnProd.orderId" class="form-control">
+                <option disabled value="">{{"Select" | localize}}</option>
+                <option *ngFor="let order of listOrder" [value]="order.order.id">{{order.order.orderCode}}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="ReturnProd_Reason">{{l("Reason")}} *</label>
+              <input type="text" #ReturnProd_Reason="ngModel" id="ReturnProd_Reason" class="form-control"
+                [(ngModel)]="returnProd.reason" name="Reason" required />
+              <validation-messages [formCtrl]="ReturnProd_Reason"></validation-messages>
+            </div>
+
+
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary blue" [disabled]="!returnProdForm.form.valid"><i
+                class="fa fa-save"></i>
+              <span>{{l("CreateReturnProdReq")}}</span></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

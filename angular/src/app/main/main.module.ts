@@ -84,13 +84,18 @@ import { UploadSingleImageService } from './uploadSingleImage/uploadSingleImage.
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 import { ProductDetailComponent } from './entity/product-detail/product-detail.component'
 ;
-import { CartDetailComponent } from './common/cart-detail/cart-detail.component';
+import { CartDetailComponent } from './common/cart-detail/cart-detail.component'
+;
 import { OrrderDetailModalComponent } from './purchase/orrder-detail-modal/orrder-detail-modal.component'
 ;
-import { ProductBrandComponent } from './user/product-brand/product-brand.component';;
-import { ProductCategoryComponent } from './user/product-category/product-category.component';
+import { ProductBrandComponent } from './user/product-brand/product-brand.component';
+import { ProductCategoryComponent } from './user/product-category/product-category.component'
+;
 import { AllProductComponent } from './user/all-product/all-product.component'
-
+;
+import { BookingComponent } from './user/booking/booking.component'
+;
+import { ReturnProdComponent } from './user/return-prod/return-prod.component';
 NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
 @NgModule({
@@ -184,12 +189,15 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 ,
         ProductDetailComponent
 ,
-        CartDetailComponent,
+        CartDetailComponent
+,
         OrrderDetailModalComponent
 ,
         ProductBrandComponent ,
         ProductCategoryComponent ,
-        AllProductComponent  ],
+        AllProductComponent ,
+        BookingComponent ,
+        ReturnProdComponent],
     providers: [
 		NewUploadImageService,
 		UploadSingleImageService,

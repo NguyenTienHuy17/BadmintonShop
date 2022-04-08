@@ -1,4 +1,4 @@
-﻿import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef} from '@angular/core';
+﻿import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 import { finalize } from 'rxjs/operators';
 import { BookingsServiceProxy, CreateOrEditBookingDto } from '@shared/service-proxies/service-proxies';
@@ -12,8 +12,8 @@ import * as moment from 'moment';
     selector: 'createOrEditBookingModal',
     templateUrl: './create-or-edit-booking-modal.component.html'
 })
-export class CreateOrEditBookingModalComponent extends AppComponentBase implements OnInit{
-   
+export class CreateOrEditBookingModalComponent extends AppComponentBase implements OnInit {
+
     @ViewChild('createOrEditModal', { static: true }) modal: ModalDirective;
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
@@ -32,9 +32,9 @@ export class CreateOrEditBookingModalComponent extends AppComponentBase implemen
     ) {
         super(injector);
     }
-    
+
     show(bookingId?: number): void {
-    
+
 
         if (!bookingId) {
             this.booking = new CreateOrEditBookingDto();
@@ -47,29 +47,26 @@ export class CreateOrEditBookingModalComponent extends AppComponentBase implemen
         } else {
             this._bookingsServiceProxy.getBookingForEdit(bookingId).subscribe(result => {
                 this.booking = result.booking;
-
-
-
                 this.active = true;
                 this.modal.show();
             });
         }
-        
-        
+
+
     }
 
     save(): void {
-            this.saving = true;
-            
-			
-			
-            this._bookingsServiceProxy.createOrEdit(this.booking)
-             .pipe(finalize(() => { this.saving = false;}))
-             .subscribe(() => {
+        this.saving = true;
+
+
+
+        this._bookingsServiceProxy.createOrEdit(this.booking)
+            .pipe(finalize(() => { this.saving = false; }))
+            .subscribe(() => {
                 this.notify.info(this.l('SavedSuccessfully'));
                 this.close();
                 this.modalSave.emit(null);
-             });
+            });
     }
 
 
@@ -88,8 +85,8 @@ export class CreateOrEditBookingModalComponent extends AppComponentBase implemen
         this.active = false;
         this.modal.hide();
     }
-    
-     ngOnInit(): void {
-        
-     }    
+
+    ngOnInit(): void {
+
+    }
 }

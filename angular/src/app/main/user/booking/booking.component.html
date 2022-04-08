@@ -1,0 +1,27 @@
+<div [@routerTransition]>
+  <div class="kt-content">
+    <div class="kt-portlet kt-portlet--mobile">
+      <div class="kt-portlet__body">
+        <form #bookingForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+
+          <div class="form-group">
+            <label for="Booking_Time">{{l("Time")}}</label>
+            <input required class="form-control m-input" #Booking_Time type="datetime" bsDatepicker
+              [(ngModel)]="booking.time" id="Booking_Time" name="Booking_Time">
+            <validation-messages [formCtrl]="Booking_Time"></validation-messages>
+          </div>
+
+          <div class="form-group">
+            <label for="Booking_Description">{{l("Description")}} *</label>
+            <input type="text" #Booking_Description="ngModel" id="Booking_Description" class="form-control"
+              [(ngModel)]="booking.description" name="Description" minlength="0" maxlength="1024" required />
+            <validation-messages [formCtrl]="Booking_Description"></validation-messages>
+          </div>
+          <button type="submit" class="btn btn-primary blue" [disabled]="!bookingForm.form.valid"><i
+              class="fa fa-save"></i>
+            <span>{{l("CreateBooking")}}</span></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

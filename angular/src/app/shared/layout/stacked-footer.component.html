@@ -2,14 +2,9 @@
     <div class="kt-footer__bottom">
         <div class="kt-container">
             <div class="kt-footer__wrapper">
-                <div class="kt-footer__logo">
-                    <a routerLink="/" target="_blank" class="kt-brand__logo-wrapper">
-                        <img *ngIf="!appSession.tenant || !appSession.tenant.logoId" src="/assets/common/images/app-logo-on-dark-sm.svg" alt="logo" height="28" />
-                        <img *ngIf="appSession.tenant && appSession.tenant.logoId" [src]="remoteServiceBaseUrl + '/TenantCustomization/GetTenantLogo?skin=' + currentTheme.baseSettings.menu.asideSkin + '&tenantId=' + appSession.tenant.id + '&id=' + appSession.tenant.logoId" alt="logo" height="38" />
-                    </a>
-                    <div class="kt-footer__copyright">
-                        ERP <span *ngIf="appSession.tenant && appSession.tenant.edition && appSession.tenant.edition.displayName"> {{appSession.tenant.edition.displayName}}</span> | v{{appSession.application.version}} [{{releaseDate}}]
-                    </div>
+                <div class="kt-footer__logo text-center">
+                    <span>CÔNG TY TNHH VISUAL SPORTS || &nbsp; </span>
+                    <span>Địa chỉ: 182/15 Lê Đức Thọ - Phường 6 - Quận Gò Vấp - TP Hồ Chí Minh</span>
                 </div>
                 <div class="kt-footer__menu">
                 </div>

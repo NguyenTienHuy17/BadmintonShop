@@ -47,9 +47,11 @@
         </div>
     </div>
 
-    <div (click)="cartDetail()" class="kt-header__topbar-user" style="color: white; display: flex; align-items: center; margin: 0 3%;font-size: 19px;"><i class="fa fa-shopping-cart"></i></div>
-    <div headerNotifications class="kt-header__topbar-item dropdown" dropdown id="header_notification_bar"></div>
-    <div class="kt-header__topbar-item kt-header__topbar-item--user" dropdown>
+    <div (click)="cartDetail()" class="kt-header__topbar-user" style="color: white; display: flex; align-items: center; margin: 0 6%;font-size: 19px;"><i class="fa fa-shopping-cart"></i></div>
+    <div *ngIf="isImpersonatedLogin" (click)="signUp()" class="kt-header__topbar-user" style="color: white; display: flex; align-items: center; margin: 0 3%;font-size: 15px;">{{l("SignUp")}}</div>
+    <div *ngIf="isImpersonatedLogin" (click)="signIn()" class="kt-header__topbar-user" style="color: white; display: flex; align-items: center; margin: 0 3%;font-size: 15px;">/{{l("SignIn")}}</div>
+    <!-- <div headerNotifications class="kt-header__topbar-item dropdown" dropdown id="header_notification_bar"></div> -->
+    <div class="kt-header__topbar-item kt-header__topbar-item--user ml-1" dropdown>
         <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="0px,0px" aria-expanded="false" dropdownToggle>
             <div class="kt-header__topbar-user">
                 <i *ngIf="isImpersonatedLogin" class="fa fa-reply kt-font-danger mr-2"></i>
