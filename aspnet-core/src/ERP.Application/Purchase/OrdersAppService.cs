@@ -22,7 +22,6 @@ using Abp.Runtime.Session;
 
 namespace ERP.Purchase
 {
-    [AbpAuthorize(AppPermissions.Pages_Orders)]
     public class OrdersAppService : ERPAppServiceBase, IOrdersAppService
     {
         private readonly IRepository<Order, long> _orderRepository;
@@ -175,7 +174,7 @@ namespace ERP.Purchase
             }
         }
 
-        [AbpAuthorize(AppPermissions.Pages_Orders_Create)]
+        [AbpAuthorize(AppPermissions.Pages_User)]
         protected virtual async Task Create(CreateOrEditOrderDto input)
         {
             var order = ObjectMapper.Map<Order>(input);
@@ -189,7 +188,7 @@ namespace ERP.Purchase
 
         }
 
-        [AbpAuthorize(AppPermissions.Pages_Orders_Edit)]
+        [AbpAuthorize(AppPermissions.Pages_User)]
         protected virtual async Task Update(CreateOrEditOrderDto input)
         {
             var order = await _orderRepository.FirstOrDefaultAsync((long)input.Id);

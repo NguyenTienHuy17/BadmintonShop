@@ -22,7 +22,6 @@ using ERP.Common.Dtos;
 
 namespace ERP.Entity
 {
-    [AbpAuthorize(AppPermissions.Pages_Products)]
     public class ProductsAppService : ERPAppServiceBase, IProductsAppService
     {
         private readonly IRepository<Product, long> _productRepository;

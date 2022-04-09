@@ -19,7 +19,6 @@ using Abp.Runtime.Session;
 
 namespace ERP.Common
 {
-    [AbpAuthorize(AppPermissions.Pages_Bookings)]
     public class BookingsAppService : ERPAppServiceBase, IBookingsAppService
     {
         private readonly IRepository<Booking, long> _bookingRepository;

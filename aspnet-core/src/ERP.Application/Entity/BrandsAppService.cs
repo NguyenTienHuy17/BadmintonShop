@@ -20,7 +20,6 @@ using ERP.Storage;
 
 namespace ERP.Entity
 {
-    [AbpAuthorize(AppPermissions.Pages_Brands)]
     public class BrandsAppService : ERPAppServiceBase, IBrandsAppService
     {
         private readonly IRepository<Brand, long> _brandRepository;

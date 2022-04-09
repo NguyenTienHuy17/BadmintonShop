@@ -21,7 +21,7 @@ using ERP.Storage;
 
 namespace ERP.Purchase
 {
-    [AbpAuthorize(AppPermissions.Pages_OrderItems)]
+    [AbpAuthorize(AppPermissions.Pages_User)]
     public class OrderItemsAppService : ERPAppServiceBase, IOrderItemsAppService
     {
         private readonly IRepository<OrderItem, long> _orderItemRepository;
@@ -156,7 +156,7 @@ namespace ERP.Purchase
             }
         }
 
-        [AbpAuthorize(AppPermissions.Pages_OrderItems_Create)]
+        [AbpAuthorize(AppPermissions.Pages_User)]
         protected virtual async Task Create(CreateOrEditOrderItemDto input)
         {
             var orderItem = ObjectMapper.Map<OrderItem>(input);

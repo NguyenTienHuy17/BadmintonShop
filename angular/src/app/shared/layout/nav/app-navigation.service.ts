@@ -19,62 +19,62 @@ export class AppNavigationService {
         return new AppMenu('MainMenu', 'MainMenu', [
             new AppMenuItem('Dashboard', 'Pages.Administration.Host.Dashboard', 'pi pi-home', '/app/admin/hostDashboard'),
             new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'pi pi-home', '/app/main/dashboard'),
-            new AppMenuItem('Dashboard', '', 'pi pi-home', '/app/main/user-dashboard'),
+            new AppMenuItem('Dashboard', 'Pages.User', 'pi pi-home', '/app/main/user-dashboard'),
             // new AppMenuItem('Tenants', 'Pages.Tenants', 'flaticon-list-3', '/app/admin/tenants'),
             // new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
-            new AppMenuItem('Product', '', 'pi pi-list', '', [
-                new AppMenuItem('AllProduct', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/all-product'),
-                new AppMenuItem('Brand', 'Pages.Bookings', 'pi pi-arrow-circle-right', '', [
-                    new AppMenuItem('Yonex', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/product-brand/1'),
-                    new AppMenuItem('Victor', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/product-brand/2'),
-                    new AppMenuItem('Li-Ning', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/product-brand/3'),
-                    new AppMenuItem('Mizuno', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/product-brand/8'),
-                    new AppMenuItem('Fleet', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/product-brand/9'),
-                    new AppMenuItem('Kawasaki', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/product-brand/10'),
-                    new AppMenuItem('Apacs', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/product-brand/11'),
+            new AppMenuItem('Product', 'Pages.User', 'pi pi-list', '', [
+                new AppMenuItem('AllProduct', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/all-product'),
+                new AppMenuItem('Brand', 'Pages.User', 'pi pi-arrow-circle-right', '', [
+                    new AppMenuItem('Yonex', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-brand/1'),
+                    new AppMenuItem('Victor', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-brand/2'),
+                    new AppMenuItem('Li-Ning', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-brand/3'),
+                    new AppMenuItem('Mizuno', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-brand/8'),
+                    new AppMenuItem('Fleet', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-brand/9'),
+                    new AppMenuItem('Kawasaki', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-brand/10'),
+                    new AppMenuItem('Apacs', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-brand/11'),
                 ]),
-                new AppMenuItem('Category', 'Pages.Bookings', 'pi pi-arrow-circle-right', '', [
-                    new AppMenuItem('Vợt cầu lông', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/product-category/1'),
-                    new AppMenuItem('Áo', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/product-category/2'),
-                    new AppMenuItem('Quần', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/product-category/3'),
-                    new AppMenuItem('Giày', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/product-category/4'),
-                    new AppMenuItem('Phụ kiện ', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/user/product-category/5'),
+                new AppMenuItem('Category', 'Pages.User', 'pi pi-arrow-circle-right', '', [
+                    new AppMenuItem('Vợt cầu lông', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-category/1'),
+                    new AppMenuItem('Áo', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-category/2'),
+                    new AppMenuItem('Quần', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-category/3'),
+                    new AppMenuItem('Giày', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-category/4'),
+                    new AppMenuItem('Phụ kiện ', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-category/5'),
                 ]),
-                
+
             ]),
-            new AppMenuItem('Hẹn lịch', 'Pages.Bookings', 'pi pi-calendar-plus', '/app/main/user/booking'),
-            new AppMenuItem('Đổi trả hàng', 'Pages.Bookings', 'pi pi-replay', '/app/main/user/returnProd'),
+            new AppMenuItem('Hẹn lịch', 'Pages.User', 'pi pi-calendar-plus', '/app/main/user/booking'),
+            new AppMenuItem('Đổi trả hàng', 'Pages.User', 'pi pi-replay', '/app/main/user/returnProd'),
             new AppMenuItem('Store', '', 'pi pi-list', '', [
-           
+
                 new AppMenuItem('Bookings', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/common/bookings'),
-                
+
                 new AppMenuItem('Blogs', 'Pages.Blogs', 'pi pi-arrow-circle-right', '/app/main/common/blogs'),
-                
+
                 new AppMenuItem('Discounts', 'Pages.Discounts', 'pi pi-arrow-circle-right', '/app/main/common/discounts'),
-                
-                
+
+
                 new AppMenuItem('Brands', 'Pages.Brands', 'pi pi-arrow-circle-right', '/app/main/entity/brands'),
-                
+
                 new AppMenuItem('Categories', 'Pages.Categories', 'pi pi-arrow-circle-right', '/app/main/common/categories'),
-                
-                
+
+
                 new AppMenuItem('Products', 'Pages.Products', 'pi pi-arrow-circle-right', '/app/main/entity/products'),
-                
+
                 new AppMenuItem('ProductImages', 'Pages.ProductImages', 'pi pi-arrow-circle-right', '/app/main/common/productImages'),
-                
+
                 new AppMenuItem('Statuses', 'Pages.Statuses', 'pi pi-arrow-circle-right', '/app/main/common/statuses'),
-                
+
                 new AppMenuItem('Orders', 'Pages.Orders', 'pi pi-arrow-circle-right', '/app/main/purchase/orders'),
-                
+
                 new AppMenuItem('OrderItems', 'Pages.OrderItems', 'pi pi-arrow-circle-right', '/app/main/purchase/orderItems'),
-                
+
                 new AppMenuItem('ReturnProds', 'Pages.ReturnProds', 'pi pi-arrow-circle-right', '/app/main/purchase/returnProds'),
-                
+
                 new AppMenuItem('Carts', 'Pages.Carts', 'pi pi-arrow-circle-right', '/app/main/common/carts'),
             ]),
 
-            
-             new AppMenuItem('Administration', '', 'pi pi-star-o', '', [
+
+            new AppMenuItem('Administration', '', 'pi pi-star-o', '', [
                 // new AppMenuItem('OrganizationUnits', 'Pages.Administration.OrganizationUnits', 'flaticon-map', '/app/admin/organization-units'),
                 new AppMenuItem('Roles', 'Pages.Administration.Roles', 'flaticon-suitcase', '/app/admin/roles'),
                 new AppMenuItem('Users', 'Pages.Administration.Users', 'flaticon-users', '/app/admin/users'),

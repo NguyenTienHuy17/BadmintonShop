@@ -20,7 +20,6 @@ using ERP.Storage;
 
 namespace ERP.Common
 {
-    [AbpAuthorize(AppPermissions.Pages_Categories)]
     public class CategoriesAppService : ERPAppServiceBase, ICategoriesAppService
     {
         private readonly IRepository<Category, long> _categoryRepository;

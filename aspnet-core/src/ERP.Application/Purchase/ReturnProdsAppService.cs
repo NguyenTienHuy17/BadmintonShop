@@ -21,7 +21,6 @@ using Abp.Runtime.Session;
 
 namespace ERP.Purchase
 {
-    [AbpAuthorize(AppPermissions.Pages_ReturnProds)]
     public class ReturnProdsAppService : ERPAppServiceBase, IReturnProdsAppService
     {
         private readonly IRepository<ReturnProd, long> _returnProdRepository;
@@ -136,7 +135,7 @@ namespace ERP.Purchase
             }
         }
 
-        [AbpAuthorize(AppPermissions.Pages_ReturnProds_Create)]
+        [AbpAuthorize(AppPermissions.Pages_User)]
         protected virtual async Task Create(CreateOrEditReturnProdDto input)
         {
             var returnProd = ObjectMapper.Map<ReturnProd>(input);
@@ -150,7 +149,7 @@ namespace ERP.Purchase
 
         }
 
-        [AbpAuthorize(AppPermissions.Pages_ReturnProds_Edit)]
+        [AbpAuthorize(AppPermissions.Pages_User)]
         protected virtual async Task Update(CreateOrEditReturnProdDto input)
         {
             var returnProd = await _returnProdRepository.FirstOrDefaultAsync((long)input.Id);

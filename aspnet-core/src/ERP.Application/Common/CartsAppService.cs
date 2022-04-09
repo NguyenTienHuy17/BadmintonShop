@@ -21,7 +21,6 @@ using Abp.Runtime.Session;
 
 namespace ERP.Common
 {
-    [AbpAuthorize(AppPermissions.Pages_Carts)]
     public class CartsAppService : ERPAppServiceBase, ICartsAppService
     {
         private readonly IRepository<Cart, long> _cartRepository;
@@ -143,7 +142,7 @@ namespace ERP.Common
             }
         }
 
-        [AbpAuthorize(AppPermissions.Pages_Carts_Create)]
+        [AbpAuthorize(AppPermissions.Pages_User)]
         protected virtual async Task Create(CreateOrEditCartDto input)
         {
             var cart = ObjectMapper.Map<Cart>(input);
@@ -157,7 +156,7 @@ namespace ERP.Common
 
         }
 
-        [AbpAuthorize(AppPermissions.Pages_Carts_Edit)]
+        [AbpAuthorize(AppPermissions.Pages_User)]
         protected virtual async Task Update(CreateOrEditCartDto input)
         {
             var cart = await _cartRepository.FirstOrDefaultAsync((long)input.Id);
@@ -165,7 +164,7 @@ namespace ERP.Common
 
         }
 
-        [AbpAuthorize(AppPermissions.Pages_Carts_Delete)]
+        [AbpAuthorize(AppPermissions.Pages_User)]
         public async Task Delete(EntityDto<long> input)
         {
             await _cartRepository.DeleteAsync(input.Id);

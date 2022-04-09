@@ -117,6 +117,7 @@ namespace ERP.Authorization
 
             pages.CreateChildPermission(AppPermissions.Pages_DemoUiComponents, L("DemoUiComponents"));
 
+            var user = pages.CreateChildPermission(AppPermissions.Pages_User, L("User"));
             var administration = pages.CreateChildPermission(AppPermissions.Pages_Administration, L("Administration"));
 
             var roles = administration.CreateChildPermission(AppPermissions.Pages_Administration_Roles, L("Roles"));

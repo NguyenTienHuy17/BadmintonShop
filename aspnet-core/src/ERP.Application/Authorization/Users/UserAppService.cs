@@ -32,7 +32,6 @@ using ERP.Organizations.Dto;
 
 namespace ERP.Authorization.Users
 {
-    [AbpAuthorize(AppPermissions.Pages_Administration_Users)]
     public class UserAppService : ERPAppServiceBase, IUserAppService
     {
         public IAppUrlService AppUrlService { get; set; }
@@ -245,7 +244,6 @@ namespace ERP.Authorization.Users
             user.Unlock();
         }
 
-        [AbpAuthorize(AppPermissions.Pages_Administration_Users_Edit)]
         protected virtual async Task UpdateUserAsync(CreateOrUpdateUserInput input)
         {
             Debug.Assert(input.User.Id != null, "input.User.Id should be set.");
@@ -286,7 +284,6 @@ namespace ERP.Authorization.Users
             }
         }
 
-        [AbpAuthorize(AppPermissions.Pages_Administration_Users_Create)]
         protected virtual async Task CreateUserAsync(CreateOrUpdateUserInput input)
         {
             if (AbpSession.TenantId.HasValue)
