@@ -15,6 +15,11 @@
 	<text name="Quantity">Số lượng</text>
 	<text name="AllProduct">Tất cả sản phẩm</text>
 	<text name="quantity">Số lượng</text>
+	<text name="SignIn">Đăng nhập</text>
+	<text name="CreateBooking">Tạo lịch hẹn</text>
+	<text name="CreateReturnProdReq">Tạo yêu cầu đổi trả</text>
+	<text name="ReturnProdList">Danh sách yêu cầu đổi trả</text>
+	<text name="BookingList">Danh sách lịch hẹn</text>
 	<text name="SuccessfullyAddedToCart">Thêm vào giỏ hàng thành công</text>
 	<text name="OrderItemsHeaderInfo">Order items header info</text>
 	<text name="CreateNewOrderItem">Tạo mới mặt hàng trong đơn</text>

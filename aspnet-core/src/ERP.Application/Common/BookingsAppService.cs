@@ -15,6 +15,7 @@ using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Abp.UI;
 using ERP.Storage;
+using Abp.Runtime.Session;
 
 namespace ERP.Common
 {
@@ -23,12 +24,15 @@ namespace ERP.Common
     {
         private readonly IRepository<Booking, long> _bookingRepository;
         private readonly IBookingsExcelExporter _bookingsExcelExporter;
+        private readonly IAbpSession _abpSession;
 
-        public BookingsAppService(IRepository<Booking, long> bookingRepository, IBookingsExcelExporter bookingsExcelExporter)
+        public BookingsAppService(IRepository<Booking, long> bookingRepository, 
+            IBookingsExcelExporter bookingsExcelExporter,
+            IAbpSession abpSession)
         {
             _bookingRepository = bookingRepository;
             _bookingsExcelExporter = bookingsExcelExporter;
-
+            _abpSession = abpSession;
         }
 
         public async Task<PagedResultDto<GetBookingForViewDto>> GetAll(GetAllBookingsInput input)
@@ -165,5 +169,49 @@ namespace ERP.Common
             return _bookingsExcelExporter.ExportToFile(bookingListDtos);
         }
 
+        public async Task<PagedResultDto<GetBookingForViewDto>> GetAllForUser()
+        {
+
+            var filteredBookings = _bookingRepository.GetAll().Where(x => x.CreatorUserId == _abpSession.UserId);
+
+            var pagedAndFilteredBookings = filteredBookings
+                .OrderBy(x => x.CreationTime);
+
+            var bookings = from o in pagedAndFilteredBookings
+                           select new
+                           {
+
+                               o.Time,
+                               o.Description,
+                               Id = o.Id
+                           };
+
+            var totalCount = await filteredBookings.CountAsync();
+
+            var dbList = await bookings.ToListAsync();
+            var results = new List<GetBookingForViewDto>();
+
+            foreach (var o in dbList)
+            {
+                var res = new GetBookingForViewDto()
+                {
+                    Booking = new BookingDto
+                    {
+
+                        Time = o.Time,
+                        Description = o.Description,
+                        Id = o.Id,
+                    }
+                };
+
+                results.Add(res);
+            }
+
+            return new PagedResultDto<GetBookingForViewDto>(
+                totalCount,
+                results
+            );
+
+        }
     }
 }

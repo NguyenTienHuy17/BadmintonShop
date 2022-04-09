@@ -17,6 +17,7 @@ using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Abp.UI;
 using ERP.Storage;
+using Abp.Runtime.Session;
 
 namespace ERP.Purchase
 {
@@ -26,13 +27,17 @@ namespace ERP.Purchase
         private readonly IRepository<ReturnProd, long> _returnProdRepository;
         private readonly IReturnProdsExcelExporter _returnProdsExcelExporter;
         private readonly IRepository<Order, long> _lookup_orderRepository;
+        private readonly IAbpSession _abpSession;
 
-        public ReturnProdsAppService(IRepository<ReturnProd, long> returnProdRepository, IReturnProdsExcelExporter returnProdsExcelExporter, IRepository<Order, long> lookup_orderRepository)
+        public ReturnProdsAppService(IRepository<ReturnProd, long> returnProdRepository, 
+            IReturnProdsExcelExporter returnProdsExcelExporter, 
+            IRepository<Order, long> lookup_orderRepository,
+            IAbpSession abpSession)
         {
             _returnProdRepository = returnProdRepository;
             _returnProdsExcelExporter = returnProdsExcelExporter;
             _lookup_orderRepository = lookup_orderRepository;
-
+            _abpSession = abpSession;
         }
 
         public async Task<PagedResultDto<GetReturnProdForViewDto>> GetAll(GetAllReturnProdsInput input)
@@ -217,5 +222,51 @@ namespace ERP.Purchase
             );
         }
 
+        public async Task<PagedResultDto<GetReturnProdForViewDto>> GetAllForUser()
+        {
+
+            var filteredReturnProds = _returnProdRepository.GetAll().Where(x => x.CreatorUserId == _abpSession.UserId);
+            var pagedAndFilteredReturnProds = filteredReturnProds
+                .OrderBy(x => x.CreationTime);
+
+            var returnProds = from o in pagedAndFilteredReturnProds
+                              join o1 in _lookup_orderRepository.GetAll() on o.OrderId equals o1.Id into j1
+                              from s1 in j1.DefaultIfEmpty()
+
+                              select new
+                              {
+
+                                  o.Reason,
+                                  Id = o.Id,
+                                  OrderOrderCode = s1 == null || s1.OrderCode == null ? "" : s1.OrderCode.ToString()
+                              };
+
+            var totalCount = await filteredReturnProds.CountAsync();
+
+            var dbList = await returnProds.ToListAsync();
+            var results = new List<GetReturnProdForViewDto>();
+
+            foreach (var o in dbList)
+            {
+                var res = new GetReturnProdForViewDto()
+                {
+                    ReturnProd = new ReturnProdDto
+                    {
+
+                        Reason = o.Reason,
+                        Id = o.Id,
+                    },
+                    OrderOrderCode = o.OrderOrderCode
+                };
+
+                results.Add(res);
+            }
+
+            return new PagedResultDto<GetReturnProdForViewDto>(
+                totalCount,
+                results
+            );
+
+        }
     }
 }
