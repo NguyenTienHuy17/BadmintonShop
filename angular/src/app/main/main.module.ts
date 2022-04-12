@@ -79,7 +79,6 @@ import { DragDropDirective } from './newUploadImage/drag-and-drop.directive';
 import { UploadSingleImageComponent } from './uploadSingleImage/uploadSingleImage.component';
 import { NewUploadImageService } from './newUploadImage/newUploadImage.service';
 import { UploadSingleImageService } from './uploadSingleImage/uploadSingleImage.service';;
-import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 import { ProductDetailComponent } from './entity/product-detail/product-detail.component'
 	;
 import { CartDetailComponent } from './common/cart-detail/cart-detail.component'
@@ -93,10 +92,11 @@ import { AllProductComponent } from './user/all-product/all-product.component'
 	;
 import { BookingComponent } from './user/booking/booking.component'
 	;
-import { ReturnProdComponent } from './user/return-prod/return-prod.component';;
+import { ReturnProdComponent } from './user/return-prod/return-prod.component';
 import { AdminOrderDetailModalComponent } from './purchase/admin-order-detail-modal/admin-order-detail-modal.component'
-import { NgImageSliderModule } from 'ng-image-slider';;
-import { UserSignUpComponent } from './user/user-sign-up/user-sign-up.component'
+import { NgImageSliderModule } from 'ng-image-slider';
+import { UserSignUpComponent } from './user/user-sign-up/user-sign-up.component';
+import { AppModule } from '..';
 NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
 @NgModule({
@@ -122,7 +122,8 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 		PopoverModule.forRoot(),
 		ImageCropperModule,
 		DataViewModule,
-		NgImageSliderModule
+		NgImageSliderModule,
+		AppModule
 	],
 	declarations: [
 		CartsComponent,
@@ -184,8 +185,7 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 		NewUploadImageComponent,
 		ShowImageModalComponent,
 		DragDropDirective,
-		UploadSingleImageComponent,
-		UserDashboardComponent
+		UploadSingleImageComponent
 		,
 		ProductDetailComponent
 		,
@@ -198,7 +198,8 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 		AllProductComponent,
 		BookingComponent,
 		ReturnProdComponent,
-		AdminOrderDetailModalComponent,
+		AdminOrderDetailModalComponent
+		,
 		UserSignUpComponent
 	],
 	providers: [

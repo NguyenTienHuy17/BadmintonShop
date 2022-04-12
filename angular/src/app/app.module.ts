@@ -70,7 +70,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 };
 
 import { CoreModule } from '@metronic/app/core/core.module';
-
+import { UserDashboardComponent } from './main/user-dashboard/user-dashboard.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -116,7 +116,8 @@ import { CoreModule } from '@metronic/app/core/core.module';
         Theme9BrandComponent,
         Theme10BrandComponent,
         Theme11BrandComponent,
-        Theme12BrandComponent
+        Theme12BrandComponent,
+        UserDashboardComponent
     ],
     imports: [
         ngCommon.CommonModule,

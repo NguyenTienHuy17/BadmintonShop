@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { NavigationEnd, RouteConfigLoadEnd, RouteConfigLoadStart, Router, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
+import { UserDashboardComponent } from './main/user-dashboard/user-dashboard.component';
 import { AppRouteGuard } from './shared/common/auth/auth-route-guard';
 import { NotificationsComponent } from './shared/layout/notifications/notifications.component';
 
@@ -16,7 +17,7 @@ import { NotificationsComponent } from './shared/layout/notifications/notificati
                     {
                         path: '',
                         children: [
-                            { path: 'notifications', component: NotificationsComponent },
+                            { path: 'user-dashboard', component: UserDashboardComponent },
                             { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
                         ]
                     },
@@ -31,7 +32,7 @@ import { NotificationsComponent } from './shared/layout/notifications/notificati
                         data: { preload: true },
                         canLoad: [AppRouteGuard]
                     }, {
-                        path: '**', redirectTo: 'notifications'
+                        path: '**', redirectTo: 'user-dashboard'
                     }
                 ]
             }
