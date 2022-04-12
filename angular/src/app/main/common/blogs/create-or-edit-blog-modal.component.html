@@ -1,4 +1,5 @@
-﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active" #blogForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
@@ -12,26 +13,31 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                 
 
 
-								<div class="form-group">
-									<label for="Blog_title">{{l("title")}} *</label>
-									<input type="text" #Blog_title="ngModel" id="Blog_title" class="form-control" [(ngModel)]="blog.title" name="title"   minlength="0"  maxlength="256"  required/>
-								    <validation-messages [formCtrl]="Blog_title"></validation-messages>
-								</div>
-					
-								<div class="form-group">
-									<label for="Blog_content">{{l("content")}} *</label>
-									<input type="text" #Blog_content="ngModel" id="Blog_content" class="form-control" [(ngModel)]="blog.content" name="content"     required/>
-								    <validation-messages [formCtrl]="Blog_content"></validation-messages>
-								</div>
-					
+
+                    <div class="form-group">
+                        <label for="Blog_title">{{l("title")}} *</label>
+                        <input type="text" #Blog_title="ngModel" id="Blog_title" class="form-control"
+                            [(ngModel)]="blog.title" name="title" minlength="0" maxlength="256" required />
+                        <validation-messages [formCtrl]="Blog_title"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Blog_content">{{l("content")}} *</label>
+                        <textarea type="text" #Blog_content="ngModel" id="Blog_content" class="form-control"
+                            [(ngModel)]="blog.content" name="content" required></textarea>
+                        <validation-messages [formCtrl]="Blog_content"></validation-messages>
+                    </div>
+
 
                 </div>
                 <div class="modal-footer">
-                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
-                    <button type="submit" class="btn btn-primary blue" [disabled]="!blogForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                    <button [disabled]="saving" type="button" class="btn btn-default"
+                        (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!blogForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i>
+                        <span>{{l("Save")}}</span></button>
                 </div>
             </form>
         </div>

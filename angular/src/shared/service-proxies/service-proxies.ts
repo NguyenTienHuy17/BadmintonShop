@@ -6916,22 +6916,13 @@ export class OrderItemsServiceProxy {
     }
 
     /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
+     * @param orderId (optional) 
      * @return Success
      */
-    getAllProductForLookupTable(filter: string | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfOrderItemProductLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/OrderItems/GetAllProductForLookupTable?";
-        if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
-        if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
-        if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+    getOrderItemByOrderId(orderId: number | null | undefined): Observable<GetOrderItemForViewDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/OrderItems/GetOrderItemByOrderId?";
+        if (orderId !== undefined)
+            url_ += "orderId=" + encodeURIComponent("" + orderId) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -6943,20 +6934,20 @@ export class OrderItemsServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllProductForLookupTable(response_);
+            return this.processGetOrderItemByOrderId(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetAllProductForLookupTable(<any>response_);
+                    return this.processGetOrderItemByOrderId(<any>response_);
                 } catch (e) {
-                    return <Observable<PagedResultDtoOfOrderItemProductLookupTableDto>><any>_observableThrow(e);
+                    return <Observable<GetOrderItemForViewDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<PagedResultDtoOfOrderItemProductLookupTableDto>><any>_observableThrow(response_);
+                return <Observable<GetOrderItemForViewDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetAllProductForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfOrderItemProductLookupTableDto> {
+    protected processGetOrderItemByOrderId(response: HttpResponseBase): Observable<GetOrderItemForViewDto[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -6967,7 +6958,11 @@ export class OrderItemsServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? PagedResultDtoOfOrderItemProductLookupTableDto.fromJS(resultData200) : new PagedResultDtoOfOrderItemProductLookupTableDto();
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(GetOrderItemForViewDto.fromJS(item));
+            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -6975,70 +6970,7 @@ export class OrderItemsServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<PagedResultDtoOfOrderItemProductLookupTableDto>(<any>null);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllOrderForLookupTable(filter: string | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfOrderItemOrderLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/OrderItems/GetAllOrderForLookupTable?";
-        if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
-        if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
-        if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllOrderForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllOrderForLookupTable(<any>response_);
-                } catch (e) {
-                    return <Observable<PagedResultDtoOfOrderItemOrderLookupTableDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<PagedResultDtoOfOrderItemOrderLookupTableDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetAllOrderForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfOrderItemOrderLookupTableDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? PagedResultDtoOfOrderItemOrderLookupTableDto.fromJS(resultData200) : new PagedResultDtoOfOrderItemOrderLookupTableDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<PagedResultDtoOfOrderItemOrderLookupTableDto>(<any>null);
+        return _observableOf<GetOrderItemForViewDto[]>(<any>null);
     }
 }
 
@@ -22418,6 +22350,7 @@ export class GetOrderItemForViewDto implements IGetOrderItemForViewDto {
     orderItem!: OrderItemDto | undefined;
     productName!: string | undefined;
     orderOrderCode!: string | undefined;
+    product!: ProductDto | undefined;
 
     constructor(data?: IGetOrderItemForViewDto) {
         if (data) {
@@ -22433,6 +22366,7 @@ export class GetOrderItemForViewDto implements IGetOrderItemForViewDto {
             this.orderItem = data["orderItem"] ? OrderItemDto.fromJS(data["orderItem"]) : <any>undefined;
             this.productName = data["productName"];
             this.orderOrderCode = data["orderOrderCode"];
+            this.product = data["product"] ? ProductDto.fromJS(data["product"]) : <any>undefined;
         }
     }
 
@@ -22448,6 +22382,7 @@ export class GetOrderItemForViewDto implements IGetOrderItemForViewDto {
         data["orderItem"] = this.orderItem ? this.orderItem.toJSON() : <any>undefined;
         data["productName"] = this.productName;
         data["orderOrderCode"] = this.orderOrderCode;
+        data["product"] = this.product ? this.product.toJSON() : <any>undefined;
         return data; 
     }
 }
@@ -22456,6 +22391,7 @@ export interface IGetOrderItemForViewDto {
     orderItem: OrderItemDto | undefined;
     productName: string | undefined;
     orderOrderCode: string | undefined;
+    product: ProductDto | undefined;
 }
 
 export class OrderItemDto implements IOrderItemDto {
@@ -22503,6 +22439,102 @@ export interface IOrderItemDto {
     quantity: number | undefined;
     productId: number | undefined;
     orderId: number | undefined;
+    id: number | undefined;
+}
+
+export class ProductDto implements IProductDto {
+    name!: string | undefined;
+    madeIn!: string | undefined;
+    code!: string | undefined;
+    price!: number | undefined;
+    inStock!: number | undefined;
+    description!: string | undefined;
+    color!: string | undefined;
+    size!: string | undefined;
+    title!: string | undefined;
+    imageId!: number | undefined;
+    brandId!: number | undefined;
+    categoryId!: number | undefined;
+    productImageUrl!: string | undefined;
+    brandName!: string | undefined;
+    categoryName!: string | undefined;
+    id!: number | undefined;
+
+    constructor(data?: IProductDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.name = data["name"];
+            this.madeIn = data["madeIn"];
+            this.code = data["code"];
+            this.price = data["price"];
+            this.inStock = data["inStock"];
+            this.description = data["description"];
+            this.color = data["color"];
+            this.size = data["size"];
+            this.title = data["title"];
+            this.imageId = data["imageId"];
+            this.brandId = data["brandId"];
+            this.categoryId = data["categoryId"];
+            this.productImageUrl = data["productImageUrl"];
+            this.brandName = data["brandName"];
+            this.categoryName = data["categoryName"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): ProductDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProductDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["madeIn"] = this.madeIn;
+        data["code"] = this.code;
+        data["price"] = this.price;
+        data["inStock"] = this.inStock;
+        data["description"] = this.description;
+        data["color"] = this.color;
+        data["size"] = this.size;
+        data["title"] = this.title;
+        data["imageId"] = this.imageId;
+        data["brandId"] = this.brandId;
+        data["categoryId"] = this.categoryId;
+        data["productImageUrl"] = this.productImageUrl;
+        data["brandName"] = this.brandName;
+        data["categoryName"] = this.categoryName;
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface IProductDto {
+    name: string | undefined;
+    madeIn: string | undefined;
+    code: string | undefined;
+    price: number | undefined;
+    inStock: number | undefined;
+    description: string | undefined;
+    color: string | undefined;
+    size: string | undefined;
+    title: string | undefined;
+    imageId: number | undefined;
+    brandId: number | undefined;
+    categoryId: number | undefined;
+    productImageUrl: string | undefined;
+    brandName: string | undefined;
+    categoryName: string | undefined;
     id: number | undefined;
 }
 
@@ -22596,182 +22628,6 @@ export interface ICreateOrEditOrderItemDto {
     productId: number | undefined;
     orderId: number | undefined;
     id: number | undefined;
-}
-
-export class PagedResultDtoOfOrderItemProductLookupTableDto implements IPagedResultDtoOfOrderItemProductLookupTableDto {
-    totalCount!: number | undefined;
-    items!: OrderItemProductLookupTableDto[] | undefined;
-
-    constructor(data?: IPagedResultDtoOfOrderItemProductLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.totalCount = data["totalCount"];
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [] as any;
-                for (let item of data["items"])
-                    this.items!.push(OrderItemProductLookupTableDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfOrderItemProductLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfOrderItemProductLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["totalCount"] = this.totalCount;
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface IPagedResultDtoOfOrderItemProductLookupTableDto {
-    totalCount: number | undefined;
-    items: OrderItemProductLookupTableDto[] | undefined;
-}
-
-export class OrderItemProductLookupTableDto implements IOrderItemProductLookupTableDto {
-    id!: number | undefined;
-    displayName!: string | undefined;
-
-    constructor(data?: IOrderItemProductLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.id = data["id"];
-            this.displayName = data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): OrderItemProductLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new OrderItemProductLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data; 
-    }
-}
-
-export interface IOrderItemProductLookupTableDto {
-    id: number | undefined;
-    displayName: string | undefined;
-}
-
-export class PagedResultDtoOfOrderItemOrderLookupTableDto implements IPagedResultDtoOfOrderItemOrderLookupTableDto {
-    totalCount!: number | undefined;
-    items!: OrderItemOrderLookupTableDto[] | undefined;
-
-    constructor(data?: IPagedResultDtoOfOrderItemOrderLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.totalCount = data["totalCount"];
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [] as any;
-                for (let item of data["items"])
-                    this.items!.push(OrderItemOrderLookupTableDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfOrderItemOrderLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfOrderItemOrderLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["totalCount"] = this.totalCount;
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface IPagedResultDtoOfOrderItemOrderLookupTableDto {
-    totalCount: number | undefined;
-    items: OrderItemOrderLookupTableDto[] | undefined;
-}
-
-export class OrderItemOrderLookupTableDto implements IOrderItemOrderLookupTableDto {
-    id!: number | undefined;
-    displayName!: string | undefined;
-
-    constructor(data?: IOrderItemOrderLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.id = data["id"];
-            this.displayName = data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): OrderItemOrderLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new OrderItemOrderLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data; 
-    }
-}
-
-export interface IOrderItemOrderLookupTableDto {
-    id: number | undefined;
-    displayName: string | undefined;
 }
 
 export class PagedResultDtoOfGetOrderForViewDto implements IPagedResultDtoOfGetOrderForViewDto {
@@ -25173,102 +25029,6 @@ export interface IGetProductForViewDto {
     productSize: string[] | undefined;
     brandName: string | undefined;
     categoryName: string | undefined;
-}
-
-export class ProductDto implements IProductDto {
-    name!: string | undefined;
-    madeIn!: string | undefined;
-    code!: string | undefined;
-    price!: number | undefined;
-    inStock!: number | undefined;
-    description!: string | undefined;
-    color!: string | undefined;
-    size!: string | undefined;
-    title!: string | undefined;
-    imageId!: number | undefined;
-    brandId!: number | undefined;
-    categoryId!: number | undefined;
-    productImageUrl!: string | undefined;
-    brandName!: string | undefined;
-    categoryName!: string | undefined;
-    id!: number | undefined;
-
-    constructor(data?: IProductDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.name = data["name"];
-            this.madeIn = data["madeIn"];
-            this.code = data["code"];
-            this.price = data["price"];
-            this.inStock = data["inStock"];
-            this.description = data["description"];
-            this.color = data["color"];
-            this.size = data["size"];
-            this.title = data["title"];
-            this.imageId = data["imageId"];
-            this.brandId = data["brandId"];
-            this.categoryId = data["categoryId"];
-            this.productImageUrl = data["productImageUrl"];
-            this.brandName = data["brandName"];
-            this.categoryName = data["categoryName"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): ProductDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ProductDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        data["madeIn"] = this.madeIn;
-        data["code"] = this.code;
-        data["price"] = this.price;
-        data["inStock"] = this.inStock;
-        data["description"] = this.description;
-        data["color"] = this.color;
-        data["size"] = this.size;
-        data["title"] = this.title;
-        data["imageId"] = this.imageId;
-        data["brandId"] = this.brandId;
-        data["categoryId"] = this.categoryId;
-        data["productImageUrl"] = this.productImageUrl;
-        data["brandName"] = this.brandName;
-        data["categoryName"] = this.categoryName;
-        data["id"] = this.id;
-        return data; 
-    }
-}
-
-export interface IProductDto {
-    name: string | undefined;
-    madeIn: string | undefined;
-    code: string | undefined;
-    price: number | undefined;
-    inStock: number | undefined;
-    description: string | undefined;
-    color: string | undefined;
-    size: string | undefined;
-    title: string | undefined;
-    imageId: number | undefined;
-    brandId: number | undefined;
-    categoryId: number | undefined;
-    productImageUrl: string | undefined;
-    brandName: string | undefined;
-    categoryName: string | undefined;
-    id: number | undefined;
 }
 
 export class GetProductForEditOutput implements IGetProductForEditOutput {

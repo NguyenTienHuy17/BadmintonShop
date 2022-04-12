@@ -1,25 +1,26 @@
 ﻿<div [@routerTransition]>
-  
-  
-  
-                <div class="kt-subheader kt-grid__item">
-                  
-                    <div class="kt-subheader__main">
-                        <h3 class="kt-subheader__title">
-                            <span>{{l("Orders")}}</span>
-                        </h3>
-                    </div>
-                    <div class="kt-subheader__toolbar">
-                        <div class="kt-subheader__wrapper">
-            				<button (click)="exportToExcel()" class="btn btn-outline-success"><i class="fa fa-file-excel"></i> {{l("ExportToExcel")}}</button>
-                <button *ngIf="isGranted('Pages.Orders.Create')" (click)="createOrder()" 
-            			class="btn btn-primary blue"><i class="fa fa-plus"></i> {{l("CreateNewOrder")}}</button>
-                        </div>
-                    </div>
-                  
-                </div>
-            
-    
+
+
+
+    <div class="kt-subheader kt-grid__item">
+
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">
+                <span>{{l("Orders")}}</span>
+            </h3>
+        </div>
+        <div class="kt-subheader__toolbar">
+            <div class="kt-subheader__wrapper">
+                <button (click)="exportToExcel()" class="btn btn-outline-success"><i class="fa fa-file-excel"></i>
+                    {{l("ExportToExcel")}}</button>
+                <!-- <button *ngIf="isGranted('Pages.Orders.Create')" (click)="createOrder()" 
+            			class="btn btn-primary blue"><i class="fa fa-plus"></i> {{l("CreateNewOrder")}}</button> -->
+            </div>
+        </div>
+
+    </div>
+
+
     <div class="kt-content">
         <div class="kt-portlet kt-portlet--mobile">
             <div class="kt-portlet__body">
@@ -29,80 +30,100 @@
                             <div class="col-xl-12">
                                 <div class="form-group m-form__group align-items-center">
                                     <div class="input-group">
-                                        <input [(ngModel)]="filterText" name="filterText" autoFocus class="form-control m-input" [placeholder]="l('SearchWithThreeDot')" type="text">
+                                        <input [(ngModel)]="filterText" name="filterText" autoFocus
+                                            class="form-control m-input" [placeholder]="l('SearchWithThreeDot')"
+                                            type="text">
                                         <span class="input-group-btn">
-                                            <button (click)="getOrders()" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
+                                            <button (click)="getOrders()" class="btn btn-primary" type="submit"><i
+                                                    class="flaticon-search-1"></i></button>
                                         </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-						 <div class="row" [hidden]="!advancedFiltersAreShown">
-						 	<div class="col-md-12">
-						         <div class="kt-separator kt-separator--border-dashed"></div>
-						     </div>
+                        <div class="row" [hidden]="!advancedFiltersAreShown">
+                            <div class="col-md-12">
+                                <div class="kt-separator kt-separator--border-dashed"></div>
+                            </div>
 
 
-							<div class="col-md-3">
-								<div class="form-group">
-									<label for="OrderCodeFilter">{{l("OrderCode")}}</label>
-									<input type="text" class="form-control" id="OrderCodeFilter" name="orderCodeFilter" [(ngModel)]="orderCodeFilter">
-								</div>
-                            </div>
-							<div class="col-md-3">
-								<div class="form-group">
-									<label for="TotalPriceFilter">{{l("TotalPrice")}}</label>
-									<input type="text" class="form-control" id="TotalPriceFilter" name="totalPriceFilter" [(ngModel)]="totalPriceFilter">
-								</div>
-                            </div>
-							<div class="col-md-3">
-								<div class="form-group">
-									<label for="ShippingAddressFilter">{{l("ShippingAddress")}}</label>
-									<input type="text" class="form-control" id="ShippingAddressFilter" name="shippingAddressFilter" [(ngModel)]="shippingAddressFilter">
-								</div>
-                            </div>
-							<div class="col-md-3">
-								<div class="form-group">
-									<label for="ShippingNumberFilter">{{l("ShippingNumber")}}</label>
-									<input type="text" class="form-control" id="ShippingNumberFilter" name="shippingNumberFilter" [(ngModel)]="shippingNumberFilter">
-								</div>
-                            </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-									<label for="MinDiscountAmountFilter">{{l("MinMax")}} {{l("DiscountAmount")}}</label>
-									<div class="input-group">
-                                        <input type="number" class="form-control" id="MinDiscountAmountFilter" [(ngModel)]="minDiscountAmountFilter" placeholder="{{l('MinValue')}}" name="minDiscountAmountFilter" />
-                                        <input type="number" class="form-control" [(ngModel)]="maxDiscountAmountFilter" placeholder="{{l('MaxValue')}}" name="maxDiscountAmountFilter" />
-									</div>
+                                    <label for="OrderCodeFilter">{{l("OrderCode")}}</label>
+                                    <input type="text" class="form-control" id="OrderCodeFilter" name="orderCodeFilter"
+                                        [(ngModel)]="orderCodeFilter">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-									<label for="MinActualPriceFilter">{{l("MinMax")}} {{l("ActualPrice")}}</label>
-									<div class="input-group">
-                                        <input type="number" class="form-control" id="MinActualPriceFilter" [(ngModel)]="minActualPriceFilter" placeholder="{{l('MinValue')}}" name="minActualPriceFilter" />
-                                        <input type="number" class="form-control" [(ngModel)]="maxActualPriceFilter" placeholder="{{l('MaxValue')}}" name="maxActualPriceFilter" />
-									</div>
+                                    <label for="TotalPriceFilter">{{l("TotalPrice")}}</label>
+                                    <input type="text" class="form-control" id="TotalPriceFilter"
+                                        name="totalPriceFilter" [(ngModel)]="totalPriceFilter">
                                 </div>
                             </div>
-							<div class="col-md-3">
-								<div class="form-group">
-									<label for="StatusNameFilter">({{l("Status")}}) {{l("Name")}}</label>
-									<input type="text" class="form-control" id="StatusNameFilter" name="statusNameFilter" [(ngModel)]="statusNameFilter">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="ShippingAddressFilter">{{l("ShippingAddress")}}</label>
+                                    <input type="text" class="form-control" id="ShippingAddressFilter"
+                                        name="shippingAddressFilter" [(ngModel)]="shippingAddressFilter">
                                 </div>
                             </div>
-							<div class="col-md-3">
-								<div class="form-group">
-									<label for="DiscountDiscountCodeFilter">({{l("Discount")}}) {{l("DiscountCode")}}</label>
-									<input type="text" class="form-control" id="DiscountDiscountCodeFilter" name="discountDiscountCodeFilter" [(ngModel)]="discountDiscountCodeFilter">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="ShippingNumberFilter">{{l("ShippingNumber")}}</label>
+                                    <input type="text" class="form-control" id="ShippingNumberFilter"
+                                        name="shippingNumberFilter" [(ngModel)]="shippingNumberFilter">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="MinDiscountAmountFilter">{{l("MinMax")}} {{l("DiscountAmount")}}</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="MinDiscountAmountFilter"
+                                            [(ngModel)]="minDiscountAmountFilter" placeholder="{{l('MinValue')}}"
+                                            name="minDiscountAmountFilter" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxDiscountAmountFilter"
+                                            placeholder="{{l('MaxValue')}}" name="maxDiscountAmountFilter" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="MinActualPriceFilter">{{l("MinMax")}} {{l("ActualPrice")}}</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="MinActualPriceFilter"
+                                            [(ngModel)]="minActualPriceFilter" placeholder="{{l('MinValue')}}"
+                                            name="minActualPriceFilter" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxActualPriceFilter"
+                                            placeholder="{{l('MaxValue')}}" name="maxActualPriceFilter" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="StatusNameFilter">({{l("Status")}}) {{l("Name")}}</label>
+                                    <input type="text" class="form-control" id="StatusNameFilter"
+                                        name="statusNameFilter" [(ngModel)]="statusNameFilter">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="DiscountDiscountCodeFilter">({{l("Discount")}})
+                                        {{l("DiscountCode")}}</label>
+                                    <input type="text" class="form-control" id="DiscountDiscountCodeFilter"
+                                        name="discountDiscountCodeFilter" [(ngModel)]="discountDiscountCodeFilter">
                                 </div>
                             </div>
 
                         </div>
                         <div class="row mb-2">
                             <div class="col-sm-12">
-                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i> {{l("ShowAdvancedFilters")}}</span>
-                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i> {{l("HideAdvancedFilters")}}</span>
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                        class="fa fa-angle-down"></i> {{l("ShowAdvancedFilters")}}</span>
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                        class="fa fa-angle-up"></i> {{l("HideAdvancedFilters")}}</span>
                             </div>
                         </div>
                     </div>
@@ -110,23 +131,18 @@
 
                 <div class="row align-items-center">
                     <!--<Primeng-Datatable-Start>-->
-                    <div class="primeng-datatable-container col-12"
-                         [busyIf]="primengTableHelper.isLoading">
-                        <p-table #dataTable
-                                     (onLazyLoad)="getOrders($event)"
-                                     [value]="primengTableHelper.records"
-                                     rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
-                                     [paginator]="false"
-                                     [lazy]="true"
-                                     [scrollable]="true"
-                                     ScrollWidth="100%"
-                                     [responsive]="primengTableHelper.isResponsive"
-                                     [resizableColumns]="primengTableHelper.resizableColumns">
+                    <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTable (onLazyLoad)="getOrders($event)" [value]="primengTableHelper.records"
+                            rows="{{primengTableHelper.defaultRecordsCountPerPage}}" [paginator]="false" [lazy]="true"
+                            [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th style="width: 130px" [hidden]="!isGrantedAny('Pages.Orders.Edit', 'Pages.Orders.Delete')">{{l('Actions')}}</th>
+                                    <th style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.Orders.Edit', 'Pages.Orders.Delete')">
+                                        {{l('Actions')}}</th>
                                     <th style="width: 150px" pSortableColumn="statusFk.name">
-                                        {{l('Name')}}
+                                        {{l('Status')}}
                                         <p-sortIcon field="statusName"></p-sortIcon>
                                     </th>
                                     <th style="width: 150px" pSortableColumn="discountFk.discountCode">
@@ -159,80 +175,85 @@
                                     </th>
 
                                 </tr>
-                            </ng-template>                           
-							<ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                            </ng-template>
+                            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
                                     <td style="width: 130px"
                                         [hidden]="!isGrantedAny('Pages.Orders.Edit', 'Pages.Orders.Delete')">
-                                       <div class="btn-group dropdown" dropdown container="body">
+                                        <div class="btn-group dropdown" dropdown container="body">
                                             <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
                                                 <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
                                             </button>
-												<ul class="dropdown-menu"  *dropdownMenu>
-												<li>
-													<a href="javascript:;" 
-														(click)="viewOrderModal.show(record)">{{l('View')}}</a>
-												</li>
-												<li>
-                                                <a href="javascript:;" *ngIf="permission.isGranted('Pages.Orders.Edit')" 
-														(click)="createOrEditOrderModal.show(record.order.id)">{{l('Edit')}}</a>												
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <!-- <li>
+                                                    <a href="javascript:;"
+                                                        (click)="viewOrderModal.show(record)">{{l('View')}}</a>
+                                                </li> -->
+                                                <li>
+                                                    <a href="javascript:;"
+                                                        (click)="adminOrderDetailModal.show(record.order.id, record)">{{l('Detail')}}</a>
                                                 </li>
-												<li>
-											        <a  href="javascript:;" *ngIf="permission.isGranted('Pages.Orders.Delete')"
-														(click)="deleteOrder(record.order)">{{l('Delete')}}</a>
-												</li>
+                                                <li>
+                                                    <a href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.Orders.Edit')"
+                                                        (click)="createOrEditOrderModal.show(record.order.id)">{{l('Edit')}}</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.Orders.Delete')"
+                                                        (click)="deleteOrder(record.order)">{{l('Delete')}}</a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </td>
                                     <td style="width:150px">
-												<span class="ui-column-title"> {{l('Name')}}</span>
-												{{record.statusName}}
-											</td>
+                                        <span class="ui-column-title"> {{l('Name')}}</span>
+                                        {{record.statusName}}
+                                    </td>
                                     <td style="width:150px">
-												<span class="ui-column-title"> {{l('DiscountCode')}}</span>
-												{{record.discountDiscountCode}}
-											</td>
+                                        <span class="ui-column-title"> {{l('DiscountCode')}}</span>
+                                        {{record.discountDiscountCode}}
+                                    </td>
                                     <td style="width:150px">
-											<span class="ui-column-title"> {{l('OrderCode')}}</span>
-											{{record.order.orderCode}}
-										</td>
+                                        <span class="ui-column-title"> {{l('OrderCode')}}</span>
+                                        {{record.order.orderCode}}
+                                    </td>
                                     <td style="width:150px">
-											<span class="ui-column-title"> {{l('TotalPrice')}}</span>
-											{{record.order.totalPrice}}
-										</td>
+                                        <span class="ui-column-title"> {{l('TotalPrice')}}</span>
+                                        {{record.order.totalPrice.toLocaleString('it-IT', {style
+                                        :'currency', currency : 'VND'})}}
+                                    </td>
                                     <td style="width:150px">
-											<span class="ui-column-title"> {{l('ShippingAddress')}}</span>
-											{{record.order.shippingAddress}}
-										</td>
+                                        <span class="ui-column-title"> {{l('ShippingAddress')}}</span>
+                                        {{record.order.shippingAddress}}
+                                    </td>
                                     <td style="width:150px">
-											<span class="ui-column-title"> {{l('ShippingNumber')}}</span>
-											{{record.order.shippingNumber}}
-										</td>
+                                        <span class="ui-column-title"> {{l('ShippingNumber')}}</span>
+                                        {{record.order.shippingNumber}}
+                                    </td>
                                     <td style="width:150px">
-											<span class="ui-column-title"> {{l('DiscountAmount')}}</span>
-											{{record.order.discountAmount}}
-										</td>
+                                        <span class="ui-column-title"> {{l('DiscountAmount')}}</span>
+                                        {{record.order.discountAmount}}
+                                    </td>
                                     <td style="width:150px">
-											<span class="ui-column-title"> {{l('ActualPrice')}}</span>
-											{{record.order.actualPrice}}
-										</td>
+                                        <span class="ui-column-title"> {{l('ActualPrice')}}</span>
+                                        {{record.order.actualPrice.toLocaleString('it-IT', {style
+                                        :'currency', currency : 'VND'})}}
+                                    </td>
 
                                 </tr>
-                               
+
                             </ng-template>
                         </p-table>
-						<div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
                             {{l('NoData')}}
                         </div>
                         <div class="primeng-paging-container">
-                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                                         #paginator
-                                         (onPageChange)="getOrders($event)"
-                                         [totalRecords]="primengTableHelper.totalRecordsCount"
-                                         [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                         [showCurrentPageReport]="true"
-                                         [currentPageReportTemplate]="'TotalRecordsCount' | localize:primengTableHelper.totalRecordsCount"    
-                            >
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+                                (onPageChange)="getOrders($event)" [totalRecords]="primengTableHelper.totalRecordsCount"
+                                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                [showCurrentPageReport]="true"
+                                [currentPageReportTemplate]="'TotalRecordsCount' | localize:primengTableHelper.totalRecordsCount">
                             </p-paginator>
                         </div>
                     </div>
@@ -241,8 +262,8 @@
             </div>
         </div>
     </div>
-    <createOrEditOrderModal #createOrEditOrderModal (modalSave)="getOrders()"></createOrEditOrderModal>    
+    <createOrEditOrderModal #createOrEditOrderModal (modalSave)="getOrders()"></createOrEditOrderModal>
     <viewOrderModal #viewOrderModal></viewOrderModal>
-    
-  
+    <adminOrderDetailModal #adminOrderDetailModal></adminOrderDetailModal>
+
 </div>

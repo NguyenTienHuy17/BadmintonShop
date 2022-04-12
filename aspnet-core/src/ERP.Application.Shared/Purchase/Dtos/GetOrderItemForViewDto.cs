@@ -1,4 +1,7 @@
-﻿namespace ERP.Purchase.Dtos
+﻿
+using ERP.Entity.Dtos;
+
+namespace ERP.Purchase.Dtos
 {
     public class GetOrderItemForViewDto
     {
@@ -7,6 +10,8 @@
         public string ProductName { get; set; }
 
         public string OrderOrderCode { get; set; }
+
+        public ProductDto Product { get; set; }
 
     }
 }

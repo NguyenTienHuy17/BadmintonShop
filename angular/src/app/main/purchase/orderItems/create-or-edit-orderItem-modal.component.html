@@ -1,4 +1,5 @@
-﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active" #orderItemForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
@@ -12,51 +13,63 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                 
 
-					<div class="form-group m-form__group">
+
+                    <div class="form-group m-form__group">
                         <label for="ProductName">{{l("Product")}}</label>
                         <div class="input-group">
-                            <input class="form-control" id="ProductName" name="productName" [(ngModel)]="productName" type="text" disabled>     
+                            <input class="form-control" id="ProductName" name="productName" [(ngModel)]="productName"
+                                type="text" disabled>
                             <div class="input-group-append">
-                                <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
-                            </div> <div class="input-group-prepend">
-                                <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()"><i class="fa fa-times"></i></button>
+                                <button class="btn btn-primary blue" type="button"><i class="fa fa-search"></i>
+                                    {{l("Pick")}}</button>
+                            </div>
+                            <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()"><i
+                                        class="fa fa-times"></i></button>
                             </div>
                         </div>
                     </div>
-                    <input class="form-control" name="orderItem.productId" [(ngModel)]="orderItem.productId" type="text" required hidden>
-		 
-					<div class="form-group m-form__group">
+                    <input class="form-control" name="orderItem.productId" [(ngModel)]="orderItem.productId" type="text"
+                        required hidden>
+
+                    <div class="form-group m-form__group">
                         <label for="OrderOrderCode">{{l("Order")}}</label>
                         <div class="input-group">
-                            <input class="form-control" id="OrderOrderCode" name="orderOrderCode" [(ngModel)]="orderOrderCode" type="text" disabled>     
+                            <input class="form-control" id="OrderOrderCode" name="orderOrderCode"
+                                [(ngModel)]="orderOrderCode" type="text" disabled>
                             <div class="input-group-append">
-                                <button class="btn btn-primary blue" (click)="openSelectOrderModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
-                            </div> <div class="input-group-prepend">
-                                <button class="btn btn-danger btn-icon" type="button" (click)="setOrderIdNull()"><i class="fa fa-times"></i></button>
+                                <button class="btn btn-primary blue" type="button"><i class="fa fa-search"></i>
+                                    {{l("Pick")}}</button>
+                            </div>
+                            <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setOrderIdNull()"><i
+                                        class="fa fa-times"></i></button>
                             </div>
                         </div>
                     </div>
-                    <input class="form-control" name="orderItem.orderId" [(ngModel)]="orderItem.orderId" type="text" required hidden>
-		 
+                    <input class="form-control" name="orderItem.orderId" [(ngModel)]="orderItem.orderId" type="text"
+                        required hidden>
 
-								<div class="form-group">
-									<label for="OrderItem_Quantity">{{l("Quantity")}} *</label>
-									<input type="text" #OrderItem_Quantity="ngModel" id="OrderItem_Quantity" class="form-control" [(ngModel)]="orderItem.quantity" name="Quantity"     required/>
-								    <validation-messages [formCtrl]="OrderItem_Quantity"></validation-messages>
-								</div>
-					
+
+                    <div class="form-group">
+                        <label for="OrderItem_Quantity">{{l("Quantity")}} *</label>
+                        <input type="text" #OrderItem_Quantity="ngModel" id="OrderItem_Quantity" class="form-control"
+                            [(ngModel)]="orderItem.quantity" name="Quantity" required />
+                        <validation-messages [formCtrl]="OrderItem_Quantity"></validation-messages>
+                    </div>
+
 
                 </div>
                 <div class="modal-footer">
-                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
-                    <button type="submit" class="btn btn-primary blue" [disabled]="!orderItemForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                    <button [disabled]="saving" type="button" class="btn btn-default"
+                        (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!orderItemForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i>
+                        <span>{{l("Save")}}</span></button>
                 </div>
             </form>
         </div>
     </div>
-<orderItemProductLookupTableModal #orderItemProductLookupTableModal (modalSave)="getNewProductId()"></orderItemProductLookupTableModal>
-		 <orderItemOrderLookupTableModal #orderItemOrderLookupTableModal (modalSave)="getNewOrderId()"></orderItemOrderLookupTableModal>
-		 
+
 </div>

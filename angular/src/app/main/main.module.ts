@@ -15,8 +15,6 @@ import { ReturnProdOrderLookupTableModalComponent } from './purchase/returnProds
 import { OrderItemsComponent } from './purchase/orderItems/orderItems.component';
 import { ViewOrderItemModalComponent } from './purchase/orderItems/view-orderItem-modal.component';
 import { CreateOrEditOrderItemModalComponent } from './purchase/orderItems/create-or-edit-orderItem-modal.component';
-import { OrderItemProductLookupTableModalComponent } from './purchase/orderItems/orderItem-product-lookup-table-modal.component';
-import { OrderItemOrderLookupTableModalComponent } from './purchase/orderItems/orderItem-order-lookup-table-modal.component';
 
 import { OrdersComponent } from './purchase/orders/orders.component';
 import { ViewOrderModalComponent } from './purchase/orders/view-order-modal.component';
@@ -62,7 +60,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { PaginatorModule } from 'primeng/paginator';
 import { DataViewModule } from 'primeng/dataview';
 import { EditorModule } from 'primeng/editor';
-import { InputMaskModule } from 'primeng/inputmask';import { FileUploadModule } from 'primeng/fileupload';
+import { InputMaskModule } from 'primeng/inputmask'; import { FileUploadModule } from 'primeng/fileupload';
 import { TableModule } from 'primeng/table';
 
 import { UtilsModule } from '@shared/utils/utils.module';
@@ -83,62 +81,61 @@ import { NewUploadImageService } from './newUploadImage/newUploadImage.service';
 import { UploadSingleImageService } from './uploadSingleImage/uploadSingleImage.service';;
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 import { ProductDetailComponent } from './entity/product-detail/product-detail.component'
-;
+	;
 import { CartDetailComponent } from './common/cart-detail/cart-detail.component'
-;
+	;
 import { OrrderDetailModalComponent } from './purchase/orrder-detail-modal/orrder-detail-modal.component'
-;
+	;
 import { ProductBrandComponent } from './user/product-brand/product-brand.component';
 import { ProductCategoryComponent } from './user/product-category/product-category.component'
-;
+	;
 import { AllProductComponent } from './user/all-product/all-product.component'
-;
+	;
 import { BookingComponent } from './user/booking/booking.component'
-;
-import { ReturnProdComponent } from './user/return-prod/return-prod.component';
+	;
+import { ReturnProdComponent } from './user/return-prod/return-prod.component';;
+import { AdminOrderDetailModalComponent } from './purchase/admin-order-detail-modal/admin-order-detail-modal.component'
 NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
 @NgModule({
-    imports: [
+	imports: [
 		FileUploadModule,
 		AutoCompleteModule,
 		PaginatorModule,
 		EditorModule,
-		InputMaskModule,		
+		InputMaskModule,
 		TableModule,
-        CommonModule,
-        FormsModule,
-        ModalModule,
-        TabsModule,
-        TooltipModule,
-        AppCommonModule,
-        UtilsModule,
-        MainRoutingModule,
-        CountoModule,
-        NgxChartsModule,
-        BsDatepickerModule.forRoot(),
-        BsDropdownModule.forRoot(),
-        PopoverModule.forRoot(),
-        ImageCropperModule,
+		CommonModule,
+		FormsModule,
+		ModalModule,
+		TabsModule,
+		TooltipModule,
+		AppCommonModule,
+		UtilsModule,
+		MainRoutingModule,
+		CountoModule,
+		NgxChartsModule,
+		BsDatepickerModule.forRoot(),
+		BsDropdownModule.forRoot(),
+		PopoverModule.forRoot(),
+		ImageCropperModule,
 		DataViewModule
-    ],
-    declarations: [
+	],
+	declarations: [
 		CartsComponent,
 
 		ViewCartModalComponent,
 		CreateOrEditCartModalComponent,
-    	CartProductLookupTableModalComponent,
+		CartProductLookupTableModalComponent,
 		ReturnProdsComponent,
 
 		ViewReturnProdModalComponent,
 		CreateOrEditReturnProdModalComponent,
-    	ReturnProdOrderLookupTableModalComponent,
+		ReturnProdOrderLookupTableModalComponent,
 		OrderItemsComponent,
 
 		ViewOrderItemModalComponent,
 		CreateOrEditOrderItemModalComponent,
-		OrderItemProductLookupTableModalComponent,
-		OrderItemOrderLookupTableModalComponent,
 		OrdersComponent,
 
 		ViewOrderModalComponent,
@@ -163,7 +160,7 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
 		ViewCategoryModalComponent,
 		CreateOrEditCategoryModalComponent,
-    	CategoryImageLookupTableModalComponent,
+		CategoryImageLookupTableModalComponent,
 		BrandsComponent,
 
 		ViewBrandModalComponent,
@@ -180,31 +177,33 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
 		ViewBookingModalComponent,
 		CreateOrEditBookingModalComponent,
-        DashboardComponent,
+		DashboardComponent,
 		NewUploadImageComponent,
-        ShowImageModalComponent,
-        DragDropDirective,
-        UploadSingleImageComponent,
-        UserDashboardComponent
-,
-        ProductDetailComponent
-,
-        CartDetailComponent
-,
-        OrrderDetailModalComponent
-,
-        ProductBrandComponent ,
-        ProductCategoryComponent ,
-        AllProductComponent ,
-        BookingComponent ,
-        ReturnProdComponent],
-    providers: [
+		ShowImageModalComponent,
+		DragDropDirective,
+		UploadSingleImageComponent,
+		UserDashboardComponent
+		,
+		ProductDetailComponent
+		,
+		CartDetailComponent
+		,
+		OrrderDetailModalComponent
+		,
+		ProductBrandComponent,
+		ProductCategoryComponent,
+		AllProductComponent,
+		BookingComponent,
+		ReturnProdComponent,
+		AdminOrderDetailModalComponent
+	],
+	providers: [
 		NewUploadImageService,
 		UploadSingleImageService,
-        { provide: BsDatepickerConfig, useFactory: NgxBootstrapDatePickerConfigService.getDatepickerConfig },
-        { provide: BsDaterangepickerConfig, useFactory: NgxBootstrapDatePickerConfigService.getDaterangepickerConfig },
-        { provide: BsLocaleService, useFactory: NgxBootstrapDatePickerConfigService.getDatepickerLocale }
-		
-    ]
+		{ provide: BsDatepickerConfig, useFactory: NgxBootstrapDatePickerConfigService.getDatepickerConfig },
+		{ provide: BsDaterangepickerConfig, useFactory: NgxBootstrapDatePickerConfigService.getDaterangepickerConfig },
+		{ provide: BsLocaleService, useFactory: NgxBootstrapDatePickerConfigService.getDatepickerLocale }
+
+	]
 })
 export class MainModule { }

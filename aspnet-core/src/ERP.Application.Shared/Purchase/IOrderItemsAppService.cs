@@ -4,6 +4,7 @@ using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using ERP.Purchase.Dtos;
 using ERP.Dto;
+using System.Collections.Generic;
 
 namespace ERP.Purchase
 {
@@ -21,9 +22,6 @@ namespace ERP.Purchase
 
         Task<FileDto> GetOrderItemsToExcel(GetAllOrderItemsForExcelInput input);
 
-        Task<PagedResultDto<OrderItemProductLookupTableDto>> GetAllProductForLookupTable(GetAllForLookupTableInput input);
-
-        Task<PagedResultDto<OrderItemOrderLookupTableDto>> GetAllOrderForLookupTable(GetAllForLookupTableInput input);
-
+        Task<List<GetOrderItemForViewDto>> GetOrderItemByOrderId(long orderId);
     }
 }

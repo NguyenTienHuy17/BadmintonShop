@@ -1,7 +1,7 @@
-﻿import {AppConsts} from '@shared/AppConsts';
+﻿import { AppConsts } from '@shared/AppConsts';
 import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
-import { ActivatedRoute , Router} from '@angular/router';
-import { OrdersServiceProxy, OrderDto  } from '@shared/service-proxies/service-proxies';
+import { ActivatedRoute, Router } from '@angular/router';
+import { OrdersServiceProxy, OrderDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from '@abp/notify/notify.service';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { TokenAuthServiceProxy } from '@shared/service-proxies/service-proxies';
@@ -15,6 +15,7 @@ import { LazyLoadEvent } from 'primeng/components/common/lazyloadevent';
 import { FileDownloadService } from '@shared/utils/file-download.service';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { AdminOrderDetailModalComponent } from '../admin-order-detail-modal/admin-order-detail-modal.component';
 
 
 @Component({
@@ -23,11 +24,12 @@ import * as moment from 'moment';
     animations: [appModuleAnimation()]
 })
 export class OrdersComponent extends AppComponentBase {
-    
-    
+
+
     @ViewChild('createOrEditOrderModal', { static: true }) createOrEditOrderModal: CreateOrEditOrderModalComponent;
-    @ViewChild('viewOrderModalComponent', { static: true }) viewOrderModal: ViewOrderModalComponent;   
-    
+    @ViewChild('viewOrderModalComponent', { static: true }) viewOrderModal: ViewOrderModalComponent;
+    @ViewChild('adminOrderDetailModal', { static: true }) adminOrderDetailModal: AdminOrderDetailModalComponent;
+
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
 
@@ -37,16 +39,16 @@ export class OrdersComponent extends AppComponentBase {
     totalPriceFilter = '';
     shippingAddressFilter = '';
     shippingNumberFilter = '';
-    maxDiscountAmountFilter : number;
-		maxDiscountAmountFilterEmpty : number;
-		minDiscountAmountFilter : number;
-		minDiscountAmountFilterEmpty : number;
-    maxActualPriceFilter : number;
-		maxActualPriceFilterEmpty : number;
-		minActualPriceFilter : number;
-		minActualPriceFilterEmpty : number;
-        statusNameFilter = '';
-        discountDiscountCodeFilter = '';
+    maxDiscountAmountFilter: number;
+    maxDiscountAmountFilterEmpty: number;
+    minDiscountAmountFilter: number;
+    minDiscountAmountFilterEmpty: number;
+    maxActualPriceFilter: number;
+    maxActualPriceFilterEmpty: number;
+    minActualPriceFilter: number;
+    minActualPriceFilterEmpty: number;
+    statusNameFilter = '';
+    discountDiscountCodeFilter = '';
 
 
 
@@ -78,10 +80,10 @@ export class OrdersComponent extends AppComponentBase {
             this.totalPriceFilter,
             this.shippingAddressFilter,
             this.shippingNumberFilter,
-            this.maxDiscountAmountFilter == null ? this.maxDiscountAmountFilterEmpty: this.maxDiscountAmountFilter,
-            this.minDiscountAmountFilter == null ? this.minDiscountAmountFilterEmpty: this.minDiscountAmountFilter,
-            this.maxActualPriceFilter == null ? this.maxActualPriceFilterEmpty: this.maxActualPriceFilter,
-            this.minActualPriceFilter == null ? this.minActualPriceFilterEmpty: this.minActualPriceFilter,
+            this.maxDiscountAmountFilter == null ? this.maxDiscountAmountFilterEmpty : this.maxDiscountAmountFilter,
+            this.minDiscountAmountFilter == null ? this.minDiscountAmountFilterEmpty : this.minDiscountAmountFilter,
+            this.maxActualPriceFilter == null ? this.maxActualPriceFilterEmpty : this.maxActualPriceFilter,
+            this.minActualPriceFilter == null ? this.minActualPriceFilterEmpty : this.minActualPriceFilter,
             this.statusNameFilter,
             this.discountDiscountCodeFilter,
             this.primengTableHelper.getSorting(this.dataTable),
@@ -99,7 +101,7 @@ export class OrdersComponent extends AppComponentBase {
     }
 
     createOrder(): void {
-        this.createOrEditOrderModal.show();        
+        this.createOrEditOrderModal.show();
     }
 
 
@@ -121,25 +123,25 @@ export class OrdersComponent extends AppComponentBase {
 
     exportToExcel(): void {
         this._ordersServiceProxy.getOrdersToExcel(
-        this.filterText,
+            this.filterText,
             this.orderCodeFilter,
             this.totalPriceFilter,
             this.shippingAddressFilter,
             this.shippingNumberFilter,
-            this.maxDiscountAmountFilter == null ? this.maxDiscountAmountFilterEmpty: this.maxDiscountAmountFilter,
-            this.minDiscountAmountFilter == null ? this.minDiscountAmountFilterEmpty: this.minDiscountAmountFilter,
-            this.maxActualPriceFilter == null ? this.maxActualPriceFilterEmpty: this.maxActualPriceFilter,
-            this.minActualPriceFilter == null ? this.minActualPriceFilterEmpty: this.minActualPriceFilter,
+            this.maxDiscountAmountFilter == null ? this.maxDiscountAmountFilterEmpty : this.maxDiscountAmountFilter,
+            this.minDiscountAmountFilter == null ? this.minDiscountAmountFilterEmpty : this.minDiscountAmountFilter,
+            this.maxActualPriceFilter == null ? this.maxActualPriceFilterEmpty : this.maxActualPriceFilter,
+            this.minActualPriceFilter == null ? this.minActualPriceFilterEmpty : this.minActualPriceFilter,
             this.statusNameFilter,
             this.discountDiscountCodeFilter,
         )
-        .subscribe(result => {
-            this._fileDownloadService.downloadTempFile(result);
-         });
+            .subscribe(result => {
+                this._fileDownloadService.downloadTempFile(result);
+            });
     }
-    
-    
-    
-    
-    
+
+
+
+
+
 }

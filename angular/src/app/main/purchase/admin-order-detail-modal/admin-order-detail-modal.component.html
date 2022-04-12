@@ -1,0 +1,73 @@
+<div bsModal #detailModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="detailModal"
+  aria-hidden="true" [config]="{backdrop: 'static'}">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">
+          <span>{{l("OrderDetail")}} : {{item.order.orderCode}}</span>
+        </h4>
+        <button type="button" class="close" (click)="close()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group m-form__group">
+          <div *ngFor="let orderItem of listOrderItem">
+            <div class="row">
+              <div class="col-6">
+                <span>{{l('ProductName')}} : </span>
+                <span>{{orderItem.product.name}}</span>
+              </div>
+              <div class="col-2">
+                <span>{{l('Quantity')}} : </span>
+                <span>{{orderItem.orderItem.quantity}}</span>
+              </div>
+              <div class="col-4">
+                <span>{{l('Price')}} : </span>
+                <span>{{(orderItem.product.price * orderItem.orderItem.quantity).toLocaleString('it-IT', {style
+                  :'currency', currency : 'VND'})}}</span>
+              </div>
+            </div>
+            <hr />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 mb-3">
+            <h6>{{l("OrderCode")}} :</h6>
+            {{ item.order.orderCode }}
+          </div>
+          <div class="col-6 mb-3">
+            <h6>{{l("TotalPrice")}} :</h6>
+            {{ item.order.totalPrice }}
+          </div>
+          <div class="col-6 mb-3">
+            <h6>{{l("ShippingAddress")}} :</h6>
+            {{ item.order.shippingAddress }}
+          </div>
+          <div class="col-6 mb-3">
+            <h6>{{l("ShippingNumber")}} :</h6>
+            {{ item.order.shippingNumber }}
+          </div>
+          <div class="col-6 mb-3">
+            <h6>{{l("DiscountAmount")}} :</h6>
+            {{ item.order.discountAmount }}
+          </div>
+          <div class="col-6 mb-3">
+            <h6>{{l("ActualPrice")}} :</h6>
+            {{ item.order.actualPrice }}
+          </div>
+
+          <div class="col-6 mb-3">
+            <h6>({{l("Status")}}) {{l("Name")}} :</h6>
+            {{item.statusName}}
+          </div>
+          <div class="col-6 mb-3">
+            <h6>({{l("Discount")}}) {{l("DiscountCode")}} :</h6>
+            {{item.discountDiscountCode}}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

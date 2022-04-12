@@ -18,10 +18,10 @@ using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Abp.UI;
 using ERP.Storage;
+using ERP.Entity.Dtos;
 
 namespace ERP.Purchase
 {
-    [AbpAuthorize(AppPermissions.Pages_User)]
     public class OrderItemsAppService : ERPAppServiceBase, IOrderItemsAppService
     {
         private readonly IRepository<OrderItem, long> _orderItemRepository;
@@ -225,65 +225,23 @@ namespace ERP.Purchase
             return _orderItemsExcelExporter.ExportToFile(orderItemListDtos);
         }
 
-        [AbpAuthorize(AppPermissions.Pages_OrderItems)]
-        public async Task<PagedResultDto<OrderItemProductLookupTableDto>> GetAllProductForLookupTable(GetAllForLookupTableInput input)
+        public async Task<List<GetOrderItemForViewDto>> GetOrderItemByOrderId(long orderId)
         {
-            var query = _lookup_productRepository.GetAll().WhereIf(
-                   !string.IsNullOrWhiteSpace(input.Filter),
-                  e => e.Name != null && e.Name.Contains(input.Filter)
-               );
+            var listOrderItem = _orderItemRepository.GetAll().Where(x => x.OrderId == orderId);
 
-            var totalCount = await query.CountAsync();
+            var output = new List<GetOrderItemForViewDto>();
 
-            var productList = await query
-                .PageBy(input)
-                .ToListAsync();
-
-            var lookupTableDtoList = new List<OrderItemProductLookupTableDto>();
-            foreach (var product in productList)
+            foreach (var item in listOrderItem)
             {
-                lookupTableDtoList.Add(new OrderItemProductLookupTableDto
-                {
-                    Id = product.Id,
-                    DisplayName = product.Name?.ToString()
-                });
+                var orderItem = new GetOrderItemForViewDto { OrderItem = ObjectMapper.Map<OrderItemDto>(item) };
+                var product = _productRepository.GetAll().Where(x => x.Id == item.ProductId).FirstOrDefault();
+                orderItem.Product = ObjectMapper.Map<ProductDto>(product);
+                var _lookupOrder = await _lookup_orderRepository.FirstOrDefaultAsync((long)item.OrderId);
+                orderItem.OrderOrderCode = _lookupOrder?.OrderCode?.ToString();
+                output.Add(orderItem);
             }
 
-            return new PagedResultDto<OrderItemProductLookupTableDto>(
-                totalCount,
-                lookupTableDtoList
-            );
+            return output;
         }
-
-        [AbpAuthorize(AppPermissions.Pages_OrderItems)]
-        public async Task<PagedResultDto<OrderItemOrderLookupTableDto>> GetAllOrderForLookupTable(GetAllForLookupTableInput input)
-        {
-            var query = _lookup_orderRepository.GetAll().WhereIf(
-                   !string.IsNullOrWhiteSpace(input.Filter),
-                  e => e.OrderCode != null && e.OrderCode.Contains(input.Filter)
-               );
-
-            var totalCount = await query.CountAsync();
-
-            var orderList = await query
-                .PageBy(input)
-                .ToListAsync();
-
-            var lookupTableDtoList = new List<OrderItemOrderLookupTableDto>();
-            foreach (var order in orderList)
-            {
-                lookupTableDtoList.Add(new OrderItemOrderLookupTableDto
-                {
-                    Id = order.Id,
-                    DisplayName = order.OrderCode?.ToString()
-                });
-            }
-
-            return new PagedResultDto<OrderItemOrderLookupTableDto>(
-                totalCount,
-                lookupTableDtoList
-            );
-        }
-
     }
 }

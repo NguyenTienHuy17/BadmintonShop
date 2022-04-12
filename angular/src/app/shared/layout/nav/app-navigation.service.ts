@@ -60,13 +60,13 @@ export class AppNavigationService {
 
                 new AppMenuItem('Products', 'Pages.Products', 'pi pi-arrow-circle-right', '/app/main/entity/products'),
 
-                new AppMenuItem('ProductImages', 'Pages.ProductImages', 'pi pi-arrow-circle-right', '/app/main/common/productImages'),
+                // new AppMenuItem('ProductImages', 'Pages.ProductImages', 'pi pi-arrow-circle-right', '/app/main/common/productImages'),
 
                 new AppMenuItem('Statuses', 'Pages.Statuses', 'pi pi-arrow-circle-right', '/app/main/common/statuses'),
 
                 new AppMenuItem('Orders', 'Pages.Orders', 'pi pi-arrow-circle-right', '/app/main/purchase/orders'),
 
-                new AppMenuItem('OrderItems', 'Pages.OrderItems', 'pi pi-arrow-circle-right', '/app/main/purchase/orderItems'),
+                // new AppMenuItem('OrderItems', 'Pages.OrderItems', 'pi pi-arrow-circle-right', '/app/main/purchase/orderItems'),
 
                 new AppMenuItem('ReturnProds', 'Pages.ReturnProds', 'pi pi-arrow-circle-right', '/app/main/purchase/returnProds'),
 
