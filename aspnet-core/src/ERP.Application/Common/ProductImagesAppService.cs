@@ -216,5 +216,17 @@ namespace ERP.Common
         {
             return await _productImageRepository.GetAllListAsync(x => x.ProductId == productId);
         }
+
+        public async Task DeleteProductImage(long id)
+        {
+            if(id == null || id == 0)
+            {
+                return;
+            }
+            else
+            {
+                await _productImageRepository.DeleteAsync(id);
+            }
+        }
     }
 }

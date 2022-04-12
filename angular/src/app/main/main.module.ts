@@ -95,7 +95,8 @@ import { BookingComponent } from './user/booking/booking.component'
 	;
 import { ReturnProdComponent } from './user/return-prod/return-prod.component';;
 import { AdminOrderDetailModalComponent } from './purchase/admin-order-detail-modal/admin-order-detail-modal.component'
-import { NgImageSliderModule } from 'ng-image-slider';
+import { NgImageSliderModule } from 'ng-image-slider';;
+import { UserSignUpComponent } from './user/user-sign-up/user-sign-up.component'
 NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
 @NgModule({
@@ -197,7 +198,8 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 		AllProductComponent,
 		BookingComponent,
 		ReturnProdComponent,
-		AdminOrderDetailModalComponent
+		AdminOrderDetailModalComponent,
+		UserSignUpComponent
 	],
 	providers: [
 		NewUploadImageService,

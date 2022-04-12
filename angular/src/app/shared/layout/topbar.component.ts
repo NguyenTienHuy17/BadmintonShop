@@ -175,6 +175,6 @@ export class TopBarComponent extends ThemesLayoutBaseComponent implements OnInit
     }
 
     signUp() {
-        this.router.navigate(['/app/main/signUp']);  // define your component where you want to go
+        this.router.navigate(['/app/main/user/signIn']);  // define your component where you want to go
     }
 }
