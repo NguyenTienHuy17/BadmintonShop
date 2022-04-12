@@ -95,6 +95,7 @@ import { BookingComponent } from './user/booking/booking.component'
 	;
 import { ReturnProdComponent } from './user/return-prod/return-prod.component';;
 import { AdminOrderDetailModalComponent } from './purchase/admin-order-detail-modal/admin-order-detail-modal.component'
+import { NgImageSliderModule } from 'ng-image-slider';
 NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
 @NgModule({
@@ -119,7 +120,8 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 		BsDropdownModule.forRoot(),
 		PopoverModule.forRoot(),
 		ImageCropperModule,
-		DataViewModule
+		DataViewModule,
+		NgImageSliderModule
 	],
 	declarations: [
 		CartsComponent,

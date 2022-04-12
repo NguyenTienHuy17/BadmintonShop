@@ -70,7 +70,7 @@ export class AppNavigationService {
 
                 new AppMenuItem('ReturnProds', 'Pages.ReturnProds', 'pi pi-arrow-circle-right', '/app/main/purchase/returnProds'),
 
-                new AppMenuItem('Carts', 'Pages.Carts', 'pi pi-arrow-circle-right', '/app/main/common/carts'),
+                // new AppMenuItem('Carts', 'Pages.Carts', 'pi pi-arrow-circle-right', '/app/main/common/carts'),
             ]),
 
 
