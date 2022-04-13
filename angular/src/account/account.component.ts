@@ -17,7 +17,7 @@ import { LoginService } from './login/login.service';
 export class AccountComponent extends AppComponentBase implements OnInit {
 
     private viewContainerRef: ViewContainerRef;
-
+    imageUrl = "../assets/common/images/DELAYED-START-AT-YONEX-1200x410-1.jpg";
     currentYear: number = moment().year();
     remoteServiceBaseUrl: string = AppConsts.remoteServiceBaseUrl;
     tenantChangeDisabledRoutes: string[] = [
