@@ -1,100 +1,116 @@
-﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <form #productForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
-                <div class="modal-header">
-                    <h4 class="modal-title">
-                        <span *ngIf="product.id">{{l("EditProduct")}}</span>
-                        <span *ngIf="!product.id">{{l("CreateNewProduct")}}</span>
-                    </h4>
-                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <input class="form-control" name="product.categoryId" [(ngModel)]="product.categoryId" type="text"  hidden>
-		 
-                                <div class="form-group">
-                                    <label for="Product_Name">{{l("Name")}} *</label>
-                                    <input type="text" #Product_Name="ngModel" id="Product_Name" class="form-control" [(ngModel)]="product.name" name="Name"   minlength="0"  maxlength="256"  required/>
-                                    <validation-messages [formCtrl]="Product_Name"></validation-messages>
-                                </div>
-
-								<div class="form-group">
-									<label for="Product_Brand">{{l("Brand")}} *</label>
-									<select id="Brand" name="Brand" [(ngModel)]="product.brandId"  class="form-control">
-                                        <option disabled value="">{{"Select" | localize}}</option>
-                                        <option *ngFor="let brand of listBrand" [value]="brand.id">{{brand.name}}</option>
-                                    </select>
-								</div>
-
-                                <div class="form-group">
-									<label for="Product_Category">{{l("Category")}} *</label>
-									<select id="Category" name="Category" [(ngModel)]="product.categoryId"  class="form-control">
-                                        <option disabled value="">{{"Select" | localize}}</option>
-                                        <option *ngFor="let category of listCategory" [value]="category.id">{{category.name}}</option>
-                                    </select>
-								</div>
-
-					
-								<div class="form-group">
-									<label for="Product_MadeIn">{{l("MadeIn")}} *</label>
-									<input type="text" #Product_MadeIn="ngModel" id="Product_MadeIn" class="form-control" [(ngModel)]="product.madeIn" name="MadeIn"   minlength="0"  maxlength="64"  required/>
-								    <validation-messages [formCtrl]="Product_MadeIn"></validation-messages>
-								</div>
-					
-								<div class="form-group">
-									<label for="Product_Code">{{l("Code")}}</label>
-									<input type="text" #Product_Code="ngModel" id="Product_Code" class="form-control" [(ngModel)]="product.code" name="Code"   minlength="0"  maxlength="128" />
-								    <validation-messages [formCtrl]="Product_Code"></validation-messages>
-								</div>
-					
-								<div class="form-group">
-									<label for="Product_Price">{{l("Price")}}</label>
-									<input type="number" #Product_Price="ngModel" id="Product_Price" class="form-control" [(ngModel)]="product.price" name="Price"   />
-									<validation-messages [formCtrl]="Product_Price"></validation-messages>
-								</div>
-					
-								<div class="form-group">
-									<label for="Product_InStock">{{l("InStock")}}</label>
-									<input type="number" #Product_InStock="ngModel" id="Product_InStock" class="form-control" [(ngModel)]="product.inStock" name="InStock"   />
-									<validation-messages [formCtrl]="Product_InStock"></validation-messages>
-								</div>
-					
-								<div class="form-group">
-									<label for="Product_Description">{{l("Description")}}</label>
-									<input type="text" #Product_Description="ngModel" id="Product_Description" class="form-control" [(ngModel)]="product.description" name="Description"    />
-								    <validation-messages [formCtrl]="Product_Description"></validation-messages>
-								</div>
-
-                                <div class="form-group">
-									<label for="Product_Color">{{l("Colors")}}</label>
-									<input type="text" #Product_Color="ngModel" id="Product_Color" class="form-control" [(ngModel)]="product.color" name="Color"    />
-								    <validation-messages [formCtrl]="Product_Color"></validation-messages>
-								</div>
-
-                                <div class="form-group">
-									<label for="Product_Size">{{l("Size")}}</label>
-									<input type="text" #Product_Size="ngModel" id="Product_Size" class="form-control" [(ngModel)]="product.size" name="Description"    />
-								    <validation-messages [formCtrl]="Product_Size"></validation-messages>
-								</div>
-					
-								<div class="form-group">
-									<label for="Product_Title">{{l("Title")}}</label>
-									<input type="text" #Product_Title="ngModel" id="Product_Title" class="form-control" [(ngModel)]="product.title" name="Title"   minlength="0"  maxlength="128" />
-								    <validation-messages [formCtrl]="Product_Title"></validation-messages>
-								</div>
-
-								<app-newUploadImage #newUploadImage [modeImage]="modeImage" [listUrlImage]="listUrlImage" (filesNeedUpload)="uploadFileWhenEdit($event)"
-												(changeMainImage)="changeMainImage($event)">
-											</app-newUploadImage>
-							</div>
-							<div class="modal-footer">
-								<button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
-								<button type="submit" class="btn btn-primary blue" [disabled]="!productForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
-							</div>
-						</form>
-					</div>
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+	aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<form #productForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+				<div class="modal-header">
+					<h4 class="modal-title">
+						<span *ngIf="product.id">{{l("EditProduct")}}</span>
+						<span *ngIf="!product.id">{{l("CreateNewProduct")}}</span>
+					</h4>
+					<button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
-				
-			</div>
+				<div class="modal-body">
+					<input class="form-control" name="product.categoryId" [(ngModel)]="product.categoryId" type="text"
+						hidden>
+
+					<div class="form-group">
+						<label for="Product_Name">{{l("Name")}} *</label>
+						<input type="text" #Product_Name="ngModel" id="Product_Name" class="form-control"
+							[(ngModel)]="product.name" name="Name" minlength="0" maxlength="256" required />
+						<validation-messages [formCtrl]="Product_Name"></validation-messages>
+					</div>
+
+					<div class="form-group">
+						<label for="Product_Brand">{{l("Brand")}} *</label>
+						<select id="Brand" name="Brand" [(ngModel)]="product.brandId" class="form-control">
+							<option disabled value="">{{"Select" | localize}}</option>
+							<option *ngFor="let brand of listBrand" [value]="brand.id">{{brand.name}}</option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="Product_Category">{{l("Category")}} *</label>
+						<select id="Category" name="Category" [(ngModel)]="product.categoryId" class="form-control">
+							<option disabled value="">{{"Select" | localize}}</option>
+							<option *ngFor="let category of listCategory" [value]="category.id">{{category.name}}
+							</option>
+						</select>
+					</div>
+
+
+					<div class="form-group">
+						<label for="Product_MadeIn">{{l("MadeIn")}} *</label>
+						<input type="text" #Product_MadeIn="ngModel" id="Product_MadeIn" class="form-control"
+							[(ngModel)]="product.madeIn" name="MadeIn" minlength="0" maxlength="64" required />
+						<validation-messages [formCtrl]="Product_MadeIn"></validation-messages>
+					</div>
+
+					<div class="form-group">
+						<label for="Product_Code">{{l("Code")}}</label>
+						<input type="text" #Product_Code="ngModel" id="Product_Code" class="form-control"
+							[(ngModel)]="product.code" name="Code" minlength="0" maxlength="128" />
+						<validation-messages [formCtrl]="Product_Code"></validation-messages>
+					</div>
+
+					<div class="form-group">
+						<label for="Product_Price">{{l("Price")}}</label>
+						<input type="number" #Product_Price="ngModel" id="Product_Price" class="form-control"
+							[(ngModel)]="product.price" name="Price" />
+						<validation-messages [formCtrl]="Product_Price"></validation-messages>
+					</div>
+
+					<div class="form-group">
+						<label for="Product_InStock">{{l("InStock")}}</label>
+						<input type="number" #Product_InStock="ngModel" id="Product_InStock" class="form-control"
+							[(ngModel)]="product.inStock" name="InStock" />
+						<validation-messages [formCtrl]="Product_InStock"></validation-messages>
+					</div>
+
+					<div class="form-group">
+						<label for="Product_Description">{{l("Description")}}</label>
+						<input type="text" #Product_Description="ngModel" id="Product_Description" class="form-control"
+							[(ngModel)]="product.description" name="Description" />
+						<validation-messages [formCtrl]="Product_Description"></validation-messages>
+					</div>
+
+					<div class="form-group">
+						<label for="Product_Color">{{l("Colors")}}</label>
+						<input type="text" #Product_Color="ngModel" id="Product_Color" class="form-control"
+							[(ngModel)]="product.color" name="Color" />
+						<validation-messages [formCtrl]="Product_Color"></validation-messages>
+					</div>
+
+					<div class="form-group">
+						<label for="Product_Size">{{l("Size")}}</label>
+						<input type="text" #Product_Size="ngModel" id="Product_Size" class="form-control"
+							[(ngModel)]="product.size" name="Description" />
+						<validation-messages [formCtrl]="Product_Size"></validation-messages>
+					</div>
+
+					<div class="form-group">
+						<label for="Product_Title">{{l("Title")}}</label>
+						<input type="text" #Product_Title="ngModel" id="Product_Title" class="form-control"
+							[(ngModel)]="product.title" name="Title" minlength="0" maxlength="128" />
+						<validation-messages [formCtrl]="Product_Title"></validation-messages>
+					</div>
+
+					<app-newUploadImage #newUploadImage [modeImage]="modeImage" [listUrlImage]="listUrlImage"
+						(filesNeedUpload)="uploadFileWhenEdit($event)" (changeMainImage)="changeMainImage($event)"
+						[resetFilesToUpload]="resetFilesToUpload">
+					</app-newUploadImage>
+				</div>
+				<div class="modal-footer">
+					<button [disabled]="saving" type="button" class="btn btn-default"
+						(click)="close()">{{l("Cancel")}}</button>
+					<button type="submit" class="btn btn-primary blue" [disabled]="!productForm.form.valid"
+						[buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i>
+						<span>{{l("Save")}}</span></button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</div>

@@ -3,9 +3,9 @@ import { Paginator } from 'primeng/components/paginator/paginator';
 import { Table } from 'primeng/components/table/table';
 
 export class PrimengTableHelper {
-    predefinedRecordsCountPerPage = [5, 10, 25, 50, 100, 250, 500];
+    predefinedRecordsCountPerPage = [8, 16, 24, 50, 100, 250, 500];
 
-    defaultRecordsCountPerPage = 10;
+    defaultRecordsCountPerPage = 16;
 
     isResponsive = true;
 

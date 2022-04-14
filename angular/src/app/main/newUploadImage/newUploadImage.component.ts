@@ -21,6 +21,7 @@ export class NewUploadImageComponent extends AppComponentBase implements OnInit,
 	@Input() listUrlImage: ImageProduct[] = []
 	@Input() urlUpload: string
 	@Input() productId: string
+	@Input() resetFilesToUpload: boolean
 
 	@Output() deleteImageWhenEdit: EventEmitter<any> = new EventEmitter<any>()
 	@Output() filesNeedUpload: EventEmitter<any> = new EventEmitter<any>()
@@ -50,6 +51,10 @@ export class NewUploadImageComponent extends AppComponentBase implements OnInit,
 		} else {
 			this.disableUpload = false
 		}
+
+		if (this.resetFilesToUpload) {
+			this.filesToUpload = []
+		}
 	}
 
 	setMainImage(file: File) {
@@ -73,6 +78,7 @@ export class NewUploadImageComponent extends AppComponentBase implements OnInit,
 	}
 
 	handleFileInput(files: any) {
+		console.log(files)
 		// Add mode
 		if (this.modeImage == ModeImage.AddNew) {
 			if (files != null) {
@@ -98,7 +104,7 @@ export class NewUploadImageComponent extends AppComponentBase implements OnInit,
 						temps.push({
 							id: maxId,
 							url: src,
-							name: files[i].name 
+							name: files[i].name
 						})
 						tempFiles.push(files[i])
 					} else {
@@ -109,6 +115,7 @@ export class NewUploadImageComponent extends AppComponentBase implements OnInit,
 				if (!isError) {
 					this.listUrlImage = [...this.listUrlImage, ...temps]
 					this.filesToUpload = [...this.filesToUpload, ...tempFiles]
+					console.log(this.filesToUpload)
 
 					if (this.listUrlImage.length > 0) {
 						this.changeMainImage.emit(this.listUrlImage)

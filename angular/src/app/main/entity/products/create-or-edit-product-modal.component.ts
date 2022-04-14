@@ -23,7 +23,7 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
     @ViewChild('newUploadImage', { static: true }) newUploadImage: NewUploadImageComponent
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
-
+    resetFilesToUpload: boolean = false;
     uploadUrl = AppConsts.remoteServiceBaseUrl + '/UploadImage/UploadMultipleFileToServer'
 
     active = false;
@@ -57,7 +57,7 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
     }
 
     show(productId?: number): void {
-        this.listUrlImage = []
+        this.resetFilesToUpload = false;
         if (!productId) {
             this.product = new CreateOrEditProductDto();
             this.product.id = productId;
@@ -105,8 +105,6 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
                 this.newProductId = result
 
                 await this.uploadFileToServer()
-                this.notify.info(this.l('SavedSuccessfully'));
-                this.close();
                 this.modalSave.emit(null);
                 this._productsServiceProxy.createProductImage(this.productImage).pipe(
                     catchError((err, caught): any => {
@@ -114,8 +112,9 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
                     })
                 )
                     .subscribe(() => {
+                        this.resetFilesToUpload = true;
                         this.notify.success(this.l('Ntf_AddedSuccessfully', this.l('Ntf_Product')), '', { timeOut: 5000, extendedTimeOut: 1000, positionClass: 'toast-bottom-left' })
-                        window.location.reload();
+                        this.close();
                     })
             });
     }
@@ -149,7 +148,7 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
     close(): void {
         this.active = false;
         this.modal.hide();
-        this.listUrlImage = []
+        this.listUrlImage = [];
     }
 
     ngOnInit(): void {
