@@ -79,7 +79,6 @@ export class ProductCategoryComponent extends AppComponentBase implements OnInit
     ).subscribe(result => {
       this.primengTableHelper.totalRecordsCount = result.totalCount;
       this.primengTableHelper.records = result.items;
-      console.log(result.items)
       this.primengTableHelper.hideLoadingIndicator();
     });
   }

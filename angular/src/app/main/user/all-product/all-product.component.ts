@@ -15,7 +15,7 @@ import { Table } from 'primeng/table';
 export class AllProductComponent extends AppComponentBase implements OnInit {
   @ViewChild('dataTable', { static: true }) dataTable: Table;
   @ViewChild('paginator', { static: true }) paginator: Paginator;
-  defaultRouter ='../../../../assets/common/images/';
+  defaultRouter = '../../../../assets/common/images/';
   advancedFiltersAreShown = false;
   filterText = '';
   nameFilter = '';
@@ -38,7 +38,7 @@ export class AllProductComponent extends AppComponentBase implements OnInit {
     injector: Injector,
     private _productsServiceProxy: ProductsServiceProxy,
     private router: Router
-  ) { 
+  ) {
     super(injector);
   }
 
@@ -47,39 +47,38 @@ export class AllProductComponent extends AppComponentBase implements OnInit {
 
   getProducts(event?: LazyLoadEvent) {
     if (this.primengTableHelper.shouldResetPaging(event)) {
-        this.paginator.changePage(0);
-        return;
+      this.paginator.changePage(0);
+      return;
     }
 
     this.primengTableHelper.showLoadingIndicator();
 
     this._productsServiceProxy.getAllProduct(
-        this.filterText,
-        this.nameFilter,
-        this.madeInFilter,
-        this.codeFilter,
-        this.maxPriceFilter == null ? this.maxPriceFilterEmpty : this.maxPriceFilter,
-        this.minPriceFilter == null ? this.minPriceFilterEmpty : this.minPriceFilter,
-        this.maxInStockFilter == null ? this.maxInStockFilterEmpty : this.maxInStockFilter,
-        this.minInStockFilter == null ? this.minInStockFilterEmpty : this.minInStockFilter,
-        this.descriptionFilter,
-        this.titleFilter,
-        this.imageNameFilter,
-        this.brandNameFilter,
-        this.categoryNameFilter,
-        this.primengTableHelper.getSorting(this.dataTable),
-        this.primengTableHelper.getSkipCount(this.paginator, event),
-        this.primengTableHelper.getMaxResultCount(this.paginator, event)
+      this.filterText,
+      this.nameFilter,
+      this.madeInFilter,
+      this.codeFilter,
+      this.maxPriceFilter == null ? this.maxPriceFilterEmpty : this.maxPriceFilter,
+      this.minPriceFilter == null ? this.minPriceFilterEmpty : this.minPriceFilter,
+      this.maxInStockFilter == null ? this.maxInStockFilterEmpty : this.maxInStockFilter,
+      this.minInStockFilter == null ? this.minInStockFilterEmpty : this.minInStockFilter,
+      this.descriptionFilter,
+      this.titleFilter,
+      this.imageNameFilter,
+      this.brandNameFilter,
+      this.categoryNameFilter,
+      this.primengTableHelper.getSorting(this.dataTable),
+      this.primengTableHelper.getSkipCount(this.paginator, event),
+      this.primengTableHelper.getMaxResultCount(this.paginator, event)
     ).subscribe(result => {
-        this.primengTableHelper.totalRecordsCount = result.totalCount;
-        this.primengTableHelper.records = result.items;
-        console.log(result.items)
-        this.primengTableHelper.hideLoadingIndicator();
+      this.primengTableHelper.totalRecordsCount = result.totalCount;
+      this.primengTableHelper.records = result.items;
+      this.primengTableHelper.hideLoadingIndicator();
     });
-}
+  }
 
-detail(product: ProductDto){
-  this.router.navigate(['/app/main/entity/product-detail', product.id, product.name]);  // define your component where you want to go
-}
+  detail(product: ProductDto) {
+    this.router.navigate(['/app/main/entity/product-detail', product.id, product.name]);  // define your component where you want to go
+  }
 
 }

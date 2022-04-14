@@ -512,10 +512,9 @@ namespace ERP.Entity
                         .WhereIf(!string.IsNullOrWhiteSpace(input.CategoryNameFilter), e => e.CategoryFk != null && e.CategoryFk.Name == input.CategoryNameFilter);
 
                 var pagedAndFilteredProducts = filteredProducts
-                    .OrderBy(input.Sorting ?? "id asc")
-                    .PageBy(input);
+                    .OrderBy(input.Sorting ?? "id asc");
+                    //.PageBy(input);
 
-                var totalCount = await filteredProducts.CountAsync();
 
                 var productImages = _lookup_productImageRepository.GetAll().GroupBy(x => x.ProductId);
 
@@ -550,10 +549,30 @@ namespace ERP.Entity
                                       ProductImageUrl = o3.Url.ToString()
                                   }).ToListAsync();
 
+                var result = products.GroupBy(x => x.Name).Select(o => new ProductDto {
+                    Name = o.FirstOrDefault().Name,
+                    MadeIn = o.FirstOrDefault().MadeIn,
+                    Code = o.FirstOrDefault().Code,
+                    Price = o.FirstOrDefault().Price,
+                    InStock = o.FirstOrDefault().InStock,
+                    Description = o.FirstOrDefault().Description,
+                    Title = o.FirstOrDefault().Title,
+                    Id = o.FirstOrDefault().Id,
+                    Color = o.FirstOrDefault().Color,
+                    Size = o.FirstOrDefault().Size,
+                    BrandName = o.FirstOrDefault().BrandName,
+                    ProductImageUrl = o.FirstOrDefault().ProductImageUrl
+                }).ToList().AsQueryable();
+
+
+
+                var totalCount = result.Count();
+
+                var output = result.PageBy(input).ToList();
 
                 return new PagedResultDto<ProductDto>(
                     totalCount,
-                    products
+                    output
                 );
             }
             catch (Exception ex)
@@ -587,10 +606,7 @@ namespace ERP.Entity
                         .WhereIf(!string.IsNullOrWhiteSpace(input.CategoryNameFilter), e => e.CategoryFk != null && e.CategoryFk.Name == input.CategoryNameFilter);
 
                 var pagedAndFilteredProducts = filteredProducts
-                    .OrderBy(input.Sorting ?? "id asc")
-                    .PageBy(input);
-
-                var totalCount = await filteredProducts.CountAsync();
+                    .OrderBy(input.Sorting ?? "id asc");
 
                 var productImages = _lookup_productImageRepository.GetAll().GroupBy(x => x.ProductId);
 
@@ -626,9 +642,31 @@ namespace ERP.Entity
                                       }).ToListAsync();
 
 
+                var result = products.GroupBy(x => x.Name).Select(o => new ProductDto
+                {
+                    Name = o.FirstOrDefault().Name,
+                    MadeIn = o.FirstOrDefault().MadeIn,
+                    Code = o.FirstOrDefault().Code,
+                    Price = o.FirstOrDefault().Price,
+                    InStock = o.FirstOrDefault().InStock,
+                    Description = o.FirstOrDefault().Description,
+                    Title = o.FirstOrDefault().Title,
+                    Id = o.FirstOrDefault().Id,
+                    Color = o.FirstOrDefault().Color,
+                    Size = o.FirstOrDefault().Size,
+                    BrandName = o.FirstOrDefault().BrandName,
+                    ProductImageUrl = o.FirstOrDefault().ProductImageUrl
+                }).ToList().AsQueryable();
+
+
+
+                var totalCount = result.Count();
+
+                var output = result.PageBy(input).ToList();
+
                 return new PagedResultDto<ProductDto>(
                     totalCount,
-                    products
+                    output
                 );
             }
             catch (Exception ex)
@@ -662,10 +700,8 @@ namespace ERP.Entity
                         .WhereIf(!string.IsNullOrWhiteSpace(input.CategoryNameFilter), e => e.CategoryFk != null && e.CategoryFk.Name == input.CategoryNameFilter);
 
                 var pagedAndFilteredProducts = filteredProducts
-                    .OrderBy(input.Sorting ?? "id asc")
-                    .PageBy(input);
+                    .OrderBy(input.Sorting ?? "id asc");
 
-                var totalCount = await filteredProducts.CountAsync();
 
                 var productImages = _lookup_productImageRepository.GetAll().GroupBy(x => x.ProductId);
 
@@ -701,9 +737,31 @@ namespace ERP.Entity
                                   }).ToListAsync();
 
 
+                var result = products.GroupBy(x => x.Name).Select(o => new ProductDto
+                {
+                    Name = o.FirstOrDefault().Name,
+                    MadeIn = o.FirstOrDefault().MadeIn,
+                    Code = o.FirstOrDefault().Code,
+                    Price = o.FirstOrDefault().Price,
+                    InStock = o.FirstOrDefault().InStock,
+                    Description = o.FirstOrDefault().Description,
+                    Title = o.FirstOrDefault().Title,
+                    Id = o.FirstOrDefault().Id,
+                    Color = o.FirstOrDefault().Color,
+                    Size = o.FirstOrDefault().Size,
+                    BrandName = o.FirstOrDefault().BrandName,
+                    ProductImageUrl = o.FirstOrDefault().ProductImageUrl
+                }).ToList().AsQueryable();
+
+
+
+                var totalCount = result.Count();
+
+                var output = result.PageBy(input).ToList();
+
                 return new PagedResultDto<ProductDto>(
                     totalCount,
-                    products
+                    output
                 );
             }
             catch (Exception ex)

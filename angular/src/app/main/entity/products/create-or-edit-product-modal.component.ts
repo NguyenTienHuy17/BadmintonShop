@@ -1,4 +1,4 @@
-﻿import { Component, Injector, Output, EventEmitter, OnInit, ElementRef, ViewChild} from '@angular/core';
+﻿import { Component, Injector, Output, EventEmitter, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 import { catchError, finalize } from 'rxjs/operators';
 import { ProductsServiceProxy, CreateOrEditProductDto, CreateOrEditProductImageDto, BrandsServiceProxy, GetBrandForViewDto, Brand, Category, CategoriesServiceProxy, ProductImagesServiceProxy, ProductImageUrl } from '@shared/service-proxies/service-proxies';
@@ -16,35 +16,35 @@ import { NewUploadImageComponent } from '@app/main/newUploadImage/newUploadImage
     selector: 'createOrEditProductModal',
     templateUrl: './create-or-edit-product-modal.component.html'
 })
-export class CreateOrEditProductModalComponent extends AppComponentBase implements OnInit{
-   
+export class CreateOrEditProductModalComponent extends AppComponentBase implements OnInit {
+
     @ViewChild('createOrEditModal', { static: true }) modal: ModalDirective;
     @ViewChild('singleUploadImage', { static: true }) singleUploadImage: UploadSingleImageComponent
-	@ViewChild('newUploadImage', { static: true }) newUploadImage: NewUploadImageComponent
+    @ViewChild('newUploadImage', { static: true }) newUploadImage: NewUploadImageComponent
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 
-	uploadUrl = AppConsts.remoteServiceBaseUrl + '/UploadImage/UploadMultipleFileToServer'
+    uploadUrl = AppConsts.remoteServiceBaseUrl + '/UploadImage/UploadMultipleFileToServer'
 
     active = false;
     saving = false;
 
     product: CreateOrEditProductDto = new CreateOrEditProductDto();
     listProductImage: CreateOrEditProductImageDto = new CreateOrEditProductImageDto();
-    listBrand: Brand [] = []
-    listCategory: Category [] = []
+    listBrand: Brand[] = []
+    listCategory: Category[] = []
     imageName = '';
     brandName = '';
     categoryName = '';
 
     modeImage: ModeImage;
-	listUrlImage: ImageProduct[] = []
-	urlUploadAndCreate = AppConsts.remoteServiceBaseUrl + '/UploadImage/UploadMultipleFileToServerAndCreate'
-	newProductId: number = undefined
-	viewImageUrl = AppConsts.remoteServiceBaseUrl + '/UploadImage/GetImageProduct'
+    listUrlImage: ImageProduct[] = []
+    urlUploadAndCreate = AppConsts.remoteServiceBaseUrl + '/UploadImage/UploadMultipleFileToServerAndCreate'
+    newProductId: number = undefined
+    viewImageUrl = AppConsts.remoteServiceBaseUrl + '/UploadImage/GetImageProduct'
     newlistProductImage = [];
-	productImage: ProductImageUrl = new ProductImageUrl()
-    
+    productImage: ProductImageUrl = new ProductImageUrl()
+
 
     constructor(
         injector: Injector,
@@ -55,7 +55,7 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
     ) {
         super(injector);
     }
-    
+
     show(productId?: number): void {
         this.listUrlImage = []
         if (!productId) {
@@ -79,17 +79,17 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
 
             this._productImagesServiceProxy.getListProductImageUrlByProductId(productId).subscribe(result => {
                 console.log(result)
-                 result.forEach(e => {
+                result.forEach(e => {
                     this.listUrlImage.push({
-						id: e.id,
-						url: e.url.replace("G:/HuySourceCode/BadmintonShop/angular/src/","http://localhost:4200/")
-					})
+                        id: e.id,
+                        url: e.url.replace("G:/HuySourceCode/BadmintonShop/angular/src/", "http://localhost:4200/")
+                    })
                 })
                 this.modal.show();
             });
         }
-        
-        
+
+
     }
 
     save(): void {
@@ -100,38 +100,38 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
             this.newlistProductImage.push(this.listProductImage)
         });
         this._productsServiceProxy.createOrEdit(this.product)
-            .pipe(finalize(() => { this.saving = false;}))
+            .pipe(finalize(() => { this.saving = false; }))
             .subscribe(async (result) => {
-            this.newProductId = result
+                this.newProductId = result
 
-            await this.uploadFileToServer()
-
-            this.notify.info(this.l('SavedSuccessfully'));
-            this.close();
-            this.modalSave.emit(null);
-            this._productsServiceProxy.createProductImage(this.productImage).pipe(
-                catchError((err, caught): any => {
-                    this.notify.error(this.l('Ntf_AddedFailed', this.l('Ntf_Product')), '', { timeOut: 5000, extendedTimeOut: 1000, positionClass: 'toast-bottom-left' })
-                })
-            )
-            .subscribe(() => {
-                this.notify.success(this.l('Ntf_AddedSuccessfully', this.l('Ntf_Product')), '', { timeOut: 5000, extendedTimeOut: 1000, positionClass: 'toast-bottom-left' })
-            })
+                await this.uploadFileToServer()
+                this.notify.info(this.l('SavedSuccessfully'));
+                this.close();
+                this.modalSave.emit(null);
+                this._productsServiceProxy.createProductImage(this.productImage).pipe(
+                    catchError((err, caught): any => {
+                        this.notify.error(this.l('Ntf_AddedFailed', this.l('Ntf_Product')), '', { timeOut: 5000, extendedTimeOut: 1000, positionClass: 'toast-bottom-left' })
+                    })
+                )
+                    .subscribe(() => {
+                        this.notify.success(this.l('Ntf_AddedSuccessfully', this.l('Ntf_Product')), '', { timeOut: 5000, extendedTimeOut: 1000, positionClass: 'toast-bottom-left' })
+                        window.location.reload();
+                    })
             });
     }
 
-	async uploadFileToServer(): Promise<void> {
-		var response = await this.newUploadImage.uploadImage(this.uploadUrl, this.newProductId.toString()).toPromise()
-		if (response instanceof HttpResponse) {
-			if (response.status == 200) {
-				let result = (response.body as any).result
-				this.productImage.listImageUrl = result
-				this.productImage.productId = this.newProductId
-			} else {
-				this.notify.error(this.l('UploadImageFails'), '', { timeOut: 5000, extendedTimeOut: 1000, positionClass: 'toast-bottom-left' })
-			}
-		}
-	}
+    async uploadFileToServer(): Promise<void> {
+        var response = await this.newUploadImage.uploadImage(this.uploadUrl, this.newProductId.toString()).toPromise()
+        if (response instanceof HttpResponse) {
+            if (response.status == 200) {
+                let result = (response.body as any).result
+                this.productImage.listImageUrl = result
+                this.productImage.productId = this.newProductId
+            } else {
+                this.notify.error(this.l('UploadImageFails'), '', { timeOut: 5000, extendedTimeOut: 1000, positionClass: 'toast-bottom-left' })
+            }
+        }
+    }
 
     setImageIdNull() {
         this.product.imageId = null;
@@ -151,50 +151,50 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
         this.modal.hide();
         this.listUrlImage = []
     }
-    
+
     ngOnInit(): void {
-		this.modeImage = ModeImage.AddNew
+        this.modeImage = ModeImage.AddNew
         this._brandsServiceProxy.getAllForProduct().subscribe(result => {
             this.listBrand = result
         });
         this._categoriesServiceProxy.getAllForProduct().subscribe(result => {
             this.listCategory = result
         });
-    }    
+    }
 
     changeMainImage(event) {
-		if (event) {
+        if (event) {
             this.listUrlImage = event
-			// this.singleUploadImage.previewUrl = event.url
-		} else {
+            // this.singleUploadImage.previewUrl = event.url
+        } else {
             // this.listUrlImage = undefined    
-			// this.singleUploadImage.previewUrl = undefined
-		}
-	}
+            // this.singleUploadImage.previewUrl = undefined
+        }
+    }
     uploadFileWhenEdit(files: FileList) {
-		this.newUploadImage.uploadImageWhenEdit(files, this.urlUploadAndCreate, this.newProductId.toString()).subscribe((result) => {
-			if (result instanceof HttpResponse) {
-				if (result.status == 200) {
-					let srcImageUploaded = (result.body as any).result
-					// this.srcImageUploadSuccess.emit(srcImageUploaded)
+        this.newUploadImage.uploadImageWhenEdit(files, this.urlUploadAndCreate, this.newProductId.toString()).subscribe((result) => {
+            if (result instanceof HttpResponse) {
+                if (result.status == 200) {
+                    let srcImageUploaded = (result.body as any).result
+                    // this.srcImageUploadSuccess.emit(srcImageUploaded)
 
-					// this._sellingProductsServiceProxy.getPathFolderForProduct(this.newProductId).subscribe((pathFolder) => {
-					// 	let pathTenant = pathFolder.pathTenantFolder
-					// 	let pathStore = pathFolder.pathStoreFolder
-					// 	let pathProduct = pathFolder.pathProductFolder
-					// 	srcImageUploaded.forEach((item) => {
-					// 		var src = this.viewImageUrl + '?pathTenant=' + pathTenant + '&pathStore=' + pathStore + '&pathProduct=' + pathProduct + '&fileName=' + item.imageLink
-					// 		this.listUrlImage.push({
-					// 			id: item.id,
-					// 			url: src,
-					// 		})
-					// 	})
-					// })
+                    // this._sellingProductsServiceProxy.getPathFolderForProduct(this.newProductId).subscribe((pathFolder) => {
+                    // 	let pathTenant = pathFolder.pathTenantFolder
+                    // 	let pathStore = pathFolder.pathStoreFolder
+                    // 	let pathProduct = pathFolder.pathProductFolder
+                    // 	srcImageUploaded.forEach((item) => {
+                    // 		var src = this.viewImageUrl + '?pathTenant=' + pathTenant + '&pathStore=' + pathStore + '&pathProduct=' + pathProduct + '&fileName=' + item.imageLink
+                    // 		this.listUrlImage.push({
+                    // 			id: item.id,
+                    // 			url: src,
+                    // 		})
+                    // 	})
+                    // })
 
-					this.notify.success(this.l('UploadImageSuccess'), '', { timeOut: 5000, extendedTimeOut: 1000, positionClass: 'toast-bottom-left' })
-				}
-			}
-		})
-	}
+                    this.notify.success(this.l('UploadImageSuccess'), '', { timeOut: 5000, extendedTimeOut: 1000, positionClass: 'toast-bottom-left' })
+                }
+            }
+        })
+    }
 
 }

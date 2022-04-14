@@ -48,14 +48,45 @@ export class ProductBrandComponent extends AppComponentBase implements OnInit {
     this._activatedRoute.params.subscribe((params: Params) => {
       this.brandId = params['brandId'];
     });
+    this.router.events.subscribe((event) => {
+      this.getProductsOnLoading()
+    });
   }
+
+  getProductsOnLoading() {
+    this.primengTableHelper.showLoadingIndicator();
+    this._productsServiceProxy.getAllByBrandId(
+      this.filterText,
+      this.nameFilter,
+      this.madeInFilter,
+      this.codeFilter,
+      this.maxPriceFilter == null ? this.maxPriceFilterEmpty : this.maxPriceFilter,
+      this.minPriceFilter == null ? this.minPriceFilterEmpty : this.minPriceFilter,
+      this.maxInStockFilter == null ? this.maxInStockFilterEmpty : this.maxInStockFilter,
+      this.minInStockFilter == null ? this.minInStockFilterEmpty : this.minInStockFilter,
+      this.descriptionFilter,
+      this.titleFilter,
+      this.imageNameFilter,
+      this.brandNameFilter,
+      this.categoryNameFilter,
+      this.primengTableHelper.getSorting(this.dataTable),
+      0,
+      10,
+      this.brandId
+    ).subscribe(result => {
+      this.brandId = 0;
+      this.primengTableHelper.totalRecordsCount = result.totalCount;
+      this.primengTableHelper.records = result.items;
+      this.primengTableHelper.hideLoadingIndicator();
+    });
+  }
+
 
   getProducts(event?: LazyLoadEvent) {
     if (this.primengTableHelper.shouldResetPaging(event)) {
       this.paginator.changePage(0);
       return;
     }
-
     this.primengTableHelper.showLoadingIndicator();
     this._productsServiceProxy.getAllByBrandId(
       this.filterText,
@@ -76,6 +107,7 @@ export class ProductBrandComponent extends AppComponentBase implements OnInit {
       this.primengTableHelper.getMaxResultCount(this.paginator, event),
       this.brandId
     ).subscribe(result => {
+      this.brandId = 0;
       this.primengTableHelper.totalRecordsCount = result.totalCount;
       this.primengTableHelper.records = result.items;
       this.primengTableHelper.hideLoadingIndicator();
