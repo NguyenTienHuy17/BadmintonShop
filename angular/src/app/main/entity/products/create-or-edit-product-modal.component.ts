@@ -82,8 +82,10 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
                 result.forEach(e => {
                     this.listUrlImage.push({
                         id: e.id,
-                        url: e.url.replace("G:/HuySourceCode/BadmintonShop/angular/src/", "http://localhost:4200/")
+                        // url: e.url.replace("E:/Đồ án tốt nghiệp/ERP/angular/src", "http://localhost:4200/"),
+                        url: "../../../../assets/common/images/" + e.url
                     })
+                    console.log(this.listUrlImage)
                 })
                 this.modal.show();
             });
