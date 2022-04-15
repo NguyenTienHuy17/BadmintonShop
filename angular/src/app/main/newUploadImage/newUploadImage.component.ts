@@ -9,6 +9,8 @@ import { NewUploadImageService } from './newUploadImage.service'
 import { Observable } from 'rxjs'
 import { ImageProduct } from './imageProduct'
 import { filter } from 'lodash'
+import { ProductImagesServiceProxy } from '@shared/service-proxies/service-proxies'
+import { async } from '@angular/core/testing'
 
 @Component({
 	selector: 'app-newUploadImage',
@@ -38,7 +40,10 @@ export class NewUploadImageComponent extends AppComponentBase implements OnInit,
 
 	maxLength = 10485760 //10MB
 
-	constructor(injector: Injector, public http: HttpClient, private uploadService: NewUploadImageService) {
+	constructor(injector: Injector,
+		public http: HttpClient,
+		private _productImagesServiceProxy: ProductImagesServiceProxy,
+		private uploadService: NewUploadImageService) {
 		super(injector)
 	}
 
@@ -217,24 +222,26 @@ export class NewUploadImageComponent extends AppComponentBase implements OnInit,
 			})
 			.then((result) => {
 				if (result.value) {
-					var index = this.listUrlImage.findIndex((e) => e.id == id)
-					if (index > -1) {
-						this.listUrlImage.splice(index, 1)
-						this.filesToUpload.splice(index, 1)
+					this._productImagesServiceProxy.deleteById(id).subscribe(() => {
+						var index = this.listUrlImage.findIndex((e) => e.id == id)
+						if (index > -1) {
+							this.listUrlImage.splice(index, 1)
+							this.filesToUpload.splice(index, 1)
 
-						if (isMainImage) {
-							this.changeMainImage.emit(this.listUrlImage[0])
+							if (isMainImage) {
+								this.changeMainImage.emit(this.listUrlImage[0])
+							}
 						}
-					}
 
-					// Remove file from FileList dependency modeImage
-					if (this.modeImage == ModeImage.Edit) {
-						this.deleteImageWhenEdit.emit(id)
+						// Remove file from FileList dependency modeImage
+						if (this.modeImage == ModeImage.Edit) {
+							this.deleteImageWhenEdit.emit(id)
 
-						if (isMainImage) {
-							this.changeOrdinalImage.emit(this.listUrlImage[0])
+							if (isMainImage) {
+								this.changeOrdinalImage.emit(this.listUrlImage[0])
+							}
 						}
-					}
+					})
 				}
 			})
 	}

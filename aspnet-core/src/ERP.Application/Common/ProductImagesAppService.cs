@@ -228,5 +228,10 @@ namespace ERP.Common
                 await _productImageRepository.DeleteAsync(id);
             }
         }
+
+        public async Task DeleteById(long Id)
+        {
+            await _productImageRepository.DeleteAsync(Id);
+        }
     }
 }
