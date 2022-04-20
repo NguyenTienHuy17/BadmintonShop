@@ -21,6 +21,8 @@ import { PayPalPurchaseComponent } from './payment/paypal/paypal-purchase.compon
 import { StripePurchaseComponent } from './payment/stripe/stripe-purchase.component';
 import { StripeSubscribeComponent } from './payment/stripe/stripe-subscribe.component';
 import { StripeUpdateSubscriptionComponent } from './payment/stripe/stripe-update-subscription.component';
+import { ProductListComponent } from './product/product-list/product-list.component';
+import { ProductDetailComponent } from './product/product-detail/product-detail.component';
 
 @NgModule({
     imports: [
@@ -29,8 +31,10 @@ import { StripeUpdateSubscriptionComponent } from './payment/stripe/stripe-updat
                 path: '',
                 component: AccountComponent,
                 children: [
-                    { path: '', redirectTo: 'login' },
+                    { path: '', redirectTo: 'product-list' },
                     { path: 'login', component: LoginComponent, canActivate: [AccountRouteGuard] },
+                    { path: 'product-list', component: ProductListComponent, canActivate: [AccountRouteGuard] },
+                    { path: 'product-detail', component: ProductDetailComponent, canActivate: [AccountRouteGuard] },
                     { path: 'register', component: RegisterComponent, canActivate: [AccountRouteGuard] },
                     { path: 'register-tenant', component: RegisterTenantComponent, canActivate: [AccountRouteGuard] },
                     { path: 'register-tenant-result', component: RegisterTenantResultComponent, canActivate: [AccountRouteGuard] },

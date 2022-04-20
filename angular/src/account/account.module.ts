@@ -36,6 +36,11 @@ import { TenantChangeModalComponent } from './shared/tenant-change-modal.compone
 import { TenantChangeComponent } from './shared/tenant-change.component';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { PaymentHelperService } from './payment/payment-helper.service';
+import { ProductListComponent } from './product/product-list/product-list.component';
+import { EditorModule, InputMaskModule, PaginatorModule } from 'primeng/primeng';
+import { TableModule } from 'primeng/table';
+import { ProductDetailComponent } from './product/product-detail/product-detail.component';
+import { NgImageSliderModule } from 'ng-image-slider';
 
 @NgModule({
     imports: [
@@ -50,7 +55,12 @@ import { PaymentHelperService } from './payment/payment-helper.service';
         UtilsModule,
         ServiceProxyModule,
         AccountRoutingModule,
-        OAuthModule.forRoot()
+        OAuthModule.forRoot(),
+        PaginatorModule,
+		EditorModule,
+		InputMaskModule,
+		TableModule,
+		NgImageSliderModule,
     ],
     declarations: [
         AccountComponent,
@@ -74,7 +84,9 @@ import { PaymentHelperService } from './payment/payment-helper.service';
         PayPalPurchaseComponent,
         StripePurchaseComponent,
         StripeSubscribeComponent,
-        StripeUpdateSubscriptionComponent
+        StripeUpdateSubscriptionComponent,
+        ProductListComponent,
+        ProductDetailComponent
     ],
     providers: [
         LoginService,
