@@ -23,7 +23,7 @@ export class AppNavigationService {
             // new AppMenuItem('Tenants', 'Pages.Tenants', 'flaticon-list-3', '/app/admin/tenants'),
             // new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
             new AppMenuItem('Product', 'Pages.User', 'pi pi-list', '', [
-                new AppMenuItem('AllProduct', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/all-product'),
+                // new AppMenuItem('AllProduct', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/all-product'),
                 new AppMenuItem('Brand', 'Pages.User', 'pi pi-arrow-circle-right', '', [
                     new AppMenuItem('Yonex', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-brand/1'),
                     new AppMenuItem('Victor', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-brand/2'),

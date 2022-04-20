@@ -17,7 +17,7 @@ import { NotificationsComponent } from './shared/layout/notifications/notificati
                     {
                         path: '',
                         children: [
-                            { path: 'user-dashboard', component: UserDashboardComponent },
+                            { path: 'main/user-dashboard', component: UserDashboardComponent },
                             { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
                         ]
                     },
@@ -32,7 +32,7 @@ import { NotificationsComponent } from './shared/layout/notifications/notificati
                         data: { preload: true },
                         canLoad: [AppRouteGuard]
                     }, {
-                        path: '**', redirectTo: 'user-dashboard'
+                        path: '**', redirectTo: 'main/user-dashboard'
                     }
                 ]
             }

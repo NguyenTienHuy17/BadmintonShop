@@ -58,7 +58,6 @@ import { ViewBookingModalComponent } from './common/bookings/view-booking-modal.
 import { CreateOrEditBookingModalComponent } from './common/bookings/create-or-edit-booking-modal.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { PaginatorModule } from 'primeng/paginator';
-import { DataViewModule } from 'primeng/dataview';
 import { EditorModule } from 'primeng/editor';
 import { InputMaskModule } from 'primeng/inputmask'; import { FileUploadModule } from 'primeng/fileupload';
 import { TableModule } from 'primeng/table';
@@ -97,6 +96,7 @@ import { AdminOrderDetailModalComponent } from './purchase/admin-order-detail-mo
 import { NgImageSliderModule } from 'ng-image-slider';
 import { UserSignUpComponent } from './user/user-sign-up/user-sign-up.component';
 import { AppModule } from '..';
+import { DataViewModule } from 'primeng/dataview';
 NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
 @NgModule({

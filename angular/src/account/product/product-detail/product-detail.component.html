@@ -2,6 +2,13 @@
   <div class="kt-content">
     <div class="kt-portlet kt-portlet--mobile">
       <div class="kt-portlet__body">
+        <div class="alert alert-danger d-flex justify-content-between" role="alert">
+          <div><a href="/account/product-list"><i class="fa fa-undo"></i>&nbsp;<span>Quay lại</span></a></div>
+          <div>
+            Để sử dụng hết các chức năng của hệ thống, vui lòng &nbsp; <a href="/account/login">Đăng
+              nhập /</a>&nbsp;<a href="/account/user-register">Đăng ký</a>
+          </div>
+        </div>
         <div class="row align-items-center">
           <div class="primeng-datatable-container col-12">
             <div class="content_main">
@@ -47,7 +54,7 @@
                           <button (click)="minus()" class="btn-minus btn-cts" type="button">–</button>
                         </div>
                       </div>
-                      <button type="button" class="btn btn-primary blue ml-5"
+                      <button type="button" class="btn btn-primary blue ml-5" disabled="true"
                         (click)="addToCart()">{{l("AddToCart")}}</button>
                     </div>
                   </div>

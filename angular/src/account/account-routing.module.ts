@@ -23,6 +23,7 @@ import { StripeSubscribeComponent } from './payment/stripe/stripe-subscribe.comp
 import { StripeUpdateSubscriptionComponent } from './payment/stripe/stripe-update-subscription.component';
 import { ProductListComponent } from './product/product-list/product-list.component';
 import { ProductDetailComponent } from './product/product-detail/product-detail.component';
+import { UserRegisterComponent } from './user-register/user-register.component';
 
 @NgModule({
     imports: [
@@ -34,8 +35,9 @@ import { ProductDetailComponent } from './product/product-detail/product-detail.
                     { path: '', redirectTo: 'product-list' },
                     { path: 'login', component: LoginComponent, canActivate: [AccountRouteGuard] },
                     { path: 'product-list', component: ProductListComponent, canActivate: [AccountRouteGuard] },
-                    { path: 'product-detail', component: ProductDetailComponent, canActivate: [AccountRouteGuard] },
+                    { path: 'product-detail/:id/:name', component: ProductDetailComponent, canActivate: [AccountRouteGuard] },
                     { path: 'register', component: RegisterComponent, canActivate: [AccountRouteGuard] },
+                    { path: 'user-register', component: UserRegisterComponent, canActivate: [AccountRouteGuard] },
                     { path: 'register-tenant', component: RegisterTenantComponent, canActivate: [AccountRouteGuard] },
                     { path: 'register-tenant-result', component: RegisterTenantResultComponent, canActivate: [AccountRouteGuard] },
                     { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [AccountRouteGuard] },

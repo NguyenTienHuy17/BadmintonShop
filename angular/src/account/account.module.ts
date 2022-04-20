@@ -41,6 +41,8 @@ import { EditorModule, InputMaskModule, PaginatorModule } from 'primeng/primeng'
 import { TableModule } from 'primeng/table';
 import { ProductDetailComponent } from './product/product-detail/product-detail.component';
 import { NgImageSliderModule } from 'ng-image-slider';
+import { DataViewModule } from 'primeng/dataview';
+import { UserRegisterComponent } from './user-register/user-register.component';
 
 @NgModule({
     imports: [
@@ -57,10 +59,11 @@ import { NgImageSliderModule } from 'ng-image-slider';
         AccountRoutingModule,
         OAuthModule.forRoot(),
         PaginatorModule,
-		EditorModule,
-		InputMaskModule,
-		TableModule,
-		NgImageSliderModule,
+        EditorModule,
+        InputMaskModule,
+        TableModule,
+        NgImageSliderModule,
+        DataViewModule
     ],
     declarations: [
         AccountComponent,
@@ -86,7 +89,8 @@ import { NgImageSliderModule } from 'ng-image-slider';
         StripeSubscribeComponent,
         StripeUpdateSubscriptionComponent,
         ProductListComponent,
-        ProductDetailComponent
+        ProductDetailComponent,
+        UserRegisterComponent
     ],
     providers: [
         LoginService,
