@@ -24,6 +24,7 @@ import { StripeUpdateSubscriptionComponent } from './payment/stripe/stripe-updat
 import { ProductListComponent } from './product/product-list/product-list.component';
 import { ProductDetailComponent } from './product/product-detail/product-detail.component';
 import { UserRegisterComponent } from './user-register/user-register.component';
+import { AboutUsComponent } from './about-us/about-us.component';
 
 @NgModule({
     imports: [
@@ -36,6 +37,7 @@ import { UserRegisterComponent } from './user-register/user-register.component';
                     { path: 'login', component: LoginComponent, canActivate: [AccountRouteGuard] },
                     { path: 'product-list', component: ProductListComponent, canActivate: [AccountRouteGuard] },
                     { path: 'product-detail/:id/:name', component: ProductDetailComponent, canActivate: [AccountRouteGuard] },
+                    { path: 'about-us', component: AboutUsComponent, canActivate: [AccountRouteGuard] },
                     { path: 'register', component: RegisterComponent, canActivate: [AccountRouteGuard] },
                     { path: 'user-register', component: UserRegisterComponent, canActivate: [AccountRouteGuard] },
                     { path: 'register-tenant', component: RegisterTenantComponent, canActivate: [AccountRouteGuard] },

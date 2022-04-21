@@ -43,6 +43,7 @@ import { ProductDetailComponent } from './product/product-detail/product-detail.
 import { NgImageSliderModule } from 'ng-image-slider';
 import { DataViewModule } from 'primeng/dataview';
 import { UserRegisterComponent } from './user-register/user-register.component';
+import { AboutUsComponent } from './about-us/about-us.component';
 
 @NgModule({
     imports: [
@@ -90,7 +91,8 @@ import { UserRegisterComponent } from './user-register/user-register.component';
         StripeUpdateSubscriptionComponent,
         ProductListComponent,
         ProductDetailComponent,
-        UserRegisterComponent
+        UserRegisterComponent,
+        AboutUsComponent
     ],
     providers: [
         LoginService,

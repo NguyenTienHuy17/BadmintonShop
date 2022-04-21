@@ -96,7 +96,8 @@ import { AdminOrderDetailModalComponent } from './purchase/admin-order-detail-mo
 import { NgImageSliderModule } from 'ng-image-slider';
 import { UserSignUpComponent } from './user/user-sign-up/user-sign-up.component';
 import { AppModule } from '..';
-import { DataViewModule } from 'primeng/dataview';
+import { DataViewModule } from 'primeng/dataview';;
+import { AboutUsComponent } from './about-us/about-us.component'
 NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
 @NgModule({
@@ -200,7 +201,8 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 		ReturnProdComponent,
 		AdminOrderDetailModalComponent
 		,
-		UserSignUpComponent
+		UserSignUpComponent,
+		AboutUsComponent
 	],
 	providers: [
 		NewUploadImageService,

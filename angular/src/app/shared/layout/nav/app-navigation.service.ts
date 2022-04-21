@@ -44,6 +44,7 @@ export class AppNavigationService {
             ]),
             new AppMenuItem('Hẹn lịch', 'Pages.User', 'pi pi-calendar-plus', '/app/main/user/booking'),
             new AppMenuItem('Đổi trả hàng', 'Pages.User', 'pi pi-replay', '/app/main/user/returnProd'),
+            new AppMenuItem('AboutUs', 'Pages.User', 'pi pi-info', '/app/main/about-us'),
             new AppMenuItem('Store', '', 'pi pi-list', '', [
 
                 new AppMenuItem('Bookings', 'Pages.Bookings', 'pi pi-arrow-circle-right', '/app/main/common/bookings'),

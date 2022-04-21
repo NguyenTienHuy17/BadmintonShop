@@ -2,62 +2,49 @@
     <div class="kt-content">
         <div class="kt-portlet kt-portlet--mobile">
             <div class="kt-portlet__body">
-                <div class="kt-subheader__main">
-                    <h3 class="kt-subheader__title">
-                        <span>{{l("Products")}}</span>
-                    </h3>
-                </div>
                 <div class="alert alert-danger" role="alert">
                     Để sử dụng hết các chức năng của hệ thống, vui lòng &nbsp; <a href="/account/login">Đăng
                         nhập /</a>&nbsp;<a href="/account/user-register">Đăng ký</a>
                 </div>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+                    <a class="navbar-brand" href="/account/product-list">CÔNG TY TNHH VISUAL SPORTS</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/account/product-list">{{l("Dashboard")}} <span
+                                        class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/account/about-us">{{l("AboutUs")}}</a>
+                            </li>
+                        </ul>
+                        <form class="form-inline my-2 my-lg-0">
+                            <input [(ngModel)]="filterText" name="filterText" autoFocus class="form-control mr-sm-2"
+                                [placeholder]="l('SearchWithThreeDot')" type="search">
+                            <span class="input-group-btn">
+                                <button (click)="getProducts()" class="btn btn-outline-success my-2 my-sm-0"
+                                    type="submit"><i class="flaticon-search-1"></i></button>
+                            </span>
+                            <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+                        </form>
+                    </div>
+                </nav>
                 <form class="kt-form" autocomplete="off">
                     <div>
-                        <div class="row align-items-center">
-                            <div class="col-xl-12">
-                                <div class="form-group m-form__group align-items-center">
-                                    <div class="input-group">
-                                        <input [(ngModel)]="filterText" name="filterText" autoFocus
-                                            class="form-control m-input" [placeholder]="l('SearchWithThreeDot')"
-                                            type="text">
-                                        <span class="input-group-btn">
-                                            <button (click)="getProducts()" class="btn btn-primary" type="submit"><i
-                                                    class="flaticon-search-1"></i></button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" [hidden]="!advancedFiltersAreShown">
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="kt-separator kt-separator--border-dashed"></div>
                             </div>
-
-
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="NameFilter">{{l("Name")}}</label>
-                                    <input type="text" class="form-control" id="NameFilter" name="nameFilter"
-                                        [(ngModel)]="nameFilter">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="MadeInFilter">{{l("MadeIn")}}</label>
-                                    <input type="text" class="form-control" id="MadeInFilter" name="madeInFilter"
-                                        [(ngModel)]="madeInFilter">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="CodeFilter">{{l("Code")}}</label>
-                                    <input type="text" class="form-control" id="CodeFilter" name="codeFilter"
-                                        [(ngModel)]="codeFilter">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="MinPriceFilter">{{l("MinMax")}} {{l("Price")}}</label>
+                                    <label for="MinPriceFilter">{{l("Price")}}</label>
                                     <div class="input-group">
                                         <input type="number" class="form-control" id="MinPriceFilter"
                                             [(ngModel)]="minPriceFilter" placeholder="{{l('MinValue')}}"
@@ -69,62 +56,12 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="MinInStockFilter">{{l("MinMax")}} {{l("InStock")}}</label>
-                                    <div class="input-group">
-                                        <input type="number" class="form-control" id="MinInStockFilter"
-                                            [(ngModel)]="minInStockFilter" placeholder="{{l('MinValue')}}"
-                                            name="minInStockFilter" />
-                                        <input type="number" class="form-control" [(ngModel)]="maxInStockFilter"
-                                            placeholder="{{l('MaxValue')}}" name="maxInStockFilter" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="DescriptionFilter">{{l("Description")}}</label>
-                                    <input type="text" class="form-control" id="DescriptionFilter"
-                                        name="descriptionFilter" [(ngModel)]="descriptionFilter">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="TitleFilter">{{l("Title")}}</label>
-                                    <input type="text" class="form-control" id="TitleFilter" name="titleFilter"
-                                        [(ngModel)]="titleFilter">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="ImageNameFilter">({{l("Image")}}) {{l("Name")}}</label>
-                                    <input type="text" class="form-control" id="ImageNameFilter" name="imageNameFilter"
-                                        [(ngModel)]="imageNameFilter">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="BrandNameFilter">({{l("Brand")}}) {{l("Name")}}</label>
-                                    <input type="text" class="form-control" id="BrandNameFilter" name="brandNameFilter"
-                                        [(ngModel)]="brandNameFilter">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="CategoryNameFilter">({{l("Category")}}) {{l("Name")}}</label>
+                                    <label for="CategoryNameFilter">{{l("Category")}}</label>
                                     <input type="text" class="form-control" id="CategoryNameFilter"
                                         name="categoryNameFilter" [(ngModel)]="categoryNameFilter">
                                 </div>
                             </div>
 
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-sm-12">
-                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
-                                        class="fa fa-angle-down"></i> {{l("ShowAdvancedFilters")}}</span>
-                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
-                                        class="fa fa-angle-up"></i> {{l("HideAdvancedFilters")}}</span>
-                            </div>
                         </div>
                     </div>
                 </form>
