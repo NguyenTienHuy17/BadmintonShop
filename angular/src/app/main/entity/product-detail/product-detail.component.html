@@ -24,7 +24,7 @@
                       <div class="d-flex align-items-center">
                         <span class="mr-2" *ngIf="product.productSize.length>0" for="Product_Size">{{l("Size")}}:
                         </span>
-                        <select style="width: 20%;" *ngIf="product.productSize.length>0" id="Size" name="Size"
+                        <select style="width: 20%;" *ngIf="product.productSize.length > 0" id="Size" name="Size"
                           [(ngModel)]="product.product.size" class="form-control">
                           <option *ngFor="let size of product.productSize" [value]="size">{{size}}</option>
                         </select>

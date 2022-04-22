@@ -25,6 +25,8 @@ namespace ERP.Types
             Field(x => x.UserName);
             Field(x => x.EmailAddress);
             Field(x => x.PhoneNumber);
+            Field(x => x.DateOfBirth);
+            Field(x => x.Address);
             Field(x => x.IsActive);
             Field(x => x.IsEmailConfirmed);
             Field(x => x.CreationTime);

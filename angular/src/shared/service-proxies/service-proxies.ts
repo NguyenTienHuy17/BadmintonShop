@@ -29525,6 +29525,8 @@ export class UserListDto implements IUserListDto {
     userName!: string | undefined;
     emailAddress!: string | undefined;
     phoneNumber!: string | undefined;
+    dateOfBirth!: moment.Moment | undefined;
+    address!: string | undefined;
     profilePictureId!: string | undefined;
     isEmailConfirmed!: boolean | undefined;
     roles!: UserListRoleDto[] | undefined;
@@ -29548,6 +29550,8 @@ export class UserListDto implements IUserListDto {
             this.userName = data["userName"];
             this.emailAddress = data["emailAddress"];
             this.phoneNumber = data["phoneNumber"];
+            this.dateOfBirth = data["dateOfBirth"] ? moment(data["dateOfBirth"].toString()) : <any>undefined;
+            this.address = data["address"];
             this.profilePictureId = data["profilePictureId"];
             this.isEmailConfirmed = data["isEmailConfirmed"];
             if (data["roles"] && data["roles"].constructor === Array) {
@@ -29575,6 +29579,8 @@ export class UserListDto implements IUserListDto {
         data["userName"] = this.userName;
         data["emailAddress"] = this.emailAddress;
         data["phoneNumber"] = this.phoneNumber;
+        data["dateOfBirth"] = this.dateOfBirth ? this.dateOfBirth.toISOString() : <any>undefined;
+        data["address"] = this.address;
         data["profilePictureId"] = this.profilePictureId;
         data["isEmailConfirmed"] = this.isEmailConfirmed;
         if (this.roles && this.roles.constructor === Array) {
@@ -29595,6 +29601,8 @@ export interface IUserListDto {
     userName: string | undefined;
     emailAddress: string | undefined;
     phoneNumber: string | undefined;
+    dateOfBirth: moment.Moment | undefined;
+    address: string | undefined;
     profilePictureId: string | undefined;
     isEmailConfirmed: boolean | undefined;
     roles: UserListRoleDto[] | undefined;
@@ -29731,6 +29739,8 @@ export class UserEditDto implements IUserEditDto {
     shouldChangePasswordOnNextLogin!: boolean | undefined;
     isTwoFactorEnabled!: boolean | undefined;
     isLockoutEnabled!: boolean | undefined;
+    dateOfBirth!: moment.Moment | undefined;
+    address!: string | undefined;
 
     constructor(data?: IUserEditDto) {
         if (data) {
@@ -29754,6 +29764,8 @@ export class UserEditDto implements IUserEditDto {
             this.shouldChangePasswordOnNextLogin = data["shouldChangePasswordOnNextLogin"];
             this.isTwoFactorEnabled = data["isTwoFactorEnabled"];
             this.isLockoutEnabled = data["isLockoutEnabled"];
+            this.dateOfBirth = data["dateOfBirth"] ? moment(data["dateOfBirth"].toString()) : <any>undefined;
+            this.address = data["address"];
         }
     }
 
@@ -29777,6 +29789,8 @@ export class UserEditDto implements IUserEditDto {
         data["shouldChangePasswordOnNextLogin"] = this.shouldChangePasswordOnNextLogin;
         data["isTwoFactorEnabled"] = this.isTwoFactorEnabled;
         data["isLockoutEnabled"] = this.isLockoutEnabled;
+        data["dateOfBirth"] = this.dateOfBirth ? this.dateOfBirth.toISOString() : <any>undefined;
+        data["address"] = this.address;
         return data; 
     }
 }
@@ -29793,6 +29807,8 @@ export interface IUserEditDto {
     shouldChangePasswordOnNextLogin: boolean | undefined;
     isTwoFactorEnabled: boolean | undefined;
     isLockoutEnabled: boolean | undefined;
+    dateOfBirth: moment.Moment | undefined;
+    address: string | undefined;
 }
 
 export class UserRoleDto implements IUserRoleDto {

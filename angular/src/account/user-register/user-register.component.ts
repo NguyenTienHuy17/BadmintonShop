@@ -15,7 +15,7 @@ export class UserRegisterComponent extends AppComponentBase implements OnInit {
 
   user: UserEditDto = new UserEditDto();
   sendActivationEmail = true;
-  setRandomPassword = true;
+  setRandomPassword = false;
   passwordComplexityInfo = '';
   profilePicture: string;
   roles: UserRoleDto[];

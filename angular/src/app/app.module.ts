@@ -71,6 +71,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 import { CoreModule } from '@metronic/app/core/core.module';
 import { UserDashboardComponent } from './main/user-dashboard/user-dashboard.component';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 @NgModule({
     declarations: [
         AppComponent,
@@ -143,7 +144,8 @@ import { UserDashboardComponent } from './main/user-dashboard/user-dashboard.com
         CoreModule,
         NgxChartsModule,
         TextMaskModule,
-        ImageCropperModule
+        ImageCropperModule,
+        NgxSliderModule
     ],
     providers: [
         ImpersonationService,

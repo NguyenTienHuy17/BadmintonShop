@@ -136,7 +136,7 @@ namespace ERP.Entity
         {
             var product = await _productRepository.GetAsync(id);
 
-            var listProduct = _productRepository.GetAll().Where(x => x.Name.Equals(name) && x.InStock > 0);
+            var listProduct = _productRepository.GetAll().Where(x => x.Name.Equals(name));
 
             var listProductImg = _productImageRepository.GetAll().Where(x => x.ProductId == id);
 

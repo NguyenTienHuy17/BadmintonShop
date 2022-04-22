@@ -36,10 +36,37 @@
             <div class="form-group">
               <label for="UserName">{{"UserName" | localize}} *</label>
               <input id="UserName" #userNameInput="ngModel" type="text" [disabled]="!canChangeUserName" name="UserName"
-                class="form-control" [(ngModel)]="user.userName" required maxlength="32">
+                class="form-control" [(ngModel)]="user.userName" required maxlength="32" autocomplete="off">
               <span class="help-block" *ngIf="!canChangeUserName">{{"CanNotChangeAdminUserName" | localize}}</span>
               <validation-messages [formCtrl]="userNameInput"></validation-messages>
             </div>
+
+            <div class="form-group">
+              <label for="DateOfBirth">{{l("DateOfBirth")}}</label>
+              <input required class="form-control m-input" #DateOfBirth type="datetime" bsDatepicker
+                [(ngModel)]="user.dateOfBirth" id="DateOfBirth" name="DateOfBirth">
+            </div>
+
+            <div class="form-group">
+              <label for="Address">{{"Address" | localize}}</label>
+              <input id="Address" #AddressInput="ngModel" type="text" name="Address" class="form-control"
+                [(ngModel)]="user.address" maxlength="1024" autocomplete="off">
+            </div>
+
+            <!-- <div class="col-md-3">
+              <div class="form-group">
+                  <label for="MinTimeFilter">{{l("TimeRange")}}</label>
+                  <div class="input-group">
+                      <input class="form-control m-input" id="MinTimeFilter" name="MinTimeFilter"
+                          type="datetime" bsDatepicker placeholder="{{l('MinValue')}}"
+                          [(ngModel)]="minTimeFilter">
+                      <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                      <input class="form-control m-input" id="MaxTimeFilter" name="MaxTimeFilter"
+                          type="datetime" bsDatepicker placeholder="{{l('MaxValue')}}"
+                          [(ngModel)]="maxTimeFilter">
+                  </div>
+              </div>
+          </div> -->
 
             <!-- <div class="kt-checkbox-list">
               <label for="EditUser_SetRandomPassword" class="kt-checkbox">

@@ -2,6 +2,7 @@
 <localizationDictionary culture="vi">
   <texts>
 	<text name="ReturnProd">Đổi trả</text>
+	<text name="DateOfBirth">Ngày sinh</text>
 	<text name="ERP.Purchase.ReturnProd">Đổi trả</text>
 	<text name="Reason">Lý do</text>
 	<text name="Condition">Tình trạng</text>

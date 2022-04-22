@@ -21,6 +21,9 @@
                 <a class="nav-link" href="/account/product-list">{{l("Dashboard")}} <span
                     class="sr-only">(current)</span></a>
               </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="/account/about-us">{{l("AboutUs")}}</a>
+              </li>
             </ul>
           </div>
         </nav>
@@ -43,19 +46,19 @@
                       <div class="mb-3 mt-3">{{l("Price")}}: {{product.product.price.toLocaleString('it-IT', {style :
                         'currency', currency : 'VND'})}}</div>
                       <div class="mb-3">{{l("Brand")}}: {{product.brandName}}</div>
-                      <div class="d-flex align-items-center">
-                        <span class="mr-2" *ngIf="product.productSize.length>0" for="Product_Size">{{l("Size")}}:
+                      <div class="d-flex align-items-center" *ngIf="checkProductColor">
+                        <span class="mr-2" for="Product_Size">{{l("Size")}}:
                         </span>
-                        <select style="width: 20%;" *ngIf="product.productSize.length>0" id="Size" name="Size"
-                          [(ngModel)]="product.product.size" class="form-control">
+                        <select style="width: 20%;" id="Size" name="Size" [(ngModel)]="product.product.size"
+                          class="form-control">
                           <option *ngFor="let size of product.productSize" [value]="size">{{size}}</option>
                         </select>
                       </div>
-                      <div class="d-flex align-items-center">
-                        <span class="mr-2" *ngIf="product.productColor.length > 0" for="Product_Color">{{l("Color")}}:
+                      <div class="d-flex align-items-center" *ngIf="checkProductSize">
+                        <span class="mr-2" for="Product_Color">{{l("Color")}}:
                         </span>
-                        <select style="width: 20%;" *ngIf="product.productColor.length > 0" id="Color" name="Color"
-                          [(ngModel)]="product.product.color" class="form-control">
+                        <select style="width: 20%;" id="Color" name="Color" [(ngModel)]="product.product.color"
+                          class="form-control">
                           <option *ngFor="let color of product.productColor" [value]="color">{{color}}</option>
                         </select>
                       </div>

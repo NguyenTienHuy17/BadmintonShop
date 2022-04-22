@@ -1,8 +1,9 @@
+import { Options } from '@angular-slider/ngx-slider';
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { ProductDto, ProductsServiceProxy } from '@shared/service-proxies/service-proxies';
+import { Brand, BrandsServiceProxy, CategoriesServiceProxy, Category, ProductDto, ProductsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { LazyLoadEvent, Paginator } from 'primeng/primeng';
 import { Table } from 'primeng/table';
 
@@ -23,10 +24,10 @@ export class ProductListComponent extends AppComponentBase implements OnInit {
   nameFilter = '';
   madeInFilter = '';
   codeFilter = '';
-  maxPriceFilter: number;
-  maxPriceFilterEmpty: number;
-  minPriceFilter: number;
-  minPriceFilterEmpty: number;
+  maxPriceFilter: number = 8000000;
+  maxPriceFilterEmpty: number = 10000000;
+  minPriceFilter: number = 100000;
+  minPriceFilterEmpty: number = 0;
   maxInStockFilter: number;
   maxInStockFilterEmpty: number;
   minInStockFilter: number;
@@ -36,15 +37,30 @@ export class ProductListComponent extends AppComponentBase implements OnInit {
   imageNameFilter = '';
   brandNameFilter = '';
   categoryNameFilter = '';
+  options: Options = {
+    floor: 0,
+    ceil: 10000000
+  };
+  listCategory: Category[] = [];
+  listBrand: Brand[] = [];
+  bannerUrl: '../../../../assets/common/images/bannerLeft.jpg';
   constructor(
     injector: Injector,
     private _productsServiceProxy: ProductsServiceProxy,
-    private router: Router
+    private router: Router,
+    private _brandsServiceProxy: BrandsServiceProxy,
+    private _categoriesServiceProxy: CategoriesServiceProxy,
   ) {
     super(injector);
   }
 
   ngOnInit() {
+    this._brandsServiceProxy.getAllForProduct().subscribe(result => {
+      this.listBrand = result
+    });
+    this._categoriesServiceProxy.getAllForProduct().subscribe(result => {
+      this.listCategory = result
+    });
   }
 
   getProducts(event?: LazyLoadEvent) {

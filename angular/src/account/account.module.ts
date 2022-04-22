@@ -44,6 +44,9 @@ import { NgImageSliderModule } from 'ng-image-slider';
 import { DataViewModule } from 'primeng/dataview';
 import { UserRegisterComponent } from './user-register/user-register.component';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { BsDatepickerConfig, BsDatepickerModule, BsDaterangepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { NgxBootstrapDatePickerConfigService } from 'assets/ngx-bootstrap/ngx-bootstrap-datepicker-config.service';
 
 @NgModule({
     imports: [
@@ -64,7 +67,9 @@ import { AboutUsComponent } from './about-us/about-us.component';
         InputMaskModule,
         TableModule,
         NgImageSliderModule,
-        DataViewModule
+        DataViewModule,
+        NgxSliderModule,
+        BsDatepickerModule.forRoot(),
     ],
     declarations: [
         AccountComponent,
@@ -98,7 +103,10 @@ import { AboutUsComponent } from './about-us/about-us.component';
         LoginService,
         TenantRegistrationHelperService,
         PaymentHelperService,
-        AccountRouteGuard
+        AccountRouteGuard,
+        { provide: BsDatepickerConfig, useFactory: NgxBootstrapDatePickerConfigService.getDatepickerConfig },
+        { provide: BsDaterangepickerConfig, useFactory: NgxBootstrapDatePickerConfigService.getDaterangepickerConfig },
+        { provide: BsLocaleService, useFactory: NgxBootstrapDatePickerConfigService.getDatepickerLocale }
     ]
 })
 export class AccountModule {

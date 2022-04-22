@@ -1,3 +1,4 @@
+import { Options } from '@angular-slider/ngx-slider';
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
@@ -21,10 +22,10 @@ export class ProductCategoryComponent extends AppComponentBase implements OnInit
   nameFilter = '';
   madeInFilter = '';
   codeFilter = '';
-  maxPriceFilter: number;
-  maxPriceFilterEmpty: number;
-  minPriceFilter: number;
-  minPriceFilterEmpty: number;
+  maxPriceFilter: number = 8000000;
+  maxPriceFilterEmpty: number = 10000000;
+  minPriceFilter: number = 100000;
+  minPriceFilterEmpty: number = 0;
   maxInStockFilter: number;
   maxInStockFilterEmpty: number;
   minInStockFilter: number;
@@ -35,6 +36,11 @@ export class ProductCategoryComponent extends AppComponentBase implements OnInit
   brandNameFilter = '';
   categoryNameFilter = '';
   categoryId: number;
+  options: Options = {
+    floor: 0,
+    ceil: 10000000
+  };
+  bannerUrl: '../../../../assets/common/images/bannerLeft.jpg';
   constructor(
     injector: Injector,
     private _productsServiceProxy: ProductsServiceProxy,
