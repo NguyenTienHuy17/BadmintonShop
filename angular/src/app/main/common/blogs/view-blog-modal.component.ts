@@ -1,4 +1,4 @@
-﻿import {AppConsts} from "@shared/AppConsts";
+﻿import { AppConsts } from "@shared/AppConsts";
 import { Component, ViewChild, Injector, Output, EventEmitter } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 import { GetBlogForViewDto, BlogDto } from '@shared/service-proxies/service-proxies';
@@ -27,13 +27,12 @@ export class ViewBlogModalComponent extends AppComponentBase {
         this.item.blog = new BlogDto();
     }
 
-    show(item: GetBlogForViewDto): void {
-        this.item = item;
+    show(item: BlogDto): void {
+        this.item.blog = item;
         this.active = true;
         this.modal.show();
     }
-    
-    
+
 
     close(): void {
         this.active = false;

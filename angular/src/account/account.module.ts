@@ -47,6 +47,8 @@ import { AboutUsComponent } from './about-us/about-us.component';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { BsDatepickerConfig, BsDatepickerModule, BsDaterangepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { NgxBootstrapDatePickerConfigService } from 'assets/ngx-bootstrap/ngx-bootstrap-datepicker-config.service';
+import { ViewBlogModalComponent } from './product/view-blog-modal/view-blog-modal.component';
+import { TabsModule } from 'ngx-bootstrap';
 
 @NgModule({
     imports: [
@@ -70,6 +72,7 @@ import { NgxBootstrapDatePickerConfigService } from 'assets/ngx-bootstrap/ngx-bo
         DataViewModule,
         NgxSliderModule,
         BsDatepickerModule.forRoot(),
+        TabsModule
     ],
     declarations: [
         AccountComponent,
@@ -97,7 +100,8 @@ import { NgxBootstrapDatePickerConfigService } from 'assets/ngx-bootstrap/ngx-bo
         ProductListComponent,
         ProductDetailComponent,
         UserRegisterComponent,
-        AboutUsComponent
+        AboutUsComponent,
+        ViewBlogModalComponent
     ],
     providers: [
         LoginService,

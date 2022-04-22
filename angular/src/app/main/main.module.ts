@@ -178,7 +178,6 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 		CreateOrEditDiscountModalComponent,
 		BlogsComponent,
 
-		ViewBlogModalComponent,
 		CreateOrEditBlogModalComponent,
 		BookingsComponent,
 

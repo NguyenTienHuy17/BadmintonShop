@@ -4,16 +4,19 @@ import { Router } from "@angular/router";
 import { appModuleAnimation } from "@shared/animations/routerTransition";
 import { AppComponentBase } from "@shared/common/app-component-base";
 import {
+    BlogsServiceProxy,
     Brand,
     BrandsServiceProxy,
     CategoriesServiceProxy,
     Category,
+    GetBlogForViewDto,
     ProductDto,
     ProductsServiceProxy,
 } from "@shared/service-proxies/service-proxies";
 import { LazyLoadEvent } from "primeng/api";
 import { Paginator } from "primeng/primeng";
 import { Table } from "primeng/table";
+import { ViewBlogModalComponent } from "../common/blogs/view-blog-modal.component";
 
 @Component({
     selector: "app-user-dashboard",
@@ -24,6 +27,7 @@ import { Table } from "primeng/table";
 export class UserDashboardComponent extends AppComponentBase implements OnInit {
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
+    @ViewChild('viewBlogModalComponent', { static: true }) viewBlogModal: ViewBlogModalComponent;
     defaultRouter = '../../../../assets/common/images/';
     advancedFiltersAreShown = false;
     filterText = '';
@@ -49,6 +53,7 @@ export class UserDashboardComponent extends AppComponentBase implements OnInit {
     };
     listCategory: Category[] = [];
     listBrand: Brand[] = [];
+    listBlog: GetBlogForViewDto[] = [];
     bannerLeftUrl = '../../../../assets/common/images/bannerLeft.jpg';
     bannerTopUrl = '../../../../assets/common/images/bannerTop.jpg';
     constructor(
@@ -57,6 +62,7 @@ export class UserDashboardComponent extends AppComponentBase implements OnInit {
         private router: Router,
         private _brandsServiceProxy: BrandsServiceProxy,
         private _categoriesServiceProxy: CategoriesServiceProxy,
+        private _blogsServiceProxy: BlogsServiceProxy,
     ) {
         super(injector);
     }
@@ -68,6 +74,10 @@ export class UserDashboardComponent extends AppComponentBase implements OnInit {
         this._categoriesServiceProxy.getAllForProduct().subscribe(result => {
             this.listCategory = result
         });
+        this._blogsServiceProxy.getAllBlogForView().subscribe(result => {
+            this.listBlog = result
+            console.log(result)
+        })
     }
 
     getProducts(event?: LazyLoadEvent) {

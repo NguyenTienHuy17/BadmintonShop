@@ -1,7 +1,7 @@
-﻿import {AppConsts} from '@shared/AppConsts';
+﻿import { AppConsts } from '@shared/AppConsts';
 import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
-import { ActivatedRoute , Router} from '@angular/router';
-import { BlogsServiceProxy, BlogDto  } from '@shared/service-proxies/service-proxies';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BlogsServiceProxy, BlogDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from '@abp/notify/notify.service';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { TokenAuthServiceProxy } from '@shared/service-proxies/service-proxies';
@@ -23,11 +23,11 @@ import * as moment from 'moment';
     animations: [appModuleAnimation()]
 })
 export class BlogsComponent extends AppComponentBase {
-    
-    
+
+
     @ViewChild('createOrEditBlogModal', { static: true }) createOrEditBlogModal: CreateOrEditBlogModalComponent;
-    @ViewChild('viewBlogModalComponent', { static: true }) viewBlogModal: ViewBlogModalComponent;   
-    
+    @ViewChild('viewBlogModalComponent', { static: true }) viewBlogModal: ViewBlogModalComponent;
+
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
 
@@ -35,11 +35,6 @@ export class BlogsComponent extends AppComponentBase {
     filterText = '';
     titleFilter = '';
     contentFilter = '';
-
-
-
-
-
 
     constructor(
         injector: Injector,
@@ -79,7 +74,7 @@ export class BlogsComponent extends AppComponentBase {
     }
 
     createBlog(): void {
-        this.createOrEditBlogModal.show();        
+        this.createOrEditBlogModal.show();
     }
 
 
@@ -101,17 +96,17 @@ export class BlogsComponent extends AppComponentBase {
 
     exportToExcel(): void {
         this._blogsServiceProxy.getBlogsToExcel(
-        this.filterText,
+            this.filterText,
             this.titleFilter,
             this.contentFilter,
         )
-        .subscribe(result => {
-            this._fileDownloadService.downloadTempFile(result);
-         });
+            .subscribe(result => {
+                this._fileDownloadService.downloadTempFile(result);
+            });
     }
-    
-    
-    
-    
-    
+
+
+
+
+
 }

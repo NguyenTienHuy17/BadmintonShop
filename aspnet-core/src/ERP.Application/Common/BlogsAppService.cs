@@ -18,7 +18,6 @@ using ERP.Storage;
 
 namespace ERP.Common
 {
-    [AbpAuthorize(AppPermissions.Pages_Blogs)]
     public class BlogsAppService : ERPAppServiceBase, IBlogsAppService
     {
         private readonly IRepository<Blog, long> _blogRepository;
@@ -163,5 +162,44 @@ namespace ERP.Common
             return _blogsExcelExporter.ExportToFile(blogListDtos);
         }
 
+        public async Task<List<GetBlogForViewDto>> GetAllBlogForView()
+        {
+
+            var filteredBlogs = _blogRepository.GetAll();
+
+            var pagedAndFilteredBlogs = filteredBlogs
+                .OrderBy(x => x.CreationTime)
+                .Take(5);
+
+            var blogs = from o in pagedAndFilteredBlogs
+                        select new
+                        {
+                            o.title,
+                            o.content,
+                            Id = o.Id
+                        };
+
+            var dbList = await blogs.ToListAsync();
+            var results = new List<GetBlogForViewDto>();
+
+            foreach (var o in dbList)
+            {
+                var res = new GetBlogForViewDto()
+                {
+                    Blog = new BlogDto
+                    {
+
+                        title = o.title,
+                        content = o.content,
+                        Id = o.Id,
+                    }
+                };
+
+                results.Add(res);
+            }
+
+            return results;
+
+        }
     }
 }
