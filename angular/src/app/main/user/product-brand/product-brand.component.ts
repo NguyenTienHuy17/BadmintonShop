@@ -40,7 +40,7 @@ export class ProductBrandComponent extends AppComponentBase implements OnInit {
     floor: 0,
     ceil: 10000000
   };
-  bannerUrl: '../../../../assets/common/images/bannerLeft.jpg';
+  bannerUrl = '../../../../assets/common/images/bannerLeft.jpg';
   constructor(
     injector: Injector,
     private _productsServiceProxy: ProductsServiceProxy,

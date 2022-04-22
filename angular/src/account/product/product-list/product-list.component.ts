@@ -43,7 +43,10 @@ export class ProductListComponent extends AppComponentBase implements OnInit {
   };
   listCategory: Category[] = [];
   listBrand: Brand[] = [];
-  bannerUrl: '../../../../assets/common/images/bannerLeft.jpg';
+  bannerLeftUrl = '../../../../assets/common/images/bannerLeft.jpg';
+  bannerTopUrl = '../../../../assets/common/images/bannerTop.jpg';
+  startIndex: number;
+
   constructor(
     injector: Injector,
     private _productsServiceProxy: ProductsServiceProxy,
@@ -91,7 +94,6 @@ export class ProductListComponent extends AppComponentBase implements OnInit {
     ).subscribe(result => {
       this.primengTableHelper.totalRecordsCount = result.totalCount;
       this.primengTableHelper.records = result.items;
-      console.log(result.items)
       this.primengTableHelper.hideLoadingIndicator();
     });
   }

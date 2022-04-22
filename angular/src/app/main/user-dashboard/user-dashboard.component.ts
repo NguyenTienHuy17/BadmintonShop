@@ -49,7 +49,8 @@ export class UserDashboardComponent extends AppComponentBase implements OnInit {
     };
     listCategory: Category[] = [];
     listBrand: Brand[] = [];
-    bannerUrl: '../../../../assets/common/images/bannerLeft.jpg';
+    bannerLeftUrl = '../../../../assets/common/images/bannerLeft.jpg';
+    bannerTopUrl = '../../../../assets/common/images/bannerTop.jpg';
     constructor(
         injector: Injector,
         private _productsServiceProxy: ProductsServiceProxy,
