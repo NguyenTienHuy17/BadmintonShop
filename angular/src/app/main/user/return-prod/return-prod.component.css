@@ -1,0 +1,43 @@
+.article-wraper .article-main .title-head {
+    font-weight: 500;
+    font-size: 22px;
+    padding: 0px 0 10px;
+    margin-bottom: 0;
+}
+
+.title-head {
+    font-size: 1.42857em;
+    font-weight: 700;
+    color: #333;
+    text-decoration: none;
+}
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    color: #323c3f;
+    letter-spacing: .01em;
+    font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height: 1.4;
+    margin-top: 20px;
+}
+
+p {
+    margin: 0 0 15px 0;
+    color: #333;
+}
