@@ -55,10 +55,16 @@ export class ProductDetailComponent extends AppComponentBase implements OnInit {
     this._productsServiceProxy.getProductForView(this.productId, this.productName)
       .subscribe(result => {
         this.product = result;
-        if (result.productSize[0] == null) {
-          this.checkProductSize = true
-        }
-        this.checkProductColor = !this.checkProductSize
+        result.productColor.forEach(x => {
+          if (x == null || x == "") {
+            this.checkProductColor = true;
+          }
+        });
+        result.productSize.forEach(x => {
+          if (x == null || x == "") {
+            this.checkProductSize = true;
+          }
+        });
         result.productImageUrl.forEach(i => {
           this.slideImage = {
             image: '',

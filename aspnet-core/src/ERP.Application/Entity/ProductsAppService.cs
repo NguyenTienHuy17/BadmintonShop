@@ -472,18 +472,22 @@ namespace ERP.Entity
 
         public async Task<long> GetProductId(string name, string size, string color)
         {
-            if (size == null)
+            var listProductId = _productRepository.GetAll();
+            if (size.ToString() == "null" || size.ToString() == "")
             {
-                size = "";
+                listProductId = listProductId.Where(x => x.Name.Equals(name) && x.Color.Equals(color));
             }
-            if (color == null)
+            else if (color.ToString() == "null" || color.ToString() == "")
             {
-                color = "";
+                listProductId = listProductId.Where(x => x.Name.Equals(name) && x.Size.Equals(size));
             }
-            var listProduct = _productRepository.GetAll().Where(x => x.Name.Equals(name) && x.Size.Equals(size) && x.Color.Equals(color));
+            else
+            {
+                listProductId = listProductId.Where(x => x.Name.Equals(name) && x.Size.Equals(size) && x.Color.Equals(color));
+            }
 
             long id = 0;
-            foreach(var prod in listProduct)
+            foreach(var prod in listProductId)
             {
                 id = prod.Id;
             }
