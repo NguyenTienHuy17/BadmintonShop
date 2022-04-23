@@ -28,7 +28,7 @@
                   </div>
                 </div>
                 <div class="product-list-action">
-                  <span>{{l('ToPrice')}}: </span>
+                  <span>{{l('ToPrice')}}: &nbsp; </span>
                   <span class="product-price">{{(cart.productPrice * cart.cart.quantity).toLocaleString('it-IT', {style
                     :'currency', currency : 'VND'})}}</span>
                 </div>
@@ -43,12 +43,14 @@
         <div class="col-3 text-center">
           <div class="mt-3 mb-3">
             <span>{{l('TotalPrice')}}: </span>
-            <span class="product-price">{{totalPrice.toLocaleString('it-IT', {style:'currency', currency : 'VND'})}}</span><br>
+            <span class="product-price">{{totalPrice.toLocaleString('it-IT', {style:'currency', currency :
+              'VND'})}}</span><br>
           </div>
-          <button (click)="orrderDetailModal.show()" class="purchase-button d-flex align-items-center" style="min-height: 45px;"><i class="pi pi-shopping-cart"></i>{{l('Purchase')}}</button>
+          <button (click)="orrderDetailModal.show()" class="purchase-button d-flex align-items-center"
+            style="min-height: 45px;"><i class="pi pi-shopping-cart"></i>{{l('Purchase')}}</button>
         </div>
       </div>
     </div>
   </div>
 </div>
-<orrder-detail-modal #orrderDetailModal  [listCart]="listCart" [totalPrice]="totalPrice"></orrder-detail-modal>
+<orrder-detail-modal #orrderDetailModal [listCart]="listCart" [totalPrice]="totalPrice"></orrder-detail-modal>

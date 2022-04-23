@@ -30,7 +30,6 @@ export class AdminOrderDetailModalComponent extends AppComponentBase implements 
     this._orderItemsServiceProxy.getOrderItemByOrderId(orderId).subscribe(result => {
       this.listOrderItem = result;
     });
-    console.log(this.item)
   }
 
   close(): void {

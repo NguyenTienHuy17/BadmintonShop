@@ -12,11 +12,11 @@ import { ModalDirective } from 'ngx-bootstrap';
 })
 export class OrrderDetailModalComponent extends AppComponentBase implements OnInit {
   @ViewChild('purchaseModal', { static: true }) modal: ModalDirective;
-  @Input() listCart: GetCartForViewDto[];  
-  @Input() totalPrice: number;  
+  @Input() listCart: GetCartForViewDto[];
+  @Input() totalPrice: number;
   active = false;
   saving = false;
-  defaultRouter ='../../../assets/common/images/';
+  defaultRouter = '../../../assets/common/images/';
   order: CreateOrEditOrderDto = new CreateOrEditOrderDto();
   orderItem: CreateOrEditOrderItemDto = new CreateOrEditOrderItemDto();
   discountCode: string;
@@ -29,7 +29,7 @@ export class OrrderDetailModalComponent extends AppComponentBase implements OnIn
     private _orderItemsServiceProxy: OrderItemsServiceProxy,
     private _cartsServiceProxy: CartsServiceProxy,
     private router: Router
-    ) { 
+  ) {
     super(injector);
     this.actualPrice = 0;
     this.orderId = 0;
@@ -37,7 +37,7 @@ export class OrrderDetailModalComponent extends AppComponentBase implements OnIn
 
   ngOnInit() {
   }
-  show(){
+  show() {
     this.modal.show();
     this.actualPrice = this.totalPrice
   }
@@ -47,48 +47,48 @@ export class OrrderDetailModalComponent extends AppComponentBase implements OnIn
     this.modal.hide();
   }
 
-  save(){
+  save() {
     var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      var result = '';
-      for ( var i = 0; i < 5; i++ ) {
-          result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
-      }
+    var result = '';
+    for (var i = 0; i < 5; i++) {
+      result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+    }
     this.order.orderCode = result;
-    this.order.totalPrice = this.totalPrice.toString();
+    this.order.totalPrice = this.totalPrice;
     this.order.actualPrice = this.actualPrice;
     this.order.discountAmount = this.totalPrice - this.actualPrice;
     this.message.confirm(
       '',
       this.l('AreYouSureToPurchase'),
       async (isConfirmed) => {
-          if (isConfirmed) {
-            this.orderId = await this._ordersServiceProxy.createAndGetId(this.order).toPromise()
-            this.listCart.forEach(x => {
-              this.orderItem.orderId = this.orderId;
-              this.orderItem.productId = x.cart.productId;
-              this.orderItem.quantity = x.cart.quantity;
-              this._cartsServiceProxy.delete(x.cart.id).toPromise();
-              this._orderItemsServiceProxy.createOrEdit(this.orderItem).toPromise();
-              this.notify.success(this.l('SuccessfullyPurchased'));
-              this.close();
-              this.router.navigate(['/app/main/user-dashboard']);  // define your component where you want to go
-            });
-          }
+        if (isConfirmed) {
+          this.orderId = await this._ordersServiceProxy.createAndGetId(this.order).toPromise()
+          this.listCart.forEach(x => {
+            this.orderItem.orderId = this.orderId;
+            this.orderItem.productId = x.cart.productId;
+            this.orderItem.quantity = x.cart.quantity;
+            this._cartsServiceProxy.delete(x.cart.id).toPromise();
+            this._orderItemsServiceProxy.createOrEdit(this.orderItem).toPromise();
+            this.notify.success(this.l('SuccessfullyPurchased'));
+            this.close();
+            this.router.navigate(['/app/main/user-dashboard']);  // define your component where you want to go
+          });
         }
+      }
     );
   }
 
-  getDiscountId(){
-    if(this.discountCode!=""){
-      this._discountsServiceProxy.getDiscount(this.discountCode).subscribe(result =>{
-          this.discount = result
-          if(this.discount.discountNum != null){
-            this.actualPrice -= this.totalPrice * (this.discount.discountNum / 100)
-          }
+  getDiscountId() {
+    if (this.discountCode != "") {
+      this._discountsServiceProxy.getDiscount(this.discountCode).subscribe(result => {
+        this.discount = result
+        if (this.discount.discountNum != null) {
+          this.actualPrice -= this.totalPrice * (this.discount.discountNum / 100)
         }
+      }
       )
     }
-    else{
+    else {
       this.actualPrice = this.totalPrice
     }
   }

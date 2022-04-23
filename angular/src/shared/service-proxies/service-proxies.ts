@@ -7663,6 +7663,99 @@ export class OrdersServiceProxy {
         }
         return _observableOf<GetOrderForViewDto[]>(<any>null);
     }
+
+    /**
+     * @param filter (optional) 
+     * @param orderCodeFilter (optional) 
+     * @param totalPriceFilter (optional) 
+     * @param shippingAddressFilter (optional) 
+     * @param shippingNumberFilter (optional) 
+     * @param maxDiscountAmountFilter (optional) 
+     * @param minDiscountAmountFilter (optional) 
+     * @param maxActualPriceFilter (optional) 
+     * @param minActualPriceFilter (optional) 
+     * @param statusNameFilter (optional) 
+     * @param discountDiscountCodeFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAllOrderForUser(filter: string | null | undefined, orderCodeFilter: string | null | undefined, totalPriceFilter: string | null | undefined, shippingAddressFilter: string | null | undefined, shippingNumberFilter: string | null | undefined, maxDiscountAmountFilter: number | null | undefined, minDiscountAmountFilter: number | null | undefined, maxActualPriceFilter: number | null | undefined, minActualPriceFilter: number | null | undefined, statusNameFilter: string | null | undefined, discountDiscountCodeFilter: string | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfGetOrderForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/Orders/GetAllOrderForUser?";
+        if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
+        if (orderCodeFilter !== undefined)
+            url_ += "OrderCodeFilter=" + encodeURIComponent("" + orderCodeFilter) + "&"; 
+        if (totalPriceFilter !== undefined)
+            url_ += "TotalPriceFilter=" + encodeURIComponent("" + totalPriceFilter) + "&"; 
+        if (shippingAddressFilter !== undefined)
+            url_ += "ShippingAddressFilter=" + encodeURIComponent("" + shippingAddressFilter) + "&"; 
+        if (shippingNumberFilter !== undefined)
+            url_ += "ShippingNumberFilter=" + encodeURIComponent("" + shippingNumberFilter) + "&"; 
+        if (maxDiscountAmountFilter !== undefined)
+            url_ += "MaxDiscountAmountFilter=" + encodeURIComponent("" + maxDiscountAmountFilter) + "&"; 
+        if (minDiscountAmountFilter !== undefined)
+            url_ += "MinDiscountAmountFilter=" + encodeURIComponent("" + minDiscountAmountFilter) + "&"; 
+        if (maxActualPriceFilter !== undefined)
+            url_ += "MaxActualPriceFilter=" + encodeURIComponent("" + maxActualPriceFilter) + "&"; 
+        if (minActualPriceFilter !== undefined)
+            url_ += "MinActualPriceFilter=" + encodeURIComponent("" + minActualPriceFilter) + "&"; 
+        if (statusNameFilter !== undefined)
+            url_ += "StatusNameFilter=" + encodeURIComponent("" + statusNameFilter) + "&"; 
+        if (discountDiscountCodeFilter !== undefined)
+            url_ += "DiscountDiscountCodeFilter=" + encodeURIComponent("" + discountDiscountCodeFilter) + "&"; 
+        if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
+        if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllOrderForUser(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllOrderForUser(<any>response_);
+                } catch (e) {
+                    return <Observable<PagedResultDtoOfGetOrderForViewDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PagedResultDtoOfGetOrderForViewDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllOrderForUser(response: HttpResponseBase): Observable<PagedResultDtoOfGetOrderForViewDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PagedResultDtoOfGetOrderForViewDto.fromJS(resultData200) : new PagedResultDtoOfGetOrderForViewDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PagedResultDtoOfGetOrderForViewDto>(<any>null);
+    }
 }
 
 @Injectable()
@@ -22880,7 +22973,7 @@ export interface IGetOrderForViewDto {
 export class OrderDto implements IOrderDto {
     receiverName!: string | undefined;
     orderCode!: string | undefined;
-    totalPrice!: string | undefined;
+    totalPrice!: number | undefined;
     shippingAddress!: string | undefined;
     shippingNumber!: string | undefined;
     discountAmount!: number | undefined;
@@ -22939,7 +23032,7 @@ export class OrderDto implements IOrderDto {
 export interface IOrderDto {
     receiverName: string | undefined;
     orderCode: string | undefined;
-    totalPrice: string | undefined;
+    totalPrice: number | undefined;
     shippingAddress: string | undefined;
     shippingNumber: string | undefined;
     discountAmount: number | undefined;
@@ -22996,7 +23089,7 @@ export interface IGetOrderForEditOutput {
 export class CreateOrEditOrderDto implements ICreateOrEditOrderDto {
     receiverName!: string;
     orderCode!: string;
-    totalPrice!: string;
+    totalPrice!: number;
     shippingAddress!: string;
     shippingNumber!: string;
     discountAmount!: number | undefined;
@@ -23055,7 +23148,7 @@ export class CreateOrEditOrderDto implements ICreateOrEditOrderDto {
 export interface ICreateOrEditOrderDto {
     receiverName: string;
     orderCode: string;
-    totalPrice: string;
+    totalPrice: number;
     shippingAddress: string;
     shippingNumber: string;
     discountAmount: number | undefined;

@@ -8,7 +8,7 @@ namespace ERP.Purchase.Dtos
         public string ReceiverName { get; set; }
         public string OrderCode { get; set; }
 
-        public string TotalPrice { get; set; }
+        public long TotalPrice { get; set; }
 
         public string ShippingAddress { get; set; }
 

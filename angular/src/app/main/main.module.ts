@@ -98,7 +98,9 @@ import { UserSignUpComponent } from './user/user-sign-up/user-sign-up.component'
 import { AppModule } from '..';
 import { DataViewModule } from 'primeng/dataview';;
 import { AboutUsComponent } from './about-us/about-us.component'
-import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';;
+import { UserOrdersComponent } from './user/user-orders/user-orders.component'
+	;
 NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
 @NgModule({
@@ -205,7 +207,8 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 		UserSignUpComponent
 		,
 		AboutUsComponent
-	],
+		,
+		UserOrdersComponent],
 	providers: [
 		NewUploadImageService,
 		UploadSingleImageService,

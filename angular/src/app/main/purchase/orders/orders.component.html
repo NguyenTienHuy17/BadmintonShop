@@ -145,10 +145,10 @@
                                         {{l('Status')}}
                                         <p-sortIcon field="statusName"></p-sortIcon>
                                     </th>
-                                    <th style="width: 150px" pSortableColumn="discountFk.discountCode">
+                                    <!-- <th style="width: 150px" pSortableColumn="discountFk.discountCode">
                                         {{l('DiscountCode')}}
                                         <p-sortIcon field="discountDiscountCode"></p-sortIcon>
-                                    </th>
+                                    </th> -->
                                     <th style="width: 150px" pSortableColumn="orderCode">
                                         {{l('OrderCode')}}
                                         <p-sortIcon field="order.orderCode"></p-sortIcon>
@@ -193,11 +193,11 @@
                                                     <a href="javascript:;"
                                                         (click)="adminOrderDetailModal.show(record.order.id, record)">{{l('Detail')}}</a>
                                                 </li>
-                                                <li>
+                                                <!-- <li>
                                                     <a href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.Orders.Edit')"
                                                         (click)="createOrEditOrderModal.show(record.order.id)">{{l('Edit')}}</a>
-                                                </li>
+                                                </li> -->
                                                 <li>
                                                     <a href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.Orders.Delete')"
@@ -210,10 +210,10 @@
                                         <span class="ui-column-title"> {{l('Name')}}</span>
                                         {{record.statusName}}
                                     </td>
-                                    <td style="width:150px">
+                                    <!-- <td style="width:150px">
                                         <span class="ui-column-title"> {{l('DiscountCode')}}</span>
                                         {{record.discountDiscountCode}}
-                                    </td>
+                                    </td> -->
                                     <td style="width:150px">
                                         <span class="ui-column-title"> {{l('OrderCode')}}</span>
                                         {{record.order.orderCode}}

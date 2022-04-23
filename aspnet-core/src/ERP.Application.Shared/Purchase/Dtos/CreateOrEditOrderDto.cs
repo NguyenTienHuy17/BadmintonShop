@@ -13,7 +13,7 @@ namespace ERP.Purchase.Dtos
         public string OrderCode { get; set; }
 
         [Required]
-        public string TotalPrice { get; set; }
+        public long TotalPrice { get; set; }
 
         [Required]
         [StringLength(OrderConsts.MaxShippingAddressLength, MinimumLength = OrderConsts.MinShippingAddressLength)]

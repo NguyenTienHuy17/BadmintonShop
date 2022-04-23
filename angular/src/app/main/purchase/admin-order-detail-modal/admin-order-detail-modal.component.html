@@ -38,7 +38,8 @@
           </div>
           <div class="col-6 mb-3">
             <h6>{{l("TotalPrice")}} :</h6>
-            {{ item.order.totalPrice }}
+            {{ item.order.totalPrice.toLocaleString('it-IT', {style
+            :'currency', currency : 'VND'})}}
           </div>
           <div class="col-6 mb-3">
             <h6>{{l("ShippingAddress")}} :</h6>
@@ -50,21 +51,25 @@
           </div>
           <div class="col-6 mb-3">
             <h6>{{l("DiscountAmount")}} :</h6>
-            {{ item.order.discountAmount }}
+            {{ item.order.discountAmount.toLocaleString('it-IT',
+            {style :
+            'currency', currency : 'VND'}) }}
           </div>
           <div class="col-6 mb-3">
             <h6>{{l("ActualPrice")}} :</h6>
-            {{ item.order.actualPrice }}
+            {{ item.order.actualPrice.toLocaleString('it-IT',
+            {style :
+            'currency', currency : 'VND'}) }}
           </div>
 
-          <div class="col-6 mb-3">
+          <!-- <div class="col-6 mb-3">
             <h6>({{l("Status")}}) {{l("Name")}} :</h6>
             {{item.statusName}}
           </div>
           <div class="col-6 mb-3">
             <h6>({{l("Discount")}}) {{l("DiscountCode")}} :</h6>
             {{item.discountDiscountCode}}
-          </div>
+          </div> -->
 
         </div>
       </div>

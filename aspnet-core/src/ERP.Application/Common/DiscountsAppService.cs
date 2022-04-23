@@ -18,7 +18,6 @@ using ERP.Storage;
 
 namespace ERP.Common
 {
-    [AbpAuthorize(AppPermissions.Pages_Discounts)]
     public class DiscountsAppService : ERPAppServiceBase, IDiscountsAppService
     {
         private readonly IRepository<Discount, long> _discountRepository;

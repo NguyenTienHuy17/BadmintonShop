@@ -21,7 +21,7 @@ namespace ERP.Purchase
         public virtual string OrderCode { get; set; }
 
         [Required]
-        public virtual string TotalPrice { get; set; }
+        public virtual long TotalPrice { get; set; }
 
         [Required]
         [StringLength(OrderConsts.MaxShippingAddressLength, MinimumLength = OrderConsts.MinShippingAddressLength)]

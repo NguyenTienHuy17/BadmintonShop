@@ -29,9 +29,9 @@ namespace ERP.Purchase
         private readonly IRepository<Status, long> _lookup_statusRepository;
         private readonly IRepository<Discount, long> _lookup_discountRepository;
         private readonly IAbpSession _abpSession;
-        public OrdersAppService(IRepository<Order, long> orderRepository, 
-            IOrdersExcelExporter ordersExcelExporter, 
-            IRepository<Status, long> lookup_statusRepository, 
+        public OrdersAppService(IRepository<Order, long> orderRepository,
+            IOrdersExcelExporter ordersExcelExporter,
+            IRepository<Status, long> lookup_statusRepository,
             IRepository<Discount, long> lookup_discountRepository,
             IAbpSession abpSession)
         {
@@ -48,9 +48,8 @@ namespace ERP.Purchase
             var filteredOrders = _orderRepository.GetAll()
                         .Include(e => e.StatusFk)
                         .Include(e => e.DiscountFk)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.OrderCode.Contains(input.Filter) || e.TotalPrice.Contains(input.Filter) || e.ShippingAddress.Contains(input.Filter) || e.ShippingNumber.Contains(input.Filter))
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.OrderCode.Contains(input.Filter) || e.ShippingAddress.Contains(input.Filter) || e.ShippingNumber.Contains(input.Filter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.OrderCodeFilter), e => e.OrderCode == input.OrderCodeFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.TotalPriceFilter), e => e.TotalPrice == input.TotalPriceFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.ShippingAddressFilter), e => e.ShippingAddress == input.ShippingAddressFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.ShippingNumberFilter), e => e.ShippingNumber == input.ShippingNumberFilter)
                         .WhereIf(input.MinDiscountAmountFilter != null, e => e.DiscountAmount >= input.MinDiscountAmountFilter)
@@ -208,9 +207,8 @@ namespace ERP.Purchase
             var filteredOrders = _orderRepository.GetAll()
                         .Include(e => e.StatusFk)
                         .Include(e => e.DiscountFk)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.OrderCode.Contains(input.Filter) || e.TotalPrice.Contains(input.Filter) || e.ShippingAddress.Contains(input.Filter) || e.ShippingNumber.Contains(input.Filter))
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.OrderCode.Contains(input.Filter) || e.ShippingAddress.Contains(input.Filter) || e.ShippingNumber.Contains(input.Filter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.OrderCodeFilter), e => e.OrderCode == input.OrderCodeFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.TotalPriceFilter), e => e.TotalPrice == input.TotalPriceFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.ShippingAddressFilter), e => e.ShippingAddress == input.ShippingAddressFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.ShippingNumberFilter), e => e.ShippingNumber == input.ShippingNumberFilter)
                         .WhereIf(input.MinDiscountAmountFilter != null, e => e.DiscountAmount >= input.MinDiscountAmountFilter)
@@ -335,7 +333,7 @@ namespace ERP.Purchase
 
             var filteredOrders = _orderRepository.GetAll().Where(x => x.CreatorUserId == _abpSession.UserId);
             var pagedAndFilteredOrders = filteredOrders
-                .OrderBy(x=> x.CreationTime);
+                .OrderBy(x => x.CreationTime);
 
             var orders = from o in pagedAndFilteredOrders
                          join o1 in _lookup_statusRepository.GetAll() on o.StatusId equals o1.Id into j1
@@ -384,6 +382,81 @@ namespace ERP.Purchase
             }
 
             return results;
+
+        }
+        public async Task<PagedResultDto<GetOrderForViewDto>> GetAllOrderForUser(GetAllOrdersInput input)
+        {
+
+            var filteredOrders = _orderRepository.GetAll().Where(x => x.CreatorUserId == _abpSession.GetUserId())
+                        .Include(e => e.StatusFk)
+                        .Include(e => e.DiscountFk)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.OrderCode.Contains(input.Filter) || e.ShippingAddress.Contains(input.Filter) || e.ShippingNumber.Contains(input.Filter))
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.OrderCodeFilter), e => e.OrderCode == input.OrderCodeFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.ShippingAddressFilter), e => e.ShippingAddress == input.ShippingAddressFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.ShippingNumberFilter), e => e.ShippingNumber == input.ShippingNumberFilter)
+                        .WhereIf(input.MinDiscountAmountFilter != null, e => e.DiscountAmount >= input.MinDiscountAmountFilter)
+                        .WhereIf(input.MaxDiscountAmountFilter != null, e => e.DiscountAmount <= input.MaxDiscountAmountFilter)
+                        .WhereIf(input.MinActualPriceFilter != null, e => e.ActualPrice >= input.MinActualPriceFilter)
+                        .WhereIf(input.MaxActualPriceFilter != null, e => e.ActualPrice <= input.MaxActualPriceFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.StatusNameFilter), e => e.StatusFk != null && e.StatusFk.Name == input.StatusNameFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.DiscountDiscountCodeFilter), e => e.DiscountFk != null && e.DiscountFk.DiscountCode == input.DiscountDiscountCodeFilter);
+
+            var pagedAndFilteredOrders = filteredOrders
+                .OrderBy(x => x.CreationTime)
+                .PageBy(input);
+
+            var orders = from o in pagedAndFilteredOrders
+                         join o1 in _lookup_statusRepository.GetAll() on o.StatusId equals o1.Id into j1
+                         from s1 in j1.DefaultIfEmpty()
+
+                         join o2 in _lookup_discountRepository.GetAll() on o.DiscountId equals o2.Id into j2
+                         from s2 in j2.DefaultIfEmpty()
+
+                         select new
+                         {
+
+                             o.OrderCode,
+                             o.TotalPrice,
+                             o.ShippingAddress,
+                             o.ShippingNumber,
+                             o.DiscountAmount,
+                             o.ActualPrice,
+                             Id = o.Id,
+                             StatusName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
+                             DiscountDiscountCode = s2 == null || s2.DiscountCode == null ? "" : s2.DiscountCode.ToString()
+                         };
+
+            var totalCount = await filteredOrders.CountAsync();
+
+            var dbList = await orders.ToListAsync();
+            var results = new List<GetOrderForViewDto>();
+
+            foreach (var o in dbList)
+            {
+                var res = new GetOrderForViewDto()
+                {
+                    Order = new OrderDto
+                    {
+
+                        OrderCode = o.OrderCode,
+                        TotalPrice = o.TotalPrice,
+                        ShippingAddress = o.ShippingAddress,
+                        ShippingNumber = o.ShippingNumber,
+                        DiscountAmount = o.DiscountAmount,
+                        ActualPrice = o.ActualPrice,
+                        Id = o.Id,
+                    },
+                    StatusName = o.StatusName,
+                    DiscountDiscountCode = o.DiscountDiscountCode
+                };
+
+                results.Add(res);
+            }
+
+            return new PagedResultDto<GetOrderForViewDto>(
+                totalCount,
+                results
+            );
 
         }
     }

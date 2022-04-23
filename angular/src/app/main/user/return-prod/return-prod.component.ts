@@ -27,7 +27,6 @@ export class ReturnProdComponent extends AppComponentBase implements OnInit {
   ngOnInit() {
     this._ordersServiceProxy.getAllUserOrder().subscribe(result => {
       this.listOrder = result
-      console.log(result)
     }
     )
   }

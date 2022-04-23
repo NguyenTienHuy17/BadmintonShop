@@ -23,6 +23,7 @@ import { BookingComponent } from './user/booking/booking.component';
 import { ReturnProdComponent } from './user/return-prod/return-prod.component';
 import { UserSignUpComponent } from './user/user-sign-up/user-sign-up.component';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { UserOrdersComponent } from './user/user-orders/user-orders.component';
 
 @NgModule({
     imports: [
@@ -50,6 +51,7 @@ import { AboutUsComponent } from './about-us/about-us.component';
                     { path: 'user/product-brand/:brandId', component: ProductBrandComponent, data: { permission: 'Pages.User' } },
                     { path: 'user/booking', component: BookingComponent, data: { permission: 'Pages.User' } },
                     { path: 'user/returnProd', component: ReturnProdComponent, data: { permission: 'Pages.User' } },
+                    { path: 'user/user-orders', component: UserOrdersComponent, data: { permission: 'Pages.User' } },
                     { path: 'user/signIn', component: UserSignUpComponent, data: { permission: '' } },
                     { path: 'about-us', component: AboutUsComponent, data: { permission: '' } },
                     { path: 'user/product-category/:categoryId', component: ProductCategoryComponent, data: { permission: 'Pages.User' } }
