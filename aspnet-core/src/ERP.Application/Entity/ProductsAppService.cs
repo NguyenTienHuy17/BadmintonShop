@@ -473,11 +473,11 @@ namespace ERP.Entity
         public async Task<long> GetProductId(string name, string size, string color)
         {
             var listProductId = _productRepository.GetAll();
-            if (size.ToString() == "null" || size.ToString() == "")
+            if (size == null || size.ToString() == "null" || size.ToString() == "")
             {
                 listProductId = listProductId.Where(x => x.Name.Equals(name) && x.Color.Equals(color));
             }
-            else if (color.ToString() == "null" || color.ToString() == "")
+            else if ( color == null || color.ToString() == "null" || color.ToString() == "")
             {
                 listProductId = listProductId.Where(x => x.Name.Equals(name) && x.Size.Equals(size));
             }

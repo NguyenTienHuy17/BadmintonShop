@@ -71,9 +71,11 @@
 
 					<div class="form-group">
 						<label for="Product_Description">{{l("Description")}}</label>
-						<input type="text" #Product_Description="ngModel" id="Product_Description" class="form-control"
-							[(ngModel)]="product.description" name="Description" />
-						<validation-messages [formCtrl]="Product_Description"></validation-messages>
+						<textarea type="text" #Product_Description="ngModel" id="Product_Description"
+							class="form-control" [(ngModel)]="product.description"
+							name="Description">{{product.description}}</textarea>
+						<validation-messages [formCtrl]="Product_Description">
+						</validation-messages>
 					</div>
 
 					<div class="form-group">
