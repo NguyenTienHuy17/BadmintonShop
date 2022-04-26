@@ -21,7 +21,7 @@
                       <div class="mb-3 mt-3">{{l("Price")}}: {{product.product.price.toLocaleString('it-IT', {style :
                         'currency', currency : 'VND'})}}</div>
                       <div class="mb-3">{{l("Brand")}}: {{product.brandName}}</div>
-                      <div class="d-flex align-items-center" *ngIf="checkProductColor">
+                      <div class="d-flex align-items-center" *ngIf="product.isSize">
                         <span class="mr-2" for="Product_Size">{{l("Size")}}:
                         </span>
                         <select style="width: 20%;" id="Size" name="Size" [(ngModel)]="product.product.size"
@@ -29,7 +29,7 @@
                           <option *ngFor="let size of product.productSize" [value]="size">{{size}}</option>
                         </select>
                       </div>
-                      <div class="d-flex align-items-center" *ngIf="checkProductSize">
+                      <div class="d-flex align-items-center" *ngIf="product.isColor">
                         <span class="mr-2" for="Product_Color">{{l("Color")}}:
                         </span>
                         <select style="width: 20%;" id="Color" name="Color" [(ngModel)]="product.product.color"

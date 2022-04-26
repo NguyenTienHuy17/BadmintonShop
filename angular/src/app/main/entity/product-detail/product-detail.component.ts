@@ -29,8 +29,6 @@ export class ProductDetailComponent extends AppComponentBase implements OnInit {
     image: '',
     thumbImage: ''
   }
-  checkProductSize: boolean = false;
-  checkProductColor: boolean = false;
   constructor(injector: Injector,
     private _activatedRoute: ActivatedRoute,
     private _productsServiceProxy: ProductsServiceProxy,
@@ -55,16 +53,6 @@ export class ProductDetailComponent extends AppComponentBase implements OnInit {
     this._productsServiceProxy.getProductForView(this.productId, this.productName)
       .subscribe(result => {
         this.product = result;
-        result.productColor.forEach(x => {
-          if (x == null || x == "") {
-            this.checkProductColor = true;
-          }
-        });
-        result.productSize.forEach(x => {
-          if (x == null || x == "") {
-            this.checkProductSize = true;
-          }
-        });
         result.productImageUrl.forEach(i => {
           this.slideImage = {
             image: '',

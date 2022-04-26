@@ -25261,6 +25261,8 @@ export class GetProductForViewDto implements IGetProductForViewDto {
     productSize!: string[] | undefined;
     brandName!: string | undefined;
     categoryName!: string | undefined;
+    isColor!: boolean | undefined;
+    isSize!: boolean | undefined;
 
     constructor(data?: IGetProductForViewDto) {
         if (data) {
@@ -25291,6 +25293,8 @@ export class GetProductForViewDto implements IGetProductForViewDto {
             }
             this.brandName = data["brandName"];
             this.categoryName = data["categoryName"];
+            this.isColor = data["isColor"];
+            this.isSize = data["isSize"];
         }
     }
 
@@ -25321,6 +25325,8 @@ export class GetProductForViewDto implements IGetProductForViewDto {
         }
         data["brandName"] = this.brandName;
         data["categoryName"] = this.categoryName;
+        data["isColor"] = this.isColor;
+        data["isSize"] = this.isSize;
         return data; 
     }
 }
@@ -25332,6 +25338,8 @@ export interface IGetProductForViewDto {
     productSize: string[] | undefined;
     brandName: string | undefined;
     categoryName: string | undefined;
+    isColor: boolean | undefined;
+    isSize: boolean | undefined;
 }
 
 export class GetProductForEditOutput implements IGetProductForEditOutput {

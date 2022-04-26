@@ -14,5 +14,8 @@ namespace ERP.Entity.Dtos
 
         public string CategoryName { get; set; }
 
+        public bool IsColor { get; set; }
+        public bool IsSize { get; set; }
+
     }
 }

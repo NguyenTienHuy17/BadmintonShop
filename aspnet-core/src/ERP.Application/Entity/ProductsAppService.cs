@@ -165,14 +165,23 @@ namespace ERP.Entity
             foreach (var prod in listProduct)
             {
                 //Each group has a key
-                if(product.Color != null)
+                if(product.Color != null && product.Color.ToString() != "null" && product.Color != "")
                 {
                     output.ProductColor.Add(prod.Color);
                 }
-                if(prod.Size != "")
+                if(prod.Size != null && product.Size.ToString() != "null")
                 {
                     output.ProductSize.Add(prod.Size);
                 }
+            }
+
+            if(output.ProductColor.Count > 0)
+            {
+                output.IsColor = true;
+            }
+            if (output.ProductSize.Count > 0)
+            {
+                output.IsSize = true;
             }
 
             return output;
