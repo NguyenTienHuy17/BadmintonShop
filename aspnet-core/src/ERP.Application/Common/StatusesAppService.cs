@@ -163,5 +163,38 @@ namespace ERP.Common
             return _statusesExcelExporter.ExportToFile(statusListDtos);
         }
 
+        public async Task<List<GetStatusForViewDto>> GetAllStatusForSelect()
+        {
+
+            var filteredStatuses = await _statusRepository.GetAllListAsync();
+
+            var statuses = from o in filteredStatuses
+                           select new
+                           {
+                               o.Name,
+                               o.Description,
+                               Id = o.Id
+                           };
+            var results = new List<GetStatusForViewDto>();
+
+            foreach (var o in statuses)
+            {
+                var res = new GetStatusForViewDto()
+                {
+                    Status = new StatusDto
+                    {
+
+                        Name = o.Name,
+                        Description = o.Description,
+                        Id = o.Id,
+                    }
+                };
+
+                results.Add(res);
+            }
+
+            return results;
+        }
+
     }
 }

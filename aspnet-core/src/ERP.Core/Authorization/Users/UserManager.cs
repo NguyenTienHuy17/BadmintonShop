@@ -32,6 +32,7 @@ namespace ERP.Authorization.Users
         private readonly IUnitOfWorkManager _unitOfWorkManager;
         private readonly ILocalizationManager _localizationManager;
         private readonly ISettingManager _settingManager;
+        private readonly IRepository<User, long> _userRepository;
 
         public UserManager(
             UserStore userStore,
@@ -51,7 +52,8 @@ namespace ERP.Authorization.Users
             IRepository<UserOrganizationUnit, long> userOrganizationUnitRepository,
             IOrganizationUnitSettings organizationUnitSettings,
             ISettingManager settingManager, 
-            ILocalizationManager localizationManager)
+            ILocalizationManager localizationManager,
+            IRepository<User, long> userRepository)
             : base(
                   roleManager,
                   userStore,
@@ -74,6 +76,7 @@ namespace ERP.Authorization.Users
             _unitOfWorkManager = unitOfWorkManager;
             _settingManager = settingManager;
             _localizationManager = localizationManager;
+            _userRepository = userRepository;
         }
 
         [UnitOfWork]
@@ -196,6 +199,71 @@ namespace ERP.Authorization.Users
         private new string L(string name)
         {
             return _localizationManager.GetString(ERPConsts.LocalizationSourceName, name);
+        }
+
+        public async Task CreateUserAsync(User input)
+        {
+            input.NormalizedEmailAddress = input.EmailAddress.ToUpper();
+            input.NormalizedUserName = input.UserName.ToUpper();
+            var user = await _userRepository.GetAllListAsync();
+
+            var tempName = user.FirstOrDefault(i => i.Name == input.Name);
+            if (tempName != null)
+            {
+                throw new UserFriendlyException(L("Identity.DuplicateName"));
+            }
+            var tempEmail = user.FirstOrDefault(i => i.EmailAddress == input.EmailAddress);
+
+            if (tempEmail != null)
+            {
+                throw new UserFriendlyException(L("Identity.DuplicateEmail"));
+            }
+            var tempUserName = user.FirstOrDefault(i => i.UserName == input.UserName);
+            if (tempUserName != null)
+            {
+                throw new UserFriendlyException(L("Identity.DuplicateUserName"));
+            }
+            try
+            {
+                await _userRepository.InsertAsync(input);
+            }
+            catch (Exception ex)
+            {
+                throw new UserFriendlyException(L("CannotCreateNewUser"));
+            }
+        }
+
+        public async Task UpdateUserAsync(User input)
+        {
+            input.NormalizedEmailAddress = input.EmailAddress.ToUpper();
+            input.NormalizedUserName = input.UserName.ToUpper();
+            var userCheck = await _userRepository.GetAllListAsync();
+
+            var tempName = userCheck.FirstOrDefault(i => i.Name == input.Name && i.Id != input.Id);
+            if (tempName != null)
+            {
+                throw new UserFriendlyException(L("Identity.DuplicateName"));
+            }
+            var tempEmail = userCheck.FirstOrDefault(i => i.EmailAddress == input.EmailAddress && i.Id != input.Id);
+
+            if (tempEmail != null)
+            {
+                throw new UserFriendlyException(L("Identity.DuplicateEmail"));
+            }
+            var tempUserName = userCheck.FirstOrDefault(i => i.UserName == input.UserName && i.Id != input.Id);
+            if (tempUserName != null)
+            {
+                throw new UserFriendlyException(L("Identity.DuplicateUserName"));
+            }
+            try
+            {
+                var user = await _userRepository.FirstOrDefaultAsync((long)input.Id);
+                user = input;
+            }
+            catch (Exception ex)
+            {
+                throw new UserFriendlyException(L("CannotCreateNewUser"));
+            }
         }
     }
 }

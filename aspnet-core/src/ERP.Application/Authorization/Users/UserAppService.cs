@@ -265,8 +265,8 @@ namespace ERP.Authorization.Users
                 CheckErrors(await UserManager.ChangePasswordAsync(user, input.User.Password));
             }
 
-            CheckErrors(await UserManager.UpdateAsync(user));
-
+            //CheckErrors(await UserManager.UpdateAsync(user));
+            await UserManager.UpdateUserAsync(user);
             //Update roles
             CheckErrors(await UserManager.SetRoles(user, input.AssignedRoleNames));
 
@@ -322,7 +322,8 @@ namespace ERP.Authorization.Users
                 user.Roles.Add(new UserRole(AbpSession.TenantId, user.Id, role.Id));
             }
 
-            CheckErrors(await UserManager.CreateAsync(user));
+            //CheckErrors(await UserManager.CreateAsync(user));
+            await UserManager.CreateUserAsync(user);
             await CurrentUnitOfWork.SaveChangesAsync(); //To get new user's Id.
 
             //Notifications

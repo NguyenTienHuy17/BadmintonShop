@@ -173,7 +173,6 @@ namespace ERP.Purchase
             }
         }
 
-        [AbpAuthorize(AppPermissions.Pages_User)]
         protected virtual async Task Create(CreateOrEditOrderDto input)
         {
             var order = ObjectMapper.Map<Order>(input);
@@ -187,7 +186,6 @@ namespace ERP.Purchase
 
         }
 
-        [AbpAuthorize(AppPermissions.Pages_User)]
         protected virtual async Task Update(CreateOrEditOrderDto input)
         {
             var order = await _orderRepository.FirstOrDefaultAsync((long)input.Id);

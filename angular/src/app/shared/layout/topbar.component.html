@@ -55,9 +55,9 @@
         </div>
     </div>
 
-    <div *ngIf="'Pages.User' | permission" (click)="cartDetail()" class="kt-header__topbar-user"
-        style="color: white; display: flex; align-items: center; margin: 0 6%;font-size: 19px;"><i
-            class="fa fa-shopping-cart"></i></div>
+    <div *ngIf="'Pages.User' | permission" (click)="cartDetail()" class="kt-menu__link-text"
+        style="display: flex; align-items: center; margin: 0 6%;font-size: 19px;"><i class="fa fa-shopping-cart"></i>
+    </div>
     <div *ngIf="isImpersonatedLogin" (click)="signUp()" class="kt-header__topbar-user"
         style="color: white; display: flex; align-items: center; margin: 0 3%;font-size: 15px; cursor: pointer;">
         {{l("SignUp")}}</div>

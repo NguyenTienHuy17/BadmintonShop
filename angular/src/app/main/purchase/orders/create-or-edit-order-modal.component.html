@@ -1,4 +1,5 @@
-﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active" #orderForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
@@ -12,81 +13,112 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                 
 
-					<div class="form-group m-form__group">
+
+                    <!-- <div class="form-group m-form__group">
                         <label for="StatusName">{{l("Status")}}</label>
                         <div class="input-group">
-                            <input class="form-control" id="StatusName" name="statusName" [(ngModel)]="statusName" type="text" disabled>     
+                            <input class="form-control" id="StatusName" name="statusName" [(ngModel)]="statusName"
+                                type="text" disabled>
                             <div class="input-group-append">
-                                <button class="btn btn-primary blue" (click)="openSelectStatusModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
-                            </div> <div class="input-group-prepend">
-                                <button class="btn btn-danger btn-icon" type="button" (click)="setStatusIdNull()"><i class="fa fa-times"></i></button>
+                                <button class="btn btn-primary blue" (click)="openSelectStatusModal()" type="button"><i
+                                        class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div>
+                            <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setStatusIdNull()"><i
+                                        class="fa fa-times"></i></button>
                             </div>
                         </div>
                     </div>
-                    <input class="form-control" name="order.statusId" [(ngModel)]="order.statusId" type="text"  hidden>
-		 
-					<div class="form-group m-form__group">
+                    <input class="form-control" name="order.statusId" [(ngModel)]="order.statusId" type="text" hidden> -->
+
+                    <!-- <div class="form-group m-form__group">
                         <label for="DiscountDiscountCode">{{l("Discount")}}</label>
                         <div class="input-group">
-                            <input class="form-control" id="DiscountDiscountCode" name="discountDiscountCode" [(ngModel)]="discountDiscountCode" type="text" disabled>     
+                            <input class="form-control" id="DiscountDiscountCode" name="discountDiscountCode"
+                                [(ngModel)]="discountDiscountCode" type="text" disabled>
                             <div class="input-group-append">
-                                <button class="btn btn-primary blue" (click)="openSelectDiscountModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
-                            </div> <div class="input-group-prepend">
-                                <button class="btn btn-danger btn-icon" type="button" (click)="setDiscountIdNull()"><i class="fa fa-times"></i></button>
+                                <button class="btn btn-primary blue" (click)="openSelectDiscountModal()"
+                                    type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div>
+                            <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setDiscountIdNull()"><i
+                                        class="fa fa-times"></i></button>
                             </div>
                         </div>
                     </div>
-                    <input class="form-control" name="order.discountId" [(ngModel)]="order.discountId" type="text"  hidden>
-		 
+                    <input class="form-control" name="order.discountId" [(ngModel)]="order.discountId" type="text"
+                        hidden> -->
 
-								<div class="form-group">
-									<label for="Order_OrderCode">{{l("OrderCode")}} *</label>
-									<input type="text" #Order_OrderCode="ngModel" id="Order_OrderCode" class="form-control" [(ngModel)]="order.orderCode" name="OrderCode"     required/>
-								    <validation-messages [formCtrl]="Order_OrderCode"></validation-messages>
-								</div>
-					
-								<div class="form-group">
-									<label for="Order_TotalPrice">{{l("TotalPrice")}} *</label>
-									<input type="text" #Order_TotalPrice="ngModel" id="Order_TotalPrice" class="form-control" [(ngModel)]="order.totalPrice" name="TotalPrice"     required/>
-								    <validation-messages [formCtrl]="Order_TotalPrice"></validation-messages>
-								</div>
-					
-								<div class="form-group">
-									<label for="Order_ShippingAddress">{{l("ShippingAddress")}} *</label>
-									<input type="text" #Order_ShippingAddress="ngModel" id="Order_ShippingAddress" class="form-control" [(ngModel)]="order.shippingAddress" name="ShippingAddress"   minlength="0"  maxlength="1028"  required/>
-								    <validation-messages [formCtrl]="Order_ShippingAddress"></validation-messages>
-								</div>
-					
-								<div class="form-group">
-									<label for="Order_ShippingNumber">{{l("ShippingNumber")}} *</label>
-									<input type="text" #Order_ShippingNumber="ngModel" id="Order_ShippingNumber" class="form-control" [(ngModel)]="order.shippingNumber" name="ShippingNumber"   minlength="0"  maxlength="32"  required/>
-								    <validation-messages [formCtrl]="Order_ShippingNumber"></validation-messages>
-								</div>
-					
-								<div class="form-group">
-									<label for="Order_DiscountAmount">{{l("DiscountAmount")}}</label>
-									<input type="number" #Order_DiscountAmount="ngModel" id="Order_DiscountAmount" class="form-control" [(ngModel)]="order.discountAmount" name="DiscountAmount"   />
-									<validation-messages [formCtrl]="Order_DiscountAmount"></validation-messages>
-								</div>
-					
-								<div class="form-group">
-									<label for="Order_ActualPrice">{{l("ActualPrice")}}</label>
-									<input type="number" #Order_ActualPrice="ngModel" id="Order_ActualPrice" class="form-control" [(ngModel)]="order.actualPrice" name="ActualPrice"   />
-									<validation-messages [formCtrl]="Order_ActualPrice"></validation-messages>
-								</div>
-					
+
+                    <div class="form-group">
+                        <label for="StatusNameFilter">{{l("Status")}}</label>
+                        <select id="Status" name="Status" [(ngModel)]="order.statusId" class="form-control">
+                            <option disabled value="">{{"Select" | localize}}</option>
+                            <option *ngFor="let status of listStatus" [value]="status.status.id">
+                                {{status.status.name}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="Order_OrderCode">{{l("OrderCode")}} *</label>
+                        <input disabled type="text" #Order_OrderCode="ngModel" id="Order_OrderCode" class="form-control"
+                            [(ngModel)]="order.orderCode" name="OrderCode" required />
+                        <validation-messages [formCtrl]="Order_OrderCode"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Order_TotalPrice">{{l("TotalPrice")}} *</label>
+                        <input disabled type="text" #Order_TotalPrice="ngModel" id="Order_TotalPrice"
+                            class="form-control" [(ngModel)]="order.totalPrice" name="TotalPrice" required />
+                        <validation-messages [formCtrl]="Order_TotalPrice"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Order_ShippingAddress">{{l("ShippingAddress")}} *</label>
+                        <input disabled type="text" #Order_ShippingAddress="ngModel" id="Order_ShippingAddress"
+                            class="form-control" [(ngModel)]="order.shippingAddress" name="ShippingAddress"
+                            minlength="0" maxlength="1028" required />
+                        <validation-messages [formCtrl]="Order_ShippingAddress"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Order_ShippingNumber">{{l("ShippingNumber")}} *</label>
+                        <input disabled type="text" #Order_ShippingNumber="ngModel" id="Order_ShippingNumber"
+                            class="form-control" [(ngModel)]="order.shippingNumber" name="ShippingNumber" minlength="0"
+                            maxlength="32" required />
+                        <validation-messages [formCtrl]="Order_ShippingNumber"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Order_DiscountAmount">{{l("DiscountAmount")}}</label>
+                        <input disabled type="number" #Order_DiscountAmount="ngModel" id="Order_DiscountAmount"
+                            class="form-control" [(ngModel)]="order.discountAmount" name="DiscountAmount" />
+                        <validation-messages [formCtrl]="Order_DiscountAmount"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Order_ActualPrice">{{l("ActualPrice")}}</label>
+                        <input disabled type="number" #Order_ActualPrice="ngModel" id="Order_ActualPrice"
+                            class="form-control" [(ngModel)]="order.actualPrice" name="ActualPrice" />
+                        <validation-messages [formCtrl]="Order_ActualPrice"></validation-messages>
+                    </div>
+
 
                 </div>
                 <div class="modal-footer">
-                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
-                    <button type="submit" class="btn btn-primary blue" [disabled]="!orderForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                    <button [disabled]="saving" type="button" class="btn btn-default"
+                        (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!orderForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i>
+                        <span>{{l("Save")}}</span></button>
                 </div>
             </form>
         </div>
     </div>
-<orderStatusLookupTableModal #orderStatusLookupTableModal (modalSave)="getNewStatusId()"></orderStatusLookupTableModal>
-		 <orderDiscountLookupTableModal #orderDiscountLookupTableModal (modalSave)="getNewDiscountId()"></orderDiscountLookupTableModal>
-		 
+    <orderStatusLookupTableModal #orderStatusLookupTableModal (modalSave)="getNewStatusId()">
+    </orderStatusLookupTableModal>
+    <orderDiscountLookupTableModal #orderDiscountLookupTableModal (modalSave)="getNewDiscountId()">
+    </orderDiscountLookupTableModal>
+
 </div>

@@ -1,7 +1,7 @@
-﻿import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef} from '@angular/core';
+﻿import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 import { finalize } from 'rxjs/operators';
-import { OrdersServiceProxy, CreateOrEditOrderDto } from '@shared/service-proxies/service-proxies';
+import { OrdersServiceProxy, CreateOrEditOrderDto, StatusesServiceProxy, GetStatusForViewDto } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import * as moment from 'moment';
 
@@ -14,8 +14,8 @@ import { OrderDiscountLookupTableModalComponent } from './order-discount-lookup-
     selector: 'createOrEditOrderModal',
     templateUrl: './create-or-edit-order-modal.component.html'
 })
-export class CreateOrEditOrderModalComponent extends AppComponentBase implements OnInit{
-   
+export class CreateOrEditOrderModalComponent extends AppComponentBase implements OnInit {
+
     @ViewChild('createOrEditModal', { static: true }) modal: ModalDirective;
     @ViewChild('orderStatusLookupTableModal', { static: true }) orderStatusLookupTableModal: OrderStatusLookupTableModalComponent;
     @ViewChild('orderDiscountLookupTableModal', { static: true }) orderDiscountLookupTableModal: OrderDiscountLookupTableModalComponent;
@@ -30,18 +30,22 @@ export class CreateOrEditOrderModalComponent extends AppComponentBase implements
     statusName = '';
     discountDiscountCode = '';
 
+    listStatus: GetStatusForViewDto[] = [];
 
 
     constructor(
         injector: Injector,
-        private _ordersServiceProxy: OrdersServiceProxy
+        private _ordersServiceProxy: OrdersServiceProxy,
+        private _statusesServiceProxy: StatusesServiceProxy
     ) {
         super(injector);
     }
-    
-    show(orderId?: number): void {
-    
 
+    show(orderId?: number): void {
+
+        this._statusesServiceProxy.getAllStatusForSelect().subscribe(result => {
+            this.listStatus = result;
+        })
         if (!orderId) {
             this.order = new CreateOrEditOrderDto();
             this.order.id = orderId;
@@ -63,22 +67,22 @@ export class CreateOrEditOrderModalComponent extends AppComponentBase implements
                 this.modal.show();
             });
         }
-        
-        
+
+
     }
 
     save(): void {
-            this.saving = true;
-            
-			
-			
-            this._ordersServiceProxy.createOrEdit(this.order)
-             .pipe(finalize(() => { this.saving = false;}))
-             .subscribe(() => {
+        this.saving = true;
+
+
+
+        this._ordersServiceProxy.createOrEdit(this.order)
+            .pipe(finalize(() => { this.saving = false; }))
+            .subscribe(() => {
                 this.notify.info(this.l('SavedSuccessfully'));
                 this.close();
                 this.modalSave.emit(null);
-             });
+            });
     }
 
     openSelectStatusModal() {
@@ -122,9 +126,10 @@ export class CreateOrEditOrderModalComponent extends AppComponentBase implements
     close(): void {
         this.active = false;
         this.modal.hide();
+        this.listStatus = [];
     }
-    
-     ngOnInit(): void {
-        
-     }    
+
+    ngOnInit(): void {
+
+    }
 }

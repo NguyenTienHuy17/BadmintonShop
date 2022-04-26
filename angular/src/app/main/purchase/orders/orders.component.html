@@ -193,11 +193,11 @@
                                                     <a href="javascript:;"
                                                         (click)="adminOrderDetailModal.show(record.order.id, record)">{{l('Detail')}}</a>
                                                 </li>
-                                                <!-- <li>
+                                                <li>
                                                     <a href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.Orders.Edit')"
                                                         (click)="createOrEditOrderModal.show(record.order.id)">{{l('Edit')}}</a>
-                                                </li> -->
+                                                </li>
                                                 <li>
                                                     <a href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.Orders.Delete')"
