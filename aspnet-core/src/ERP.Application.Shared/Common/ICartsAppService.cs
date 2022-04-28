@@ -21,7 +21,5 @@ namespace ERP.Common
 
         Task<FileDto> GetCartsToExcel(GetAllCartsForExcelInput input);
 
-        Task<PagedResultDto<CartProductLookupTableDto>> GetAllProductForLookupTable(GetAllForLookupTableInput input);
-
     }
 }

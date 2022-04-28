@@ -3,6 +3,7 @@
 	<texts>
 		<text name="RegisterSuccessfully">Đăng ký tài khoản thành công</text>
 		<text name="SuccessfullyPurchased">Đặt hàng thành công</text>
+		<text name="QuantityOverLimit">Số lượng sản phẩm vượt quá giới hạn</text>
 		<text name="CreateBookingRequestSuccessfully">Hẹn lịch thành công</text>
 		<text name="CreateReturnProdSuccessfully">Tạo yêu cầu đổi trả thành công</text>
 		<text name="ReturnProd">Đổi trả</text>

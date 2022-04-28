@@ -76,7 +76,6 @@ export class UserDashboardComponent extends AppComponentBase implements OnInit {
         });
         this._blogsServiceProxy.getAllBlogForView().subscribe(result => {
             this.listBlog = result
-            console.log(result)
         })
     }
 

@@ -61,6 +61,7 @@ namespace ERP
             configuration.CreateMap<ProductImageDto, ProductImage>().ReverseMap();
             configuration.CreateMap<CreateOrEditProductDto, Product>().ReverseMap();
             configuration.CreateMap<ProductDto, Product>().ReverseMap();
+            configuration.CreateMap<ProductDto, Product>();
             configuration.CreateMap<CreateOrEditCategoryDto, Category>().ReverseMap();
             configuration.CreateMap<CategoryDto, Category>().ReverseMap();
             configuration.CreateMap<CreateOrEditBrandDto, Brand>().ReverseMap();

@@ -53,6 +53,7 @@ export class ProductDetailComponent extends AppComponentBase implements OnInit {
     this._productsServiceProxy.getProductForView(this.productId, this.productName)
       .subscribe(result => {
         this.product = result;
+        console.log(result)
         result.productImageUrl.forEach(i => {
           this.slideImage = {
             image: '',

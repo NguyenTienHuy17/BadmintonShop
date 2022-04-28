@@ -169,7 +169,7 @@ namespace ERP.Entity
                 {
                     output.ProductColor.Add(prod.Color);
                 }
-                if(prod.Size != null && product.Size.ToString() != "null")
+                if(prod.Size != null && product.Size.ToString() != "null" && product.Size != "")
                 {
                     output.ProductSize.Add(prod.Size);
                 }

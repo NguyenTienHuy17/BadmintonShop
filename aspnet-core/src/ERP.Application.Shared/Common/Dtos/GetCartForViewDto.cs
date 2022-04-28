@@ -1,4 +1,6 @@
-﻿namespace ERP.Common.Dtos
+﻿using ERP.Entity.Dtos;
+
+namespace ERP.Common.Dtos
 {
     public class GetCartForViewDto
     {
@@ -9,6 +11,8 @@
         public string ProductImageUrl { get; set; }
 
         public long? ProductPrice { get; set; }
+
+        public ProductDto Product { get; set; }
 
     }
 }

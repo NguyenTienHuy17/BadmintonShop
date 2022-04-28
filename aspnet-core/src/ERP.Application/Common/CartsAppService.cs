@@ -18,6 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using Abp.UI;
 using ERP.Storage;
 using Abp.Runtime.Session;
+using ERP.Entity.Dtos;
 
 namespace ERP.Common
 {
@@ -30,8 +31,8 @@ namespace ERP.Common
         private readonly IRepository<Product, long> _productRepository;
         private readonly IRepository<ProductImage, long> _lookup_productImageRepository;
 
-        public CartsAppService(IRepository<Cart, long> cartRepository, 
-            ICartsExcelExporter cartsExcelExporter, 
+        public CartsAppService(IRepository<Cart, long> cartRepository,
+            ICartsExcelExporter cartsExcelExporter,
             IRepository<Product, long> lookup_productRepository,
             IAbpSession abpSession,
             IRepository<Product, long> productRepository,
@@ -132,7 +133,12 @@ namespace ERP.Common
 
         public async Task CreateOrEdit(CreateOrEditCartDto input)
         {
-            if (input.Id == null)
+            var cartItem = await _cartRepository.FirstOrDefaultAsync(x => x.ProductId == input.ProductId);
+            if (cartItem != null)
+            {
+                cartItem.quantity += input.quantity;
+            }
+            else if (input.Id == null && cartItem == null)
             {
                 await Create(input);
             }
@@ -199,39 +205,9 @@ namespace ERP.Common
             return _cartsExcelExporter.ExportToFile(cartListDtos);
         }
 
-        [AbpAuthorize(AppPermissions.Pages_Carts)]
-        public async Task<PagedResultDto<CartProductLookupTableDto>> GetAllProductForLookupTable(GetAllForLookupTableInput input)
-        {
-            var query = _lookup_productRepository.GetAll().WhereIf(
-                   !string.IsNullOrWhiteSpace(input.Filter),
-                  e => e.Name != null && e.Name.Contains(input.Filter)
-               );
-
-            var totalCount = await query.CountAsync();
-
-            var productList = await query
-                .PageBy(input)
-                .ToListAsync();
-
-            var lookupTableDtoList = new List<CartProductLookupTableDto>();
-            foreach (var product in productList)
-            {
-                lookupTableDtoList.Add(new CartProductLookupTableDto
-                {
-                    Id = product.Id,
-                    DisplayName = product.Name?.ToString()
-                });
-            }
-
-            return new PagedResultDto<CartProductLookupTableDto>(
-                totalCount,
-                lookupTableDtoList
-            );
-        }
-
         public async Task AddProductToCart(CreateOrEditCartDto input)
         {
-            if(input.Id != null)
+            if (input.Id != null)
             {
                 var cart = _cartRepository.GetAll().Where(x => x.ProductId == input.ProductId && x.CreatorUserId == _abpSession.GetUserId()).FirstOrDefault();
                 var product = _productRepository.GetAll().Where(x => x.Id == input.ProductId).FirstOrDefault();
@@ -244,75 +220,93 @@ namespace ERP.Common
             }
             if (input.Id == null)
             {
-                var product = _productRepository.GetAll().Where(x => x.Id == input.ProductId).FirstOrDefault();
-                if (input.quantity <= product.InStock)
+                var product = await _productRepository.FirstOrDefaultAsync(x => x.Id == input.ProductId);
+                var cartItem = await _cartRepository.FirstOrDefaultAsync(x => x.ProductId == input.ProductId);
+                if (input.quantity <= product.InStock && cartItem == null)
                 {
                     await Create(input);
+                }
+                else if (cartItem != null && input.quantity + cartItem.quantity <= product.InStock)
+                {
+                    cartItem.quantity += input.quantity;
+                }
+                else if (input.quantity + cartItem.quantity > product.InStock)
+                {
+                    throw new UserFriendlyException(L("QuantityOverLimit"));
                 }
             }
         }
 
         public async Task<List<GetCartForViewDto>> GetAllForCart()
         {
-            var listCart = _cartRepository.GetAll().Where(x => x.CreatorUserId == _abpSession.GetUserId());
-            var productImages = _lookup_productImageRepository.GetAll().GroupBy(x => x.ProductId);
-            var products = _productRepository.GetAll().GroupBy(x => x.Name);
-
-            var listProdImg = new List<ProductImage>();
-            //iterate each group        
-            foreach (var productImage in productImages)
+            try
             {
-                //Each group has a key
-                listProdImg.Add((ProductImage)productImage.FirstOrDefault());
-            }
+                var listCart = _cartRepository.GetAll().Where(x => x.CreatorUserId == _abpSession.GetUserId());
+                var productImages = _lookup_productImageRepository.GetAll().GroupBy(x => x.ProductId);
+                var products = _productRepository.GetAll().GroupBy(x => x.Name);
 
-            var listProd = new List<Product>();
-            //iterate each group        
-            foreach (var product in products)
-            {
-                //Each group has a key
-                listProd.Add((Product)product.FirstOrDefault());
-            }
-            var carts = from o in listCart
-
-                        join o1 in _lookup_productRepository.GetAll() on o.ProductId equals o1.Id into j1
-                        from s1 in j1.DefaultIfEmpty()
-
-                        join o3 in listProdImg on o.ProductId equals o3.ProductId
-
-                        join o4 in listProd on o.ProductId equals o4.Id
-
-                        select new
-                        {
-                            o.quantity,
-                            o.ProductId,
-                            Id = o.Id,
-                            ProductName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
-                            ProductImageUrl = o3.Url.ToString(),
-                            ProductPrice = o4.Price
-                        };
-            var dbList = await carts.ToListAsync();
-            var results = new List<GetCartForViewDto>();
-
-            foreach (var o in dbList)
-            {
-                var res = new GetCartForViewDto()
+                var listProdImg = new List<ProductImage>();
+                //iterate each group        
+                foreach (var productImage in productImages)
                 {
-                    Cart = new CartDto
+                    //Each group has a key
+                    listProdImg.Add((ProductImage)productImage.FirstOrDefault());
+                }
+
+                var listProd = new List<Product>();
+                //iterate each group        
+                foreach (var product in products)
+                {
+                    //Each group has a key
+                    listProd.Add((Product)product.FirstOrDefault());
+                }
+                var carts = from o in listCart
+
+                            join o1 in _lookup_productRepository.GetAll() on o.ProductId equals o1.Id into j1
+                            from s1 in j1.DefaultIfEmpty()
+
+                            join o3 in listProdImg on o.ProductId equals o3.ProductId
+
+                            join o4 in listProd on o.ProductId equals o4.Id
+
+                            select new
+                            {
+                                o.quantity,
+                                o.ProductId,
+                                Id = o.Id,
+                                ProductName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
+                                ProductImageUrl = o3.Url.ToString(),
+                                ProductPrice = o4.Price
+                            };
+                var dbList = await carts.ToListAsync();
+                var results = new List<GetCartForViewDto>();
+
+                foreach (var o in dbList)
+                {
+                    var res = new GetCartForViewDto()
                     {
-                        ProductId = o.ProductId,
-                        quantity = o.quantity,
-                        Id = o.Id,
-                    },
-                    ProductName = o.ProductName,
-                    ProductImageUrl = o.ProductImageUrl,
-                    ProductPrice = o.ProductPrice
-                };
+                        Cart = new CartDto
+                        {
+                            ProductId = o.ProductId,
+                            quantity = o.quantity,
+                            Id = o.Id,
+                        },
+                        ProductName = o.ProductName,
+                        ProductImageUrl = o.ProductImageUrl,
+                        ProductPrice = o.ProductPrice,
+                        Product = ObjectMapper.Map<ProductDto>(await _productRepository.FirstOrDefaultAsync(x => x.Id == o.ProductId))
+                    };
 
-                results.Add(res);
+                    results.Add(res);
+                }
+
+                return results;
             }
+            catch (Exception ex)
+            {
 
-            return results;
+                throw;
+            }
         }
     }
 }

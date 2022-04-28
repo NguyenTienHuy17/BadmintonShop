@@ -1,5 +1,6 @@
 import { Component, Injector, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { async } from '@angular/core/testing';
+import { Router } from '@angular/router';
 import { OrrderDetailModalComponent } from '@app/main/purchase/orrder-detail-modal/orrder-detail-modal.component';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/common/app-component-base';
@@ -23,6 +24,7 @@ export class CartDetailComponent extends AppComponentBase implements OnInit {
   constructor(injector: Injector,
     private _cartsServiceProxy: CartsServiceProxy,
     private _productsServiceProxy: ProductsServiceProxy,
+    private _router: Router,
   ) {
     super(injector);
     this.listCart = [];
@@ -36,6 +38,7 @@ export class CartDetailComponent extends AppComponentBase implements OnInit {
     this.totalPrice = 0;
     this._cartsServiceProxy.getAllForCart().subscribe(result => {
       this.listCart = result;
+      console.log(result)
       this.listCart.forEach(x => {
         this.totalPrice += x.productPrice * x.cart.quantity
       });
@@ -64,19 +67,6 @@ export class CartDetailComponent extends AppComponentBase implements OnInit {
   }
 
   delete(cart: GetCartForViewDto) {
-    // this.message.confirm(
-    //   '',
-    //   this.l('AreYouSure'),
-    //   (isConfirmed) => {
-    //     if (isConfirmed) {
-    //       this._cartsServiceProxy.delete(cart.cart.id)
-    //         .subscribe(() => {
-    //           this.getAllCart();
-    //           this.notify.success(this.l('SuccessfullyDeleted'));
-    //         });
-    //     }
-    //   }
-    // );
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-danger btn_delete',
@@ -111,4 +101,7 @@ export class CartDetailComponent extends AppComponentBase implements OnInit {
     console.log(listCart)
   }
 
+  cartDetail(productName: string, productId: string) {
+    this._router.navigate(['/app/main/entity/product-detail', productId, productName]);  // define your component where you want to go
+  }
 }

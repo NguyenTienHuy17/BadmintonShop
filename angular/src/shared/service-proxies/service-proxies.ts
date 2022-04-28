@@ -2831,69 +2831,6 @@ export class CartsServiceProxy {
     }
 
     /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllProductForLookupTable(filter: string | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfCartProductLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/Carts/GetAllProductForLookupTable?";
-        if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
-        if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
-        if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllProductForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllProductForLookupTable(<any>response_);
-                } catch (e) {
-                    return <Observable<PagedResultDtoOfCartProductLookupTableDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<PagedResultDtoOfCartProductLookupTableDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetAllProductForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfCartProductLookupTableDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? PagedResultDtoOfCartProductLookupTableDto.fromJS(resultData200) : new PagedResultDtoOfCartProductLookupTableDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<PagedResultDtoOfCartProductLookupTableDto>(<any>null);
-    }
-
-    /**
      * @param input (optional) 
      * @return Success
      */
@@ -18014,6 +17951,7 @@ export class GetCartForViewDto implements IGetCartForViewDto {
     productName!: string | undefined;
     productImageUrl!: string | undefined;
     productPrice!: number | undefined;
+    product!: ProductDto | undefined;
 
     constructor(data?: IGetCartForViewDto) {
         if (data) {
@@ -18030,6 +17968,7 @@ export class GetCartForViewDto implements IGetCartForViewDto {
             this.productName = data["productName"];
             this.productImageUrl = data["productImageUrl"];
             this.productPrice = data["productPrice"];
+            this.product = data["product"] ? ProductDto.fromJS(data["product"]) : <any>undefined;
         }
     }
 
@@ -18046,6 +17985,7 @@ export class GetCartForViewDto implements IGetCartForViewDto {
         data["productName"] = this.productName;
         data["productImageUrl"] = this.productImageUrl;
         data["productPrice"] = this.productPrice;
+        data["product"] = this.product ? this.product.toJSON() : <any>undefined;
         return data; 
     }
 }
@@ -18055,6 +17995,7 @@ export interface IGetCartForViewDto {
     productName: string | undefined;
     productImageUrl: string | undefined;
     productPrice: number | undefined;
+    product: ProductDto | undefined;
 }
 
 export class CartDto implements ICartDto {
@@ -18098,6 +18039,102 @@ export class CartDto implements ICartDto {
 export interface ICartDto {
     quantity: number | undefined;
     productId: number | undefined;
+    id: number | undefined;
+}
+
+export class ProductDto implements IProductDto {
+    name!: string | undefined;
+    madeIn!: string | undefined;
+    code!: string | undefined;
+    price!: number | undefined;
+    inStock!: number | undefined;
+    description!: string | undefined;
+    color!: string | undefined;
+    size!: string | undefined;
+    title!: string | undefined;
+    imageId!: number | undefined;
+    brandId!: number | undefined;
+    categoryId!: number | undefined;
+    productImageUrl!: string | undefined;
+    brandName!: string | undefined;
+    categoryName!: string | undefined;
+    id!: number | undefined;
+
+    constructor(data?: IProductDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.name = data["name"];
+            this.madeIn = data["madeIn"];
+            this.code = data["code"];
+            this.price = data["price"];
+            this.inStock = data["inStock"];
+            this.description = data["description"];
+            this.color = data["color"];
+            this.size = data["size"];
+            this.title = data["title"];
+            this.imageId = data["imageId"];
+            this.brandId = data["brandId"];
+            this.categoryId = data["categoryId"];
+            this.productImageUrl = data["productImageUrl"];
+            this.brandName = data["brandName"];
+            this.categoryName = data["categoryName"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): ProductDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProductDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["madeIn"] = this.madeIn;
+        data["code"] = this.code;
+        data["price"] = this.price;
+        data["inStock"] = this.inStock;
+        data["description"] = this.description;
+        data["color"] = this.color;
+        data["size"] = this.size;
+        data["title"] = this.title;
+        data["imageId"] = this.imageId;
+        data["brandId"] = this.brandId;
+        data["categoryId"] = this.categoryId;
+        data["productImageUrl"] = this.productImageUrl;
+        data["brandName"] = this.brandName;
+        data["categoryName"] = this.categoryName;
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface IProductDto {
+    name: string | undefined;
+    madeIn: string | undefined;
+    code: string | undefined;
+    price: number | undefined;
+    inStock: number | undefined;
+    description: string | undefined;
+    color: string | undefined;
+    size: string | undefined;
+    title: string | undefined;
+    imageId: number | undefined;
+    brandId: number | undefined;
+    categoryId: number | undefined;
+    productImageUrl: string | undefined;
+    brandName: string | undefined;
+    categoryName: string | undefined;
     id: number | undefined;
 }
 
@@ -18183,94 +18220,6 @@ export interface ICreateOrEditCartDto {
     quantity: number | undefined;
     productId: number | undefined;
     id: number | undefined;
-}
-
-export class PagedResultDtoOfCartProductLookupTableDto implements IPagedResultDtoOfCartProductLookupTableDto {
-    totalCount!: number | undefined;
-    items!: CartProductLookupTableDto[] | undefined;
-
-    constructor(data?: IPagedResultDtoOfCartProductLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.totalCount = data["totalCount"];
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [] as any;
-                for (let item of data["items"])
-                    this.items!.push(CartProductLookupTableDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfCartProductLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfCartProductLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["totalCount"] = this.totalCount;
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface IPagedResultDtoOfCartProductLookupTableDto {
-    totalCount: number | undefined;
-    items: CartProductLookupTableDto[] | undefined;
-}
-
-export class CartProductLookupTableDto implements ICartProductLookupTableDto {
-    id!: number | undefined;
-    displayName!: string | undefined;
-
-    constructor(data?: ICartProductLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.id = data["id"];
-            this.displayName = data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): CartProductLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new CartProductLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data; 
-    }
-}
-
-export interface ICartProductLookupTableDto {
-    id: number | undefined;
-    displayName: string | undefined;
 }
 
 export class PagedResultDtoOfGetCategoryForViewDto implements IPagedResultDtoOfGetCategoryForViewDto {
@@ -22742,102 +22691,6 @@ export interface IOrderItemDto {
     quantity: number | undefined;
     productId: number | undefined;
     orderId: number | undefined;
-    id: number | undefined;
-}
-
-export class ProductDto implements IProductDto {
-    name!: string | undefined;
-    madeIn!: string | undefined;
-    code!: string | undefined;
-    price!: number | undefined;
-    inStock!: number | undefined;
-    description!: string | undefined;
-    color!: string | undefined;
-    size!: string | undefined;
-    title!: string | undefined;
-    imageId!: number | undefined;
-    brandId!: number | undefined;
-    categoryId!: number | undefined;
-    productImageUrl!: string | undefined;
-    brandName!: string | undefined;
-    categoryName!: string | undefined;
-    id!: number | undefined;
-
-    constructor(data?: IProductDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.name = data["name"];
-            this.madeIn = data["madeIn"];
-            this.code = data["code"];
-            this.price = data["price"];
-            this.inStock = data["inStock"];
-            this.description = data["description"];
-            this.color = data["color"];
-            this.size = data["size"];
-            this.title = data["title"];
-            this.imageId = data["imageId"];
-            this.brandId = data["brandId"];
-            this.categoryId = data["categoryId"];
-            this.productImageUrl = data["productImageUrl"];
-            this.brandName = data["brandName"];
-            this.categoryName = data["categoryName"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): ProductDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ProductDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        data["madeIn"] = this.madeIn;
-        data["code"] = this.code;
-        data["price"] = this.price;
-        data["inStock"] = this.inStock;
-        data["description"] = this.description;
-        data["color"] = this.color;
-        data["size"] = this.size;
-        data["title"] = this.title;
-        data["imageId"] = this.imageId;
-        data["brandId"] = this.brandId;
-        data["categoryId"] = this.categoryId;
-        data["productImageUrl"] = this.productImageUrl;
-        data["brandName"] = this.brandName;
-        data["categoryName"] = this.categoryName;
-        data["id"] = this.id;
-        return data; 
-    }
-}
-
-export interface IProductDto {
-    name: string | undefined;
-    madeIn: string | undefined;
-    code: string | undefined;
-    price: number | undefined;
-    inStock: number | undefined;
-    description: string | undefined;
-    color: string | undefined;
-    size: string | undefined;
-    title: string | undefined;
-    imageId: number | undefined;
-    brandId: number | undefined;
-    categoryId: number | undefined;
-    productImageUrl: string | undefined;
-    brandName: string | undefined;
-    categoryName: string | undefined;
     id: number | undefined;
 }
 
