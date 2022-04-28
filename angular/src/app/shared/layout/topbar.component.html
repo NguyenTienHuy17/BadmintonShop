@@ -56,7 +56,8 @@
     </div>
 
     <div *ngIf="'Pages.User' | permission" (click)="cartDetail()" class="kt-menu__link-text"
-        style="display: flex; align-items: center; margin: 0 6%;font-size: 19px;"><i class="fa fa-shopping-cart"></i>
+        style="display: flex; height: fit-content; padding: 10px; border-radius: 3px; align-items: center; margin: auto;font-size: 19px; border: 1px solid white;">
+        <i class="fa fa-shopping-cart"></i>
     </div>
     <div *ngIf="isImpersonatedLogin" (click)="signUp()" class="kt-header__topbar-user"
         style="color: white; display: flex; align-items: center; margin: 0 3%;font-size: 15px; cursor: pointer;">
@@ -65,7 +66,7 @@
         style="color: white; display: flex; align-items: center; margin: 0 3%;font-size: 15px; cursor: pointer;">
         {{l("SignIn")}}</div>
     <!-- <div headerNotifications class="kt-header__topbar-item dropdown" dropdown id="header_notification_bar"></div> -->
-    <div class="kt-header__topbar-item kt-header__topbar-item--user ml-1" dropdown>
+    <div class="kt-header__topbar-item kt-header__topbar-item--user ml-3" dropdown>
         <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="0px,0px" aria-expanded="false"
             dropdownToggle>
             <div class="kt-header__topbar-user">

@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="vi">
 	<texts>
+		<text name="RegisterSuccessfully">Đăng ký tài khoản thành công</text>
+		<text name="SuccessfullyPurchased">Đặt hàng thành công</text>
+		<text name="CreateBookingRequestSuccessfully">Hẹn lịch thành công</text>
+		<text name="CreateReturnProdSuccessfully">Tạo yêu cầu đổi trả thành công</text>
 		<text name="ReturnProd">Đổi trả</text>
 		<text name="DateOfBirth">Ngày sinh</text>
 		<text name="Descriptions">Mô tả</text>
@@ -187,10 +191,14 @@
 		<text name="Users">Người dùng</text>
 		
 		<text name="Identity.DuplicateName">Tên đã được sử dụng</text>
+		<text name="Identity.DuplicatePhoneNumber">Số điện thoại đã được sử dụng</text>
 		<text name="Identity.DuplicateEmail">Email đã được sử dụng</text>
 		<text name="Identity.DuplicateProduct">Sản phẩm đã được tạo</text>
 		<text name="Identity.DuplicateUserName">Tên đăng nhập đã được sử dụng</text>
 		<text name="CannotCreateNewUser">Không thể tạo người dùng mới</text>
+		
+		<text name="Ntf_AddedSuccessfully">Lưu thông tin sản phẩm thành công</text>
+		<text name="Ntf_AddedFailed">Lưu thông tin sản phẩm thất bại</text>
 		
 		<text name="InvalidFormMessage">Biểu mẫu của bạn không hợp lệ. Vui lòng kiểm tra và sửa lại.</text>
 		<text name="InvalidUserNameOrPassword">Sai tên truy cập hoặc mật khẩu</text>

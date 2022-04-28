@@ -257,15 +257,6 @@ namespace ERP.Entity
         [AbpAuthorize(AppPermissions.Pages_Products_Edit)]
         protected virtual async Task<long> Update(CreateOrEditProductDto input)
         {
-            var products = await _productRepository.GetAllListAsync();
-
-            var tempName = products.FirstOrDefault(x => x.Name == input.Name && x.Color == input.Color && x.Size == input.Size && x.Id == input.Id);
-
-            if (tempName != null)
-            {
-                throw new UserFriendlyException(L("Identity.DuplicateProduct"));
-            } 
-
             var product = await _productRepository.FirstOrDefaultAsync((long)input.Id);
             ObjectMapper.Map(input, product);
             return (long)input.Id;

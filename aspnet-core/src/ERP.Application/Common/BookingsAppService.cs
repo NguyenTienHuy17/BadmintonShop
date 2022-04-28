@@ -115,7 +115,6 @@ namespace ERP.Common
             }
         }
 
-        [AbpAuthorize(AppPermissions.Pages_Bookings_Create)]
         protected virtual async Task Create(CreateOrEditBookingDto input)
         {
             var booking = ObjectMapper.Map<Booking>(input);
@@ -129,7 +128,6 @@ namespace ERP.Common
 
         }
 
-        [AbpAuthorize(AppPermissions.Pages_Bookings_Edit)]
         protected virtual async Task Update(CreateOrEditBookingDto input)
         {
             var booking = await _bookingRepository.FirstOrDefaultAsync((long)input.Id);
@@ -137,7 +135,6 @@ namespace ERP.Common
 
         }
 
-        [AbpAuthorize(AppPermissions.Pages_Bookings_Delete)]
         public async Task Delete(EntityDto<long> input)
         {
             await _bookingRepository.DeleteAsync(input.Id);

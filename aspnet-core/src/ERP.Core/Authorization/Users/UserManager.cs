@@ -207,10 +207,10 @@ namespace ERP.Authorization.Users
             input.NormalizedUserName = input.UserName.ToUpper();
             var user = await _userRepository.GetAllListAsync();
 
-            var tempName = user.FirstOrDefault(i => i.Name == input.Name);
+            var tempName = user.FirstOrDefault(i => i.PhoneNumber == input.PhoneNumber);
             if (tempName != null)
             {
-                throw new UserFriendlyException(L("Identity.DuplicateName"));
+                throw new UserFriendlyException(L("Identity.DuplicatePhoneNumber"));
             }
             var tempEmail = user.FirstOrDefault(i => i.EmailAddress == input.EmailAddress);
 
@@ -239,10 +239,10 @@ namespace ERP.Authorization.Users
             input.NormalizedUserName = input.UserName.ToUpper();
             var userCheck = await _userRepository.GetAllListAsync();
 
-            var tempName = userCheck.FirstOrDefault(i => i.Name == input.Name && i.Id != input.Id);
+            var tempName = userCheck.FirstOrDefault(i => i.PhoneNumber == input.PhoneNumber && i.Id != input.Id);
             if (tempName != null)
             {
-                throw new UserFriendlyException(L("Identity.DuplicateName"));
+                throw new UserFriendlyException(L("Identity.DuplicatePhoneNumber"));
             }
             var tempEmail = userCheck.FirstOrDefault(i => i.EmailAddress == input.EmailAddress && i.Id != input.Id);
 

@@ -34,7 +34,7 @@ export class ReturnProdComponent extends AppComponentBase implements OnInit {
   save(): void {
     this._returnProdsServiceProxy.createOrEdit(this.returnProd)
       .subscribe(() => {
-        this.notify.info(this.l('SavedSuccessfully'));
+        this.notify.info(this.l('CreateReturnProdSuccessfully'));
         window.location.reload();
       });
   }

@@ -53,6 +53,7 @@ export class OrrderDetailModalComponent extends AppComponentBase implements OnIn
     for (var i = 0; i < 5; i++) {
       result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
     }
+    this.order.statusId = 1;
     this.order.orderCode = result;
     this.order.totalPrice = this.totalPrice;
     this.order.actualPrice = this.actualPrice;

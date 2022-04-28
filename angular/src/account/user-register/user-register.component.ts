@@ -47,7 +47,7 @@ export class UserRegisterComponent extends AppComponentBase implements OnInit {
     this._userService.createOrUpdateUser(input)
       .pipe(finalize(() => { this.saving = false; }))
       .subscribe(() => {
-        this.notify.info(this.l('SavedSuccessfully'));
+        this.notify.info(this.l('RegisterSuccessfully'));
         this.router.navigate(['/account/login']);
       });
   }
