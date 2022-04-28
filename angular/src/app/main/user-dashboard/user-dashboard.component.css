@@ -35,6 +35,10 @@ img {
     color: black;
 }
 
+.blog:hover h5 {
+    color: #1dc9b7;
+}
+
 .product-price {
     font-size: 1.5rem;
     font-weight: 600;
