@@ -94,3 +94,7 @@
     color: white;
     text-decoration: underline;
 }
+
+.navbar-nav li:hover a {
+    color: #1dc9b7;
+}

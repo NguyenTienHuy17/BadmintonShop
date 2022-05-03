@@ -59,3 +59,7 @@
 .item span {
     font-style: normal;
 }
+
+.navbar-nav li:hover a {
+    color: #1dc9b7;
+}

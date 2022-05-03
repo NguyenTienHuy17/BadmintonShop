@@ -3,13 +3,13 @@
     <div class="kt-portlet kt-portlet--mobile">
       <div class="kt-portlet__body">
         <div class="alert alert-danger" role="alert">
-          <div>
-            Để sử dụng hết các chức năng của hệ thống, vui lòng &nbsp; <a href="/account/login">Đăng
-              nhập /</a>&nbsp;<a href="/account/user-register">Đăng ký</a>
-          </div>
+          Để sử dụng hết các chức năng của hệ thống, vui lòng &nbsp; <a
+            style="color: white; text-decoration: underline;" href="/account/login">Đăng
+            nhập /</a>&nbsp;<a style="color: white; text-decoration: underline;" href="/account/user-register">Đăng
+            ký</a>
         </div>
         <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
-          <a class="navbar-brand" href="/account/product-list">CÔNG TY TNHH VISUAL SPORTS</a>
+          <p class="navbar-brand pt-4">CÔNG TY TNHH VISUAL SPORTS</p>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -93,17 +93,19 @@
                 </div>
               </div>
             </div>
-            <tabset class="mt-3">
-              <tab heading="{{'Descriptions' | localize}}">
-                <div class="row">
-                  <pre class="col-12"
-                    style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            <div class="mt-3">
+              <tabset class="mt-3">
+                <tab heading="{{'Descriptions' | localize}}">
+                  <div class="row">
+                    <pre class="col-12"
+                      style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
                      white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word; font-size: larger;">
                     {{product.product.description}}
                   </pre>
-                </div>
-              </tab>
-            </tabset>
+                  </div>
+                </tab>
+              </tabset>
+            </div>
           </div>
         </div>
       </div>

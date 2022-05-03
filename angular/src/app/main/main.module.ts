@@ -5,7 +5,6 @@ import { AppCommonModule } from '@app/shared/common/app-common.module';
 import { CartsComponent } from './common/carts/carts.component';
 import { ViewCartModalComponent } from './common/carts/view-cart-modal.component';
 import { CreateOrEditCartModalComponent } from './common/carts/create-or-edit-cart-modal.component';
-import { CartProductLookupTableModalComponent } from './common/carts/cart-product-lookup-table-modal.component';
 
 import { ReturnProdsComponent } from './purchase/returnProds/returnProds.component';
 import { ViewReturnProdModalComponent } from './purchase/returnProds/view-returnProd-modal.component';
@@ -135,7 +134,6 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
 		ViewCartModalComponent,
 		CreateOrEditCartModalComponent,
-		CartProductLookupTableModalComponent,
 		ReturnProdsComponent,
 
 		ViewReturnProdModalComponent,

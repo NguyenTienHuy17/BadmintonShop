@@ -55,7 +55,7 @@ export class UserDashboardComponent extends AppComponentBase implements OnInit {
     listBrand: Brand[] = [];
     listBlog: GetBlogForViewDto[] = [];
     bannerLeftUrl = '../../../../assets/common/images/bannerLeft.jpg';
-    bannerTopUrl = '../../../../assets/common/images/bannerTop.jpg';
+    bannerTopUrl = '../../../../assets/common/images/bg-home-video-01.jpg';
     constructor(
         injector: Injector,
         private _productsServiceProxy: ProductsServiceProxy,
