@@ -49,6 +49,7 @@ namespace ERP.Authorization.Users.Dto
 
         public DateTime DateOfBirth { get; set; }
         public string Address { get; set; }
+        public string PasswordRepeat { get; set; }
 
     }
 }

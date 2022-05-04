@@ -29805,6 +29805,7 @@ export class UserEditDto implements IUserEditDto {
     isLockoutEnabled!: boolean | undefined;
     dateOfBirth!: moment.Moment | undefined;
     address!: string | undefined;
+    passwordRepeat!: string | undefined;
 
     constructor(data?: IUserEditDto) {
         if (data) {
@@ -29830,6 +29831,7 @@ export class UserEditDto implements IUserEditDto {
             this.isLockoutEnabled = data["isLockoutEnabled"];
             this.dateOfBirth = data["dateOfBirth"] ? moment(data["dateOfBirth"].toString()) : <any>undefined;
             this.address = data["address"];
+            this.passwordRepeat = data["passwordRepeat"];
         }
     }
 
@@ -29855,6 +29857,7 @@ export class UserEditDto implements IUserEditDto {
         data["isLockoutEnabled"] = this.isLockoutEnabled;
         data["dateOfBirth"] = this.dateOfBirth ? this.dateOfBirth.toISOString() : <any>undefined;
         data["address"] = this.address;
+        data["passwordRepeat"] = this.passwordRepeat;
         return data; 
     }
 }
@@ -29873,6 +29876,7 @@ export interface IUserEditDto {
     isLockoutEnabled: boolean | undefined;
     dateOfBirth: moment.Moment | undefined;
     address: string | undefined;
+    passwordRepeat: string | undefined;
 }
 
 export class UserRoleDto implements IUserRoleDto {
