@@ -48,7 +48,7 @@ namespace ERP.MultiTenancy.HostDashboard
                 DashboardPlaceholder2 = 830,
                 NewTenantsCount = await GetTenantsCountByDate(input.StartDate, input.EndDate),
                 NewSubscriptionAmount = await GetNewSubscriptionAmount(input.StartDate, input.EndDate),
-                IncomeStatistics = await _incomeStatisticsService.GetIncomeStatisticsData(input.StartDate, input.EndDate, input.IncomeStatisticsDateInterval),
+                IncomeStatistics = await _incomeStatisticsService.GetOrderIncomeStatisticsData(input.StartDate, input.EndDate, input.IncomeStatisticsDateInterval),
                 EditionStatistics = await GetEditionTenantStatisticsData(input.StartDate, input.EndDate),
                 ExpiringTenants = await GetExpiringTenantsData(subscriptionEndDateStartUtc, subscriptionEndDateEndUtc, MaxExpiringTenantsShownCount),
                 RecentTenants = await GetRecentTenantsData(tenantCreationStartDate, MaxRecentTenantsShownCount),

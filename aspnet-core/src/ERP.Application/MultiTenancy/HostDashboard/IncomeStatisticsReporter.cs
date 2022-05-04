@@ -6,16 +6,22 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ERP.MultiTenancy.HostDashboard.Dto;
 using ERP.MultiTenancy.Payments;
+using Abp.Domain.Repositories;
+using ERP.Entity;
+using ERP.Purchase;
 
 namespace ERP.MultiTenancy.HostDashboard
 {
     public class IncomeStatisticsService : ERPDomainServiceBase, IIncomeStatisticsService
     {
         private readonly ISubscriptionPaymentRepository _subscriptionPaymentRepository;
+        private readonly IRepository<Order, long> _orderRepository;
 
-        public IncomeStatisticsService(ISubscriptionPaymentRepository subscriptionPaymentRepository)
+        public IncomeStatisticsService(ISubscriptionPaymentRepository subscriptionPaymentRepository,
+            IRepository<Order, long> orderRepository)
         {
             _subscriptionPaymentRepository = subscriptionPaymentRepository;
+            _orderRepository = orderRepository;
         }
 
         private async Task<List<IncomeStastistic>> GetDailyIncomeStatisticsData(DateTime startDate, DateTime endDate)
@@ -29,6 +35,23 @@ namespace ERP.MultiTenancy.HostDashboard
                 {
                     Date = s.First().CreationTime.Date,
                     Amount = s.Sum(c => c.Amount)
+                })
+                .ToListAsync();
+
+            FillGapsInDailyIncomeStatistics(dailyRecords, startDate, endDate);
+            return dailyRecords.OrderBy(s => s.Date).ToList();
+        }
+
+        private async Task<List<IncomeStastistic>> GetDailyOrderIncomeStatisticsData(DateTime startDate, DateTime endDate)
+        {
+            var dailyRecords = await _orderRepository.GetAll()
+                .Where(s => s.CreationTime >= startDate &&
+                            s.CreationTime <= endDate)
+                .GroupBy(s => new DateTime(s.CreationTime.Year, s.CreationTime.Month, s.CreationTime.Day))
+                .Select(s => new IncomeStastistic
+                {
+                    Date = s.First().CreationTime.Date,
+                    Amount = s.Sum(c => c.ActualPrice)
                 })
                 .ToListAsync();
 
@@ -78,6 +101,34 @@ namespace ERP.MultiTenancy.HostDashboard
             return incomeStastistics.OrderBy(i => i.Date).ToList();
         }
 
+        public async Task<List<IncomeStastistic>> GetOrderIncomeStatisticsData(DateTime startDate, DateTime endDate,
+            ChartDateInterval dateInterval)
+        {
+            List<IncomeStastistic> incomeStastistics;
+
+            switch (dateInterval)
+            {
+                case ChartDateInterval.Daily:
+                    incomeStastistics = await GetDailyOrderIncomeStatisticsData(startDate, endDate);
+                    break;
+                case ChartDateInterval.Weekly:
+                    incomeStastistics = await GetWeeklyOrderIncomeStatisticsData(startDate, endDate);
+                    break;
+                case ChartDateInterval.Monthly:
+                    incomeStastistics = await GetMonthlyOrderIncomeStatisticsData(startDate, endDate);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(dateInterval), dateInterval, null);
+            }
+
+            incomeStastistics.ForEach(i =>
+            {
+                i.Label = i.Date.ToString(L("DateFormatShort"));
+            });
+
+            return incomeStastistics.OrderBy(i => i.Date).ToList();
+        }
+
         private async Task<List<IncomeStastistic>> GetWeeklyIncomeStatisticsData(DateTime startDate, DateTime endDate)
         {
             var dailyRecords = await GetDailyIncomeStatisticsData(startDate, endDate);
@@ -111,9 +162,59 @@ namespace ERP.MultiTenancy.HostDashboard
             return incomeStastistics;
         }
 
+        private async Task<List<IncomeStastistic>> GetWeeklyOrderIncomeStatisticsData(DateTime startDate, DateTime endDate)
+        {
+            var dailyRecords = await GetDailyOrderIncomeStatisticsData(startDate, endDate);
+            var firstDayOfWeek = DateTimeFormatInfo.CurrentInfo == null
+                ? DayOfWeek.Sunday
+                : DateTimeFormatInfo.CurrentInfo.FirstDayOfWeek;
+
+            var incomeStastistics = new List<IncomeStastistic>();
+            decimal weeklyAmount = 0;
+            var weekStart = dailyRecords.First().Date;
+            var isFirstWeek = weekStart.DayOfWeek == firstDayOfWeek;
+
+            dailyRecords.ForEach(dailyRecord =>
+            {
+                if (dailyRecord.Date.DayOfWeek == firstDayOfWeek)
+                {
+                    if (!isFirstWeek)
+                    {
+                        incomeStastistics.Add(new IncomeStastistic(weekStart, weeklyAmount));
+                    }
+
+                    isFirstWeek = false;
+                    weekStart = dailyRecord.Date;
+                    weeklyAmount = 0;
+                }
+
+                weeklyAmount += dailyRecord.Amount;
+            });
+
+            incomeStastistics.Add(new IncomeStastistic(weekStart, weeklyAmount));
+            return incomeStastistics;
+        }
+
         private async Task<List<IncomeStastistic>> GetMonthlyIncomeStatisticsData(DateTime startDate, DateTime endDate)
         {
             var dailyRecords = await GetDailyIncomeStatisticsData(startDate, endDate);
+            var query = dailyRecords.GroupBy(d => new
+            {
+                d.Date.Year,
+                d.Date.Month
+            })
+            .Select(grouping => new IncomeStastistic
+            {
+                Date = FindMonthlyDate(startDate, grouping.Key.Year, grouping.Key.Month),
+                Amount = grouping.DefaultIfEmpty().Sum(x => x.Amount)
+            });
+
+            return query.ToList();
+        }
+
+        private async Task<List<IncomeStastistic>> GetMonthlyOrderIncomeStatisticsData(DateTime startDate, DateTime endDate)
+        {
+            var dailyRecords = await GetDailyOrderIncomeStatisticsData(startDate, endDate);
             var query = dailyRecords.GroupBy(d => new
             {
                 d.Date.Year,

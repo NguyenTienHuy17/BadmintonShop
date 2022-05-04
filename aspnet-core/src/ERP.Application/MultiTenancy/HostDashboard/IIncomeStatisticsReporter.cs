@@ -9,5 +9,7 @@ namespace ERP.MultiTenancy.HostDashboard
     {
         Task<List<IncomeStastistic>> GetIncomeStatisticsData(DateTime startDate, DateTime endDate,
             ChartDateInterval dateInterval);
+        Task<List<IncomeStastistic>> GetOrderIncomeStatisticsData(DateTime startDate, DateTime endDate,
+            ChartDateInterval dateInterval);
     }
 }
