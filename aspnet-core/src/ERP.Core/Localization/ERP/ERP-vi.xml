@@ -208,6 +208,8 @@
 		<text name="Accessories">Phụ kiện</text>
 		<text name="Returns">Đổi trả hàng</text>
 		
+		<text name="Reply">Gửi</text>
+		
 		<text name="InvalidFormMessage">Biểu mẫu của bạn không hợp lệ. Vui lòng kiểm tra và sửa lại.</text>
 		<text name="InvalidUserNameOrPassword">Sai tên truy cập hoặc mật khẩu</text>
 		<text name="ThereIsNoTenantDefinedWithName{0}">Không có thuê bao được định nghĩa với tên {0}</text>
