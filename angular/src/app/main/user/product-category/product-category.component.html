@@ -3,9 +3,9 @@
         <div class="kt-portlet kt-portlet--mobile">
             <div class="kt-portlet__body">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3 d-flex justify-content-center">
-                    <form class="form-inline my-2 my-lg-0">
-                        <input [(ngModel)]="filterText" name="filterText" autoFocus class="form-control mr-sm-2"
-                            [placeholder]="l('SearchWithThreeDot')" type="search">
+                    <form class="form-inline my-2 my-lg-0 d-flex justify-content-center" style="width: 100%;">
+                        <input [(ngModel)]="filterText" style="width: 60%;" name="filterText" autoFocus
+                            class="form-control mr-sm-2" [placeholder]="l('SearchWithThreeDot')" type="search">
                         <span class="input-group-btn">
                             <button (click)="getProducts()" class="btn btn-outline-success my-2 my-sm-0"
                                 type="submit"><i class="flaticon-search-1"></i></button>
@@ -44,7 +44,7 @@
                                 [responsive]="primengTableHelper.isResponsive"
                                 [resizableColumns]="primengTableHelper.resizableColumns">
                                 <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
-                                    <div (click)="detail(record)" class="col-4 product-cart" style="cursor: pointer; float: left; border: 0.5px solid white; border-radius: 10px; 
+                                    <div (click)="detail(record)" class="col-3 product-cart" style="cursor: pointer; float: left; border: 0.5px solid white; border-radius: 10px; 
                                             margin: 15px 0px;">
                                         <div class="d-flex justify-content-between mt-2 mb-2">
                                             <div>
@@ -62,7 +62,8 @@
                                                 alt="Card image cap">
                                         </div>
                                         <div class="product-grid-item-content">
-                                            <div class="product-name" style="font-size: medium;">{{record.name}}</div>
+                                            <div class="product-name text-truncate"
+                                                style="font-size: medium; max-width: 90%;">{{record.name}}</div>
                                         </div>
                                         <div class="product-grid-item-bottom text-center">
                                             <span class="product-price">{{record.price.toLocaleString('it-IT', {style :

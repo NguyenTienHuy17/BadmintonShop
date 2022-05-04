@@ -54,6 +54,37 @@ export class ProductCategoryComponent extends AppComponentBase implements OnInit
     this._activatedRoute.params.subscribe((params: Params) => {
       this.categoryId = params['categoryId'];
     });
+    this.router.events.subscribe((event) => {
+      this.getProductsOnLoading()
+    });
+  }
+
+  getProductsOnLoading() {
+    this.primengTableHelper.showLoadingIndicator();
+
+    this._productsServiceProxy.getAllByCategoryId(
+      this.filterText,
+      this.nameFilter,
+      this.madeInFilter,
+      this.codeFilter,
+      this.maxPriceFilter == null ? this.maxPriceFilterEmpty : this.maxPriceFilter,
+      this.minPriceFilter == null ? this.minPriceFilterEmpty : this.minPriceFilter,
+      this.maxInStockFilter == null ? this.maxInStockFilterEmpty : this.maxInStockFilter,
+      this.minInStockFilter == null ? this.minInStockFilterEmpty : this.minInStockFilter,
+      this.descriptionFilter,
+      this.titleFilter,
+      this.imageNameFilter,
+      this.brandNameFilter,
+      this.categoryNameFilter,
+      this.primengTableHelper.getSorting(this.dataTable),
+      0,
+      12,
+      this.categoryId
+    ).subscribe(result => {
+      this.primengTableHelper.totalRecordsCount = result.totalCount;
+      this.primengTableHelper.records = result.items;
+      this.primengTableHelper.hideLoadingIndicator();
+    });
   }
 
   getProducts(event?: LazyLoadEvent) {

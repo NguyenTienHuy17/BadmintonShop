@@ -614,18 +614,9 @@ namespace ERP.Entity
                         .Where(x => x.BrandId == brandId)
                         .Include(e => e.BrandFk)
                         .Include(e => e.CategoryFk)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.MadeIn.Contains(input.Filter) || e.Code.Contains(input.Filter) || e.Description.Contains(input.Filter) || e.Title.Contains(input.Filter))
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name == input.NameFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.MadeInFilter), e => e.MadeIn == input.MadeInFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.CodeFilter), e => e.Code == input.CodeFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.MadeIn.Contains(input.Filter) || e.Code.Contains(input.Filter))
                         .WhereIf(input.MinPriceFilter != null, e => e.Price >= input.MinPriceFilter)
-                        .WhereIf(input.MaxPriceFilter != null, e => e.Price <= input.MaxPriceFilter)
-                        .WhereIf(input.MinInStockFilter != null, e => e.InStock >= input.MinInStockFilter)
-                        .WhereIf(input.MaxInStockFilter != null, e => e.InStock <= input.MaxInStockFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionFilter), e => e.Description == input.DescriptionFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.TitleFilter), e => e.Title == input.TitleFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.BrandNameFilter), e => e.BrandFk != null && e.BrandFk.Name == input.BrandNameFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.CategoryNameFilter), e => e.CategoryFk != null && e.CategoryFk.Name == input.CategoryNameFilter);
+                        .WhereIf(input.MaxPriceFilter != null, e => e.Price <= input.MaxPriceFilter);
 
                 var pagedAndFilteredProducts = filteredProducts
                     .OrderBy(input.Sorting ?? "id asc");
@@ -708,18 +699,9 @@ namespace ERP.Entity
                         .Where(x => x.CategoryId == categoryId)
                         .Include(e => e.BrandFk)
                         .Include(e => e.CategoryFk)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.MadeIn.Contains(input.Filter) || e.Code.Contains(input.Filter) || e.Description.Contains(input.Filter) || e.Title.Contains(input.Filter))
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name == input.NameFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.MadeInFilter), e => e.MadeIn == input.MadeInFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.CodeFilter), e => e.Code == input.CodeFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.MadeIn.Contains(input.Filter) || e.Code.Contains(input.Filter))
                         .WhereIf(input.MinPriceFilter != null, e => e.Price >= input.MinPriceFilter)
-                        .WhereIf(input.MaxPriceFilter != null, e => e.Price <= input.MaxPriceFilter)
-                        .WhereIf(input.MinInStockFilter != null, e => e.InStock >= input.MinInStockFilter)
-                        .WhereIf(input.MaxInStockFilter != null, e => e.InStock <= input.MaxInStockFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionFilter), e => e.Description == input.DescriptionFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.TitleFilter), e => e.Title == input.TitleFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.BrandNameFilter), e => e.BrandFk != null && e.BrandFk.Name == input.BrandNameFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.CategoryNameFilter), e => e.CategoryFk != null && e.CategoryFk.Name == input.CategoryNameFilter);
+                        .WhereIf(input.MaxPriceFilter != null, e => e.Price <= input.MaxPriceFilter);
 
                 var pagedAndFilteredProducts = filteredProducts
                     .OrderBy(input.Sorting ?? "id asc");

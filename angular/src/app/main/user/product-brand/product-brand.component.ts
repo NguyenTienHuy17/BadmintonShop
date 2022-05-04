@@ -77,7 +77,7 @@ export class ProductBrandComponent extends AppComponentBase implements OnInit {
       this.categoryNameFilter,
       this.primengTableHelper.getSorting(this.dataTable),
       0,
-      10,
+      12,
       this.brandId
     ).subscribe(result => {
       this.brandId = 0;
@@ -113,7 +113,6 @@ export class ProductBrandComponent extends AppComponentBase implements OnInit {
       this.primengTableHelper.getMaxResultCount(this.paginator, event),
       this.brandId
     ).subscribe(result => {
-      this.brandId = 0;
       this.primengTableHelper.totalRecordsCount = result.totalCount;
       this.primengTableHelper.records = result.items;
       this.primengTableHelper.hideLoadingIndicator();
