@@ -34,16 +34,16 @@ export class AppNavigationService {
                     new AppMenuItem('Apacs', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-brand/11'),
                 ]),
                 new AppMenuItem('Category', 'Pages.User', 'pi pi-arrow-circle-right', '', [
-                    new AppMenuItem('Vợt cầu lông', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-category/1'),
-                    new AppMenuItem('Áo', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-category/2'),
-                    new AppMenuItem('Quần', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-category/3'),
-                    new AppMenuItem('Giày', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-category/4'),
-                    new AppMenuItem('Phụ kiện ', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-category/5'),
+                    new AppMenuItem('Rackets', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-category/1'),
+                    new AppMenuItem('Shirts', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-category/2'),
+                    new AppMenuItem('Pants', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-category/3'),
+                    new AppMenuItem('Shoes', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-category/4'),
+                    new AppMenuItem('Accessories', 'Pages.User', 'pi pi-arrow-circle-right', '/app/main/user/product-category/5'),
                 ]),
 
             ]),
-            new AppMenuItem('Hẹn lịch', 'Pages.User', 'pi pi-calendar-plus', '/app/main/user/booking'),
-            new AppMenuItem('Đổi trả hàng', 'Pages.User', 'pi pi-replay', '/app/main/user/returnProd'),
+            new AppMenuItem('Bookings', 'Pages.User', 'pi pi-calendar-plus', '/app/main/user/booking'),
+            new AppMenuItem('Returns', 'Pages.User', 'pi pi-replay', '/app/main/user/returnProd'),
             new AppMenuItem('UserOrders', 'Pages.User', 'pi pi-th-large', '/app/main/user/user-orders'),
             new AppMenuItem('AboutUs', 'Pages.User', 'pi pi-info', '/app/main/about-us'),
             new AppMenuItem('Store', '', 'pi pi-list', '', [
@@ -83,10 +83,10 @@ export class AppNavigationService {
                 new AppMenuItem('Languages', 'Pages.Administration.Languages', 'flaticon-tabs', '/app/admin/languages'),
                 // new AppMenuItem('AuditLogs', 'Pages.Administration.AuditLogs', 'flaticon-folder-1', '/app/admin/auditLogs'),
                 // new AppMenuItem('Maintenance', 'Pages.Administration.Host.Maintenance', 'flaticon-lock', '/app/admin/maintenance'),
-                new AppMenuItem('Subscription', 'Pages.Administration.Tenant.SubscriptionManagement', 'flaticon-refresh', '/app/admin/subscription-management'),
-                new AppMenuItem('VisualSettings', 'Pages.Administration.UiCustomization', 'flaticon-medical', '/app/admin/ui-customization'),
-                new AppMenuItem('Settings', 'Pages.Administration.Host.Settings', 'flaticon-settings', '/app/admin/hostSettings'),
-                new AppMenuItem('Settings', 'Pages.Administration.Tenant.Settings', 'flaticon-settings', '/app/admin/tenantSettings')
+                // new AppMenuItem('Subscription', 'Pages.Administration.Tenant.SubscriptionManagement', 'flaticon-refresh', '/app/admin/subscription-management'),
+                // new AppMenuItem('VisualSettings', 'Pages.Administration.UiCustomization', 'flaticon-medical', '/app/admin/ui-customization'),
+                // new AppMenuItem('Settings', 'Pages.Administration.Host.Settings', 'flaticon-settings', '/app/admin/hostSettings'),
+                // new AppMenuItem('Settings', 'Pages.Administration.Tenant.Settings', 'flaticon-settings', '/app/admin/tenantSettings')
             ]),
             // new AppMenuItem('DemoUiComponents', 'Pages.DemoUiComponents', 'flaticon-shapes', '/app/admin/demo-ui-components')
         ]);
