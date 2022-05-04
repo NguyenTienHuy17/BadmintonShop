@@ -1,4 +1,4 @@
-import { Options } from '@angular-slider/ngx-slider';
+import { LabelType, Options } from '@angular-slider/ngx-slider';
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
@@ -38,7 +38,17 @@ export class ProductCategoryComponent extends AppComponentBase implements OnInit
   categoryId: number;
   options: Options = {
     floor: 0,
-    ceil: 10000000
+    ceil: 10000000,
+    translate: (value: number, label: LabelType): string => {
+      switch (label) {
+        case LabelType.Low:
+          return value.toLocaleString();
+        case LabelType.High:
+          return value.toLocaleString();
+        default:
+          return value.toLocaleString();
+      }
+    }
   };
   bannerUrl = '../../../../assets/common/images/bannerLeft.jpg';
   constructor(
