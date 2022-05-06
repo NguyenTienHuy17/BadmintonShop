@@ -58,10 +58,10 @@ namespace ERP.Web.Controllers
 					throw new Exception(L("IncorrectImageFormat"));
 				}
 
-				DirectoryHelper.CreateIfNotExists("E:/Đồ án tốt nghiệp/ERP/angular/src/assets/common/images");
+				DirectoryHelper.CreateIfNotExists("C:/inetpub/webs/Live/ng/assets/common/images");
 
 				var tempFileName = System.Guid.NewGuid() + Path.GetExtension(file.FileName);
-				var tempFilePath = Path.Combine("E:/Đồ án tốt nghiệp/ERP/angular/src/assets/common/images", tempFileName);
+				var tempFilePath = Path.Combine("C:/inetpub/webs/Live/ng/assets/common/images", tempFileName);
 
 				System.IO.File.WriteAllBytesAsync(tempFilePath, fileBytes);
 
@@ -122,10 +122,10 @@ namespace ERP.Web.Controllers
 
 					var productId = Convert.ToInt32(Request.Form[Request.Form.Keys.FirstOrDefault()]);
 
-					DirectoryHelper.CreateIfNotExists("E:/Đồ án tốt nghiệp/ERP/angular/src/assets/common/images");
+					DirectoryHelper.CreateIfNotExists("C:/inetpub/webs/Live/ng/assets/common/images");
 
 					var tempFileName = System.Guid.NewGuid() + Path.GetExtension(file.FileName);
-					var tempFilePath = Path.Combine("E:/Đồ án tốt nghiệp/ERP/angular/src/assets/common/images", tempFileName);
+					var tempFilePath = Path.Combine("C:/inetpub/webs/Live/ng/assets/common/images", tempFileName);
 
 					System.IO.File.WriteAllBytes(tempFilePath, fileBytes);
 
