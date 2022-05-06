@@ -57,6 +57,7 @@ export class ProductListComponent extends AppComponentBase implements OnInit {
   listBrand: Brand[] = [];
   listBlog: GetBlogForViewDto[] = [];
   bannerLeftUrl = '../../../../assets/common/images/bannerLeft.jpg';
+  bannerLeftUrl2 = '../../../../assets/common/images/yonex-vertical.png';
   bannerTopUrl = '../../../../assets/common/images/bg-home-video-01.jpg';
   startIndex: number;
 
