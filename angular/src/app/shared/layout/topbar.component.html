@@ -105,7 +105,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="javascript:;" class="kt-notification__item linked-accounts" (click)="showLinkedAccounts()">
+                <!-- <a href="javascript:;" class="kt-notification__item linked-accounts" (click)="showLinkedAccounts()">
                     <div class="kt-notification__item-icon">
                         <i class="flaticon-user-settings"></i>
                     </div>
@@ -116,7 +116,7 @@
                             </span>
                         </div>
                     </div>
-                </a>
+                </a> -->
                 <div class="kt-notification__custom py-0 linked-accounts">
                     <ul class="kt-nav linked-accounts" *ngIf="recentlyLinkedUsers"
                         [attr.aria-label]="l('LinkedAccounts')">
@@ -145,7 +145,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="javascript:;" class="kt-notification__item" (click)="showLoginAttempts()">
+                <!-- <a href="javascript:;" class="kt-notification__item" (click)="showLoginAttempts()">
                     <div class="kt-notification__item-icon">
                         <i class="flaticon-list"></i>
                     </div>
@@ -156,7 +156,7 @@
                             </span>
                         </div>
                     </div>
-                </a>
+                </a> -->
                 <a href="javascript:;" class="kt-notification__item" (click)="changeProfilePicture()">
                     <div class="kt-notification__item-icon">
                         <i class="flaticon-profile-1"></i>
@@ -181,7 +181,7 @@
                         </div>
                     </div>
                 </a>
-                <a *ngIf="!('Pages.Administration.UiCustomization' | permission)" routerLink="admin/ui-customization"
+                <!-- <a *ngIf="!('Pages.Administration.UiCustomization' | permission)" routerLink="admin/ui-customization"
                     class="kt-notification__item">
                     <div class="kt-notification__item-icon">
                         <i class="flaticon-medical"></i>
@@ -205,7 +205,7 @@
                             </span>
                         </div>
                     </div>
-                </a>
+                </a> -->
                 <div class="kt-notification__custom">
                     <a (click)="logout()" class="btn btn-label-brand btn-sm btn-bold">{{"Logout" | localize}}</a>
                 </div>
