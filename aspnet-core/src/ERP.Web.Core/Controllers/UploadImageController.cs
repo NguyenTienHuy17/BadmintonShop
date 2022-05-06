@@ -79,7 +79,7 @@ namespace ERP.Web.Controllers
 			try
 			{
 				var listFile = Request.Form.Files;
-
+				Logger.Info("Check file");
 				var result = new List<string>();
 				if (listFile.Count > 20)
 				{
@@ -104,6 +104,7 @@ namespace ERP.Web.Controllers
 					{
 						fileBytes = stream.GetAllBytes();
 					}
+					Logger.Info("Check image");
 
 					var isImage = CheckFileIsImage(file.ContentType);
 
@@ -126,16 +127,20 @@ namespace ERP.Web.Controllers
 
 					var tempFileName = System.Guid.NewGuid() + Path.GetExtension(file.FileName);
 					var tempFilePath = Path.Combine("C:/inetpub/webs/Live/ng/assets/common/images", tempFileName);
+					Logger.Info("Check đường dẫn");
 
 					System.IO.File.WriteAllBytes(tempFilePath, fileBytes);
 
 					result.Add(tempFileName);
+					Logger.Info("Thành công");
+
 				}
 				return result;
 			}
 			catch (UserFriendlyException ex)
 			{
 				return new List<string>();
+				Logger.Error(ex.Message);
 			}
 		}
 
