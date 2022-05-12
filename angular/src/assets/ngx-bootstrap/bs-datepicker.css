@@ -179,7 +179,8 @@
 
 .bs-datepicker-body table td span.selected,
 .bs-datepicker-body table td.selected span {
-  color: #fff;
+  color: rgb(0, 0, 0);
+  background-color: #34bfa3;
 }
 
 .bs-datepicker-body table td.active {
