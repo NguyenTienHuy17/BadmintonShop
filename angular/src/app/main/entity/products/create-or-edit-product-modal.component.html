@@ -78,14 +78,14 @@
 						</validation-messages>
 					</div>
 
-					<div class="form-group">
+					<div class="form-group" *ngIf="product.categoryId==5">
 						<label for="Product_Color">{{l("Colors")}}</label>
 						<input type="text" #Product_Color="ngModel" id="Product_Color" class="form-control"
 							[(ngModel)]="product.color" name="Color" />
 						<validation-messages [formCtrl]="Product_Color"></validation-messages>
 					</div>
 
-					<div class="form-group">
+					<div class="form-group" *ngIf="product.categoryId!=1 && product.categoryId!=5">
 						<label for="Product_Size">{{l("Size")}}</label>
 						<input type="text" #Product_Size="ngModel" id="Product_Size" class="form-control"
 							[(ngModel)]="product.size" name="Description" />
