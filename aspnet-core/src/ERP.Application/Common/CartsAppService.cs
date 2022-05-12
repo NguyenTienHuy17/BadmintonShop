@@ -243,7 +243,7 @@ namespace ERP.Common
             {
                 var listCart = _cartRepository.GetAll().Where(x => x.CreatorUserId == _abpSession.GetUserId());
                 var productImages = _lookup_productImageRepository.GetAll().GroupBy(x => x.ProductId);
-                var products = _productRepository.GetAll().GroupBy(x => x.Name);
+                var products = await _productRepository.GetAll().ToListAsync();
 
                 var listProdImg = new List<ProductImage>();
                 //iterate each group        
@@ -252,13 +252,22 @@ namespace ERP.Common
                     //Each group has a key
                     listProdImg.Add((ProductImage)productImage.FirstOrDefault());
                 }
-
+                var listProdId = new List<long>();
+                foreach (var cartItem in listCart)
+                {
+                    listProdId.Add(cartItem.ProductId);
+                }
                 var listProd = new List<Product>();
                 //iterate each group        
                 foreach (var product in products)
                 {
-                    //Each group has a key
-                    listProd.Add((Product)product.FirstOrDefault());
+                    foreach(var productId in listProdId)
+                    {
+                        if (product.Id == productId)
+                        {
+                            listProd.Add((Product)product);
+                        }
+                    }
                 }
                 var carts = from o in listCart
 
