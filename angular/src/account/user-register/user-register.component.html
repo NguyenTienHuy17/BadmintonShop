@@ -48,8 +48,9 @@
 
             <div class="form-group col-6">
               <label for="DateOfBirth">{{l("DateOfBirth")}}</label>
-              <input required class="form-control m-input" #DateOfBirth type="datetime" bsDatepicker
-                [(ngModel)]="user.dateOfBirth" id="DateOfBirth" name="DateOfBirth">
+              <input required [placeholder]="'Ngày sinh'" class="form-control m-input" #DateOfBirth type="datetime"
+                bsDatepicker [bsConfig]="{dateInputFormat : 'DD/MM/YYYY', showWeekNumbers:false, color: '#66666'}"
+                [(ngModel)]="user.dateOfBirth" id="DateOfBirth" autocomplete="off" name="DateOfBirth">
             </div>
 
             <div class="form-group col-6">
@@ -57,30 +58,6 @@
               <input id="Address" #AddressInput="ngModel" type="text" name="Address" class="form-control"
                 [(ngModel)]="user.address" maxlength="1024" autocomplete="off">
             </div>
-
-            <!-- <div class="col-md-3">
-              <div class="form-group">
-                  <label for="MinTimeFilter">{{l("TimeRange")}}</label>
-                  <div class="input-group">
-                      <input class="form-control m-input" id="MinTimeFilter" name="MinTimeFilter"
-                          type="datetime" bsDatepicker placeholder="{{l('MinValue')}}"
-                          [(ngModel)]="minTimeFilter">
-                      <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
-                      <input class="form-control m-input" id="MaxTimeFilter" name="MaxTimeFilter"
-                          type="datetime" bsDatepicker placeholder="{{l('MaxValue')}}"
-                          [(ngModel)]="maxTimeFilter">
-                  </div>
-              </div>
-          </div> -->
-
-            <!-- <div class="kt-checkbox-list">
-              <label for="EditUser_SetRandomPassword" class="kt-checkbox">
-                <input id="EditUser_SetRandomPassword" type="checkbox" name="SetRandomPassword"
-                  [(ngModel)]="setRandomPassword">
-                {{"SetRandomPassword" | localize}}
-                <span></span>
-              </label>
-            </div> -->
             <div class="form-group col-6">
               <div class="right">
                 <label for="Password">{{"Password" | localize}}</label>
@@ -91,7 +68,7 @@
                   [requireUppercase]="passwordComplexitySetting.requireUppercase"
                   [requireNonAlphanumeric]="passwordComplexitySetting.requireNonAlphanumeric"
                   [requiredLength]="passwordComplexitySetting.requiredLength" validateEqual="PasswordRepeat"
-                  reverse="true">
+                  reverse="true" autocomplete="off">
               </div>
               <div [hidden]="userForm.form.valid || userForm.form.pristine">
                 <ul class="help-block text-danger"
