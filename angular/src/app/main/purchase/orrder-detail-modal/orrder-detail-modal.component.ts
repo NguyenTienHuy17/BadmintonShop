@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { CartsServiceProxy, CreateOrEditOrderDto, CreateOrEditOrderItemDto, Discount, DiscountsServiceProxy, GetCartForViewDto, OrderItemsServiceProxy, OrdersServiceProxy } from '@shared/service-proxies/service-proxies';
 import { ModalDirective } from 'ngx-bootstrap';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'orrder-detail-modal',
@@ -58,11 +59,28 @@ export class OrrderDetailModalComponent extends AppComponentBase implements OnIn
     this.order.totalPrice = this.totalPrice;
     this.order.actualPrice = this.actualPrice;
     this.order.discountAmount = this.totalPrice - this.actualPrice;
-    this.message.confirm(
-      '',
-      this.l('AreYouSureToPurchase'),
-      async (isConfirmed) => {
-        if (isConfirmed) {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success btn_success',
+        cancelButton: 'btn btn-primary btn_cancel',
+      },
+      buttonsStyling: false,
+    })
+
+    swalWithBootstrapButtons
+      .fire({
+        title: this.l('AreYouSureToPurchase'),
+        // text: this.l('Hãy chắc chắn bạn muốn xóa'),
+        imageUrl: this.appRootUrl() + 'assets/common/images/danger.PNG',
+        imageWidth: 60,
+        imageHeight: 50,
+        showCancelButton: true,
+        showCloseButton: true,
+        confirmButtonText: '<i class="fas fa-check"></i>' + this.l('Purchase'),
+        cancelButtonText: '<i class="fas fa-trash"></i>' + this.l('Cancel'),
+      })
+      .then(async (result) => {
+        if (result.value) {
           this.orderId = await this._ordersServiceProxy.createAndGetId(this.order).toPromise()
           this.listCart.forEach(x => {
             this.orderItem.orderId = this.orderId;
@@ -75,8 +93,26 @@ export class OrrderDetailModalComponent extends AppComponentBase implements OnIn
             this.router.navigate(['/app/main/user-dashboard']);  // define your component where you want to go
           });
         }
-      }
-    );
+      })
+    // this.message.confirm(
+    //   '',
+    //   this.l('AreYouSureToPurchase'),
+    //   async (isConfirmed) => {
+    //     if (isConfirmed) {
+    //       this.orderId = await this._ordersServiceProxy.createAndGetId(this.order).toPromise()
+    //       this.listCart.forEach(x => {
+    //         this.orderItem.orderId = this.orderId;
+    //         this.orderItem.productId = x.cart.productId;
+    //         this.orderItem.quantity = x.cart.quantity;
+    //         this._cartsServiceProxy.delete(x.cart.id).toPromise();
+    //         this._orderItemsServiceProxy.createOrEdit(this.orderItem).toPromise();
+    //         this.notify.success(this.l('SuccessfullyPurchased'));
+    //         this.close();
+    //         this.router.navigate(['/app/main/user-dashboard']);  // define your component where you want to go
+    //       });
+    //     }
+    //   }
+    // );
   }
 
   getDiscountId() {

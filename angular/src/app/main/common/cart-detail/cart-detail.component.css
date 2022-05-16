@@ -10,6 +10,7 @@
     padding: 0 2px;
     text-align: center;
 }
+
 .custom-btn-number {
     position: relative;
     padding: 0;
@@ -44,6 +45,7 @@
     padding: 1rem;
     width: 100%;
 }
+
 .product-list-item .img {
     width: 150px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
@@ -79,6 +81,7 @@
     float: left;
     width: 20px;
 }
+
 .gp-btn button {
     background-color: #fff;
     border: 1px solid #e8e8e8;
@@ -99,27 +102,38 @@
     margin-top: 2px;
 }
 
-.delete-button button{
+.delete-button button {
     border-radius: 50%;
-    background-color: red;
-    color: white;
-    border: none;
+    border: 1px solid red;
+    background-color: transparent;
+    color: red;
     position: absolute;
     right: 0;
     top: 0;
     cursor: pointer;
 }
 
-.purchase-button{
+.delete-button button:hover {
+    background-color: red;
+    color: white;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.purchase-button {
     width: 50%;
-    height: 15%;
-    background-color: greenyellow;
-    border: none;
-    border-radius: 50%;
+    height: 12%;
+    border: 1px solid greenyellow;
+    background-color: transparent;
+    color: rgb(103, 149, 34);
+    border-radius: 20px;
     font-size: 18px;
     margin: auto;
 }
 
-.purchase-button i{
+.purchase-button:hover {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.purchase-button i {
     font-size: 30px;
 }

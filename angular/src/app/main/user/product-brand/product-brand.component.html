@@ -35,7 +35,7 @@
                             </div>
                         </div>
                     </form>
-                    <div class="col-10 row align-items-center">
+                    <div class="col-10 row align-items-center" style="height: fit-content;">
                         <!--<Primeng-Datatable-Start>-->
                         <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
                             <p-table #dataTable (onLazyLoad)="getProducts($event)" [value]="primengTableHelper.records"

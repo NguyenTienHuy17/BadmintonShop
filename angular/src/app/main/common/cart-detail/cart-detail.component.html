@@ -5,11 +5,12 @@
         <div class="col-9">
           <div *ngFor="let cart of listCart">
             <div class="col-12">
-              <div class="product-list-item" (click)="cartDetail(cart.productName, cart.cart.productId)">
-                <img class="mr-3" style="width: 20%;" [src]="defaultRouter + cart.productImageUrl"
-                  [alt]="cart.productName" />
+              <div class="product-list-item">
+                <img (click)="cartDetail(cart.productName, cart.cart.productId)" class="mr-3" style="width: 20%;"
+                  [src]="defaultRouter + cart.productImageUrl" [alt]="cart.productName" />
                 <div class="product-list-detail">
-                  <div class="product-name">{{cart.productName}}</div>
+                  <div class="product-name" style="cursor: pointer;"
+                    (click)="cartDetail(cart.productName, cart.cart.productId)">{{cart.productName}}</div>
                   <div class="d-flex mt-4">
                     <span class="mt-1">{{l('Quantity')}}</span>
                     <div class="custom custom-btn-number form-control">
@@ -40,9 +41,9 @@
                   <span class="product-price">{{(cart.productPrice * cart.cart.quantity).toLocaleString('it-IT', {style
                     :'currency', currency : 'VND'})}}</span>
                 </div>
-                <div class="delete-button">
-                  <button (click)="delete(cart)" type="button">X</button>
-                </div>
+              </div>
+              <div class="delete-button">
+                <button (click)="delete(cart)"><i class="pi pi-times"></i></button>
               </div>
               <hr />
             </div>
